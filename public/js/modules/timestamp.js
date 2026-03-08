@@ -1,13 +1,15 @@
 function updateCurrent() {
-  const now = new Date();
-  document.getElementById('currentTimestamp').textContent = Math.floor(now.getTime() / 1000);
-  document.getElementById('currentHuman').textContent = now.toLocaleString();
+  const now = Date.now();
+  document.getElementById('currentSec').textContent = Math.floor(now / 1000);
+  document.getElementById('currentMs').textContent = now;
+  document.getElementById('currentISO').textContent = new Date(now).toISOString();
 }
 
 function convertTS() {
   const ts = document.getElementById('tsInput').value.trim();
   if (!ts) return showToast((I18N && I18N.invalidTs) || 'Invalid timestamp', 'error');
   const num = parseInt(ts);
+  if (isNaN(num)) return showToast((I18N && I18N.invalidTs) || 'Invalid timestamp', 'error');
   const ms = ts.length >= 13 ? num : num * 1000;
   const date = new Date(ms);
   if (isNaN(date.getTime())) return showToast((I18N && I18N.invalidTs) || 'Invalid timestamp', 'error');
@@ -20,19 +22,21 @@ function convertTS() {
 
 document.addEventListener('DOMContentLoaded', () => {
   updateCurrent();
-  setInterval(updateCurrent, 1000);
+  setInterval(updateCurrent, 100);
+
   const now = new Date();
   now.setSeconds(0, 0);
   document.getElementById('dateInput').value = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
 
   document.getElementById('btnConvertTS').addEventListener('click', convertTS);
+  document.getElementById('tsInput').addEventListener('keydown', e => { if (e.key === 'Enter') convertTS(); });
   document.getElementById('btnUseNow').addEventListener('click', () => {
     document.getElementById('tsInput').value = Math.floor(Date.now() / 1000);
     convertTS();
   });
   document.getElementById('btnConvertDate').addEventListener('click', () => {
     const val = document.getElementById('dateInput').value;
-    if (!val) return showToast((I18N && I18N.pickDate) || 'Select a date first', 'error');
+    if (!val) return showToast((I18N && I18N.pickDate) || 'Pick a date first', 'error');
     const date = new Date(val);
     document.getElementById('date-seconds').textContent = Math.floor(date.getTime() / 1000);
     document.getElementById('date-ms').textContent = date.getTime();
@@ -40,9 +44,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   document.querySelectorAll('.copy-ts-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const text = document.getElementById(btn.dataset.target).textContent;
-      if (!text) return;
-      copyToClipboard(text); showToast((I18N && I18N.copied) || 'Copied!');
+      const el = document.getElementById(btn.dataset.target);
+      if (!el || !el.textContent) return;
+      copyToClipboard(el.textContent);
+      showToast((I18N && I18N.copied) || 'Copied!');
     });
   });
 });

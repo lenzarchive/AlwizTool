@@ -1,43 +1,77 @@
-async function generateHash() {
+async function generateHashes() {
   const text = document.getElementById('inputText').value;
-  const loading = document.getElementById('loadingIndicator');
-  if (!text.trim()) return showToast(I18N.noText || 'Enter text first', 'error');
-  loading.classList.remove('hidden');
+  const hmacKey = document.getElementById('hmacKey').value;
+  const algos = ['md5', 'sha1', 'sha256', 'sha384', 'sha512'];
+
+  if (!text) {
+    algos.forEach(a => { document.getElementById('hash-' + a).value = ''; });
+    return;
+  }
+
   try {
-    const res = await fetch('/api/hash', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text })
-    });
-    const data = await res.json();
-    if (!data.success) throw new Error(data.error);
-    ['md5', 'sha1', 'sha256', 'sha384', 'sha512'].forEach(a => {
-      document.getElementById('hash-' + a).value = data.data[a] || '';
-    });
+    if (hmacKey) {
+      // HMAC via server API (requires crypto module)
+      const res = await fetch('/api/hash', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text, hmacKey })
+      });
+      const data = await res.json();
+      if (data.success) {
+        algos.forEach(a => {
+          const el = document.getElementById('hash-' + a);
+          el.value = data.data[a] || '—';
+        });
+      }
+    } else {
+      // Plain hash via server (MD5 not available in SubtleCrypto)
+      const res = await fetch('/api/hash', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text })
+      });
+      const data = await res.json();
+      if (data.success) {
+        algos.forEach(a => {
+          const el = document.getElementById('hash-' + a);
+          el.value = data.data[a] || '—';
+        });
+      }
+    }
   } catch (e) {
-    showToast('Error: ' + e.message, 'error');
-  } finally {
-    loading.classList.add('hidden');
+    console.error(e);
   }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('btnGenerate').addEventListener('click', generateHash);
+  document.getElementById('btnGenerate').addEventListener('click', generateHashes);
+  document.getElementById('inputText').addEventListener('input', function() {
+    if (this.value) generateHashes();
+  });
+  document.getElementById('hmacKey').addEventListener('input', function() {
+    if (document.getElementById('inputText').value) generateHashes();
+  });
   document.getElementById('btnClear').addEventListener('click', () => {
     document.getElementById('inputText').value = '';
-    ['md5', 'sha1', 'sha256', 'sha384', 'sha512'].forEach(a => {
+    document.getElementById('hmacKey').value = '';
+    ['md5','sha1','sha256','sha384','sha512'].forEach(a => {
       document.getElementById('hash-' + a).value = '';
     });
   });
   document.querySelectorAll('.copy-hash-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const val = document.getElementById('hash-' + btn.dataset.algo).value;
-      if (!val) return showToast(I18N.noHash || 'No hash yet', 'error');
+      if (!val || val === '—') return showToast((I18N && I18N.nothingToCopy) || 'Nothing to copy', 'error');
       copyToClipboard(val);
-      showToast(btn.dataset.algo.toUpperCase() + ' ' + (I18N.copied || 'Copied!'));
+      showToast((I18N && I18N.copied) || 'Copied!');
     });
   });
-  document.getElementById('inputText').addEventListener('keydown', e => {
-    if (e.ctrlKey && e.key === 'Enter') generateHash();
+  document.getElementById('btnCopyAll').addEventListener('click', () => {
+    const lines = ['md5','sha1','sha256','sha384','sha512']
+      .map(a => a.toUpperCase() + ': ' + (document.getElementById('hash-' + a).value || ''))
+      .filter(l => !l.endsWith(': ') && !l.endsWith('—'));
+    if (!lines.length) return showToast((I18N && I18N.generateFirst) || 'Generate first', 'error');
+    copyToClipboard(lines.join('\n'));
+    showToast((I18N && I18N.copied) || 'Copied!');
   });
 });

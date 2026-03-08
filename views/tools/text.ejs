@@ -1,55 +1,85 @@
+<% var tl = t.tools.text; var tc = t.common; %>
 <%- include('../partials/head') %>
 <body class="bg-slate-50 dark:bg-slate-950 min-h-screen flex flex-col">
 <%- include('../partials/header') %>
 <main class="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">
   <nav class="flex items-center gap-2 text-xs text-slate-400 mb-6">
-    <a href="/" class="hover:text-indigo-600 transition-colors"><%= t('nav.home') %></a>
+    <a href="/" class="hover:text-indigo-600 transition-colors"><%= tc.back %></a>
     <span>/</span>
-    <span class="text-slate-600 dark:text-slate-300"><%= t('page.text.h1') %></span>
+    <span class="text-slate-600 dark:text-slate-300"><%= tl.title %></span>
   </nav>
   <div class="mb-6">
-    <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-1"><%= t('page.text.h1') %></h1>
-    <p class="text-sm text-slate-500 dark:text-slate-400"><%= t('page.text.desc') %></p>
+    <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-1"><%= tl.title %></h1>
+    <p class="text-sm text-slate-500 dark:text-slate-400"><%= tl.subtitle %></p>
   </div>
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
     <div class="lg:col-span-2 space-y-4">
       <div class="card p-5 space-y-4">
-        <textarea id="inputText" class="textarea-field min-h-[240px]" placeholder="<%= t('page.text.placeholder') %>"></textarea>
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <% [['page.text.chars','statChars'],['page.text.noSpace','statNoSpace'],['page.text.words','statWords'],['page.text.lines','statLines']].forEach(([key, id]) => { %>
-          <div class="bg-slate-50 dark:bg-slate-800 rounded-lg p-3 text-center">
-            <div class="text-xl font-bold text-indigo-600" id="<%= id %>">0</div>
-            <div class="text-xs text-slate-500 mt-0.5"><%= t(key) %></div>
+        <textarea id="inputText" class="textarea-field min-h-[240px]" placeholder="<%= tl.inputPlaceholder %>"></textarea>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <% [
+            [tl.chars,    'statChars',     'text-indigo-600'],
+            [tl.noSpace,  'statNoSpace',   'text-violet-600'],
+            [tl.words,    'statWords',     'text-sky-600'],
+            [tl.lines,    'statLines',     'text-teal-600'],
+            [tl.sentences,'statSentences', 'text-orange-500'],
+            [tl.readTime, 'statReadTime',  'text-rose-500']
+          ].forEach(function(s) { %>
+          <div class="bg-slate-50 dark:bg-slate-800/60 rounded-lg p-3 text-center">
+            <div class="text-2xl font-bold font-mono <%= s[2] %>" id="<%= s[1] %>">0</div>
+            <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5"><%= s[0] %></div>
           </div>
           <% }) %>
         </div>
       </div>
       <div class="card p-5 space-y-3">
-        <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= t('page.text.changeCase') %></h2>
+        <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tl.changeCase %></h2>
         <div class="flex flex-wrap gap-2">
-          <% [['UPPERCASE','toUpper'],['lowercase','toLower'],['Title Case','toTitle'],['Sentence case','toSentence'],['camelCase','toCamel'],['snake_case','toSnake'],['kebab-case','toKebab'],['PascalCase','toPascal']].forEach(([label, fn]) => { %>
-          <button class="btn-secondary text-xs text-action-btn" data-action="<%= fn %>"><%= label %></button>
+          <% [
+            ['UPPERCASE', 'toUpper'],
+            ['lowercase', 'toLower'],
+            ['Title Case', 'toTitle'],
+            ['Sentence case', 'toSentence'],
+            ['camelCase', 'toCamel'],
+            ['snake_case', 'toSnake'],
+            ['kebab-case', 'toKebab'],
+            ['PascalCase', 'toPascal']
+          ].forEach(function(row) { %>
+          <button class="btn-secondary text-xs py-1.5 text-action-btn" data-action="<%= row[1] %>"><%= row[0] %></button>
           <% }) %>
         </div>
       </div>
     </div>
     <div class="space-y-4">
-      <div class="card p-5 space-y-3">
-        <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= t('page.text.actions') %></h2>
-        <button class="btn-secondary w-full justify-center text-sm text-action-btn" data-action="trimText"><%= t('page.text.trim') %></button>
-        <button class="btn-secondary w-full justify-center text-sm text-action-btn" data-action="removeExtraSpaces"><%= t('page.text.removeExtraSpaces') %></button>
-        <button class="btn-secondary w-full justify-center text-sm text-action-btn" data-action="reverseText"><%= t('page.text.reverse') %></button>
-        <button class="btn-secondary w-full justify-center text-sm text-action-btn" data-action="removeDuplicateLines"><%= t('page.text.removeDuplicates') %></button>
-        <button class="btn-secondary w-full justify-center text-sm text-action-btn" data-action="sortLines"><%= t('page.text.sortLines') %></button>
-        <button id="btnCopyText" class="btn-primary w-full justify-center text-sm mt-2"><%= t('page.text.copyText') %></button>
-        <button id="btnClearText" class="btn-secondary w-full justify-center text-sm"><%= t('common.clear') %></button>
+      <div class="card p-5 space-y-2">
+        <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm mb-3"><%= tl.actions %></h2>
+        <% [
+          [tl.trim,             'trimText'],
+          [tl.removeExtraSpaces,'removeExtraSpaces'],
+          [tl.reverse,          'reverseText'],
+          [tl.removeDuplicates, 'removeDuplicateLines'],
+          [tl.sortLines,        'sortLines'],
+          [tl.addLineNumbers,   'addLineNumbers'],
+          [tl.rot13,            'rot13'],
+          [tl.toSlug,           'toSlug']
+        ].forEach(function(row) { %>
+        <button class="btn-secondary w-full justify-center text-sm text-action-btn py-1.5" data-action="<%= row[1] %>"><%= row[0] %></button>
+        <% }) %>
+        <div class="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-2">
+          <button id="btnCopyText" class="btn-primary w-full justify-center text-sm"><%= tl.copyText %></button>
+          <button id="btnClearText" class="btn-secondary w-full justify-center text-sm"><%= tc.clear %></button>
+        </div>
       </div>
       <%- include('../partials/ads', { adType: 'banner300' }) %>
     </div>
   </div>
+  <div class="mt-6 card p-5">
+    <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
+    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
+  </div>
 </main>
 <%- include('../partials/footer') %>
-<script>var I18N = { noText: "<%= t('common.noText') %>", copied: "<%= t('common.copied') %>" };</script>
+<script>var I18N = { noText: "<%= tl.noText %>", copied: "<%= tc.copied %>" };</script>
 <script src="/js/app.js"></script>
 <script src="/js/modules/text.js"></script>
 </body>

@@ -1,50 +1,62 @@
+<% var tl = t.tools.color; var tc = t.common; %>
 <%- include('../partials/head') %>
 <body class="bg-slate-50 dark:bg-slate-950 min-h-screen flex flex-col">
 <%- include('../partials/header') %>
 <main class="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">
   <nav class="flex items-center gap-2 text-xs text-slate-400 mb-6">
-    <a href="/" class="hover:text-indigo-600 transition-colors"><%= t('nav.home') %></a>
+    <a href="/" class="hover:text-indigo-600 transition-colors"><%= tc.back %></a>
     <span>/</span>
-    <span class="text-slate-600 dark:text-slate-300"><%= t('page.color.h1') %></span>
+    <span class="text-slate-600 dark:text-slate-300"><%= tl.title %></span>
   </nav>
   <div class="mb-6">
-    <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-1"><%= t('page.color.h1') %></h1>
-    <p class="text-sm text-slate-500 dark:text-slate-400"><%= t('page.color.desc') %></p>
+    <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-1"><%= tl.title %></h1>
+    <p class="text-sm text-slate-500 dark:text-slate-400"><%= tl.subtitle %></p>
   </div>
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
     <div class="card p-5 space-y-4">
       <div class="flex items-center gap-3">
-        <input type="color" id="colorPicker" value="#4f46e5" class="w-12 h-12 rounded-lg border border-slate-200 dark:border-slate-700 cursor-pointer p-0.5 bg-white dark:bg-slate-800">
+        <input type="color" id="colorPicker" value="#4f46e5" class="w-12 h-12 rounded-xl border-2 border-slate-200 dark:border-slate-700 cursor-pointer p-0.5 bg-white dark:bg-slate-800">
         <div>
-          <p class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= t('page.color.pickColor') %></p>
-          <p class="text-xs text-slate-400"><%= t('page.color.pickHint') %></p>
+          <p class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tl.pickColor %></p>
+          <p class="text-xs text-slate-400 mt-0.5"><%= tl.pickColorHint %></p>
         </div>
       </div>
-      <div id="colorPreview" class="h-24 rounded-xl border border-slate-200 dark:border-slate-700 transition-colors" style="background-color:#4f46e5;"></div>
+      <div id="colorPreview" class="h-28 rounded-xl border border-slate-200 dark:border-slate-700 transition-colors" style="background-color:#4f46e5;"></div>
       <div>
         <label class="label" for="hexInput">HEX</label>
         <div class="flex gap-2">
           <input type="text" id="hexInput" class="input-field font-mono flex-1" placeholder="#4f46e5" value="#4f46e5">
-          <button class="btn-secondary text-xs shrink-0 copy-color-btn" data-source="hexInput"><%= t('common.copy') %></button>
+          <button class="btn-secondary text-xs shrink-0 copy-color-btn" data-source="hexInput"><%= tc.copy %></button>
         </div>
       </div>
     </div>
-    <div class="card p-5 space-y-4">
-      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= t('page.color.otherFormats') %></h2>
-      <% [['RGB','rgbOutput'],['RGBA','rgbaOutput'],['HSL','hslOutput'],['HSLA','hslaOutput'],['HSV','hsvOutput'],['CMYK','cmykOutput']].forEach(([label, id]) => { %>
+    <div class="card p-5 space-y-3">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tl.otherFormats %></h2>
+      <% [
+        ['RGB',  'rgbOutput'],
+        ['RGBA', 'rgbaOutput'],
+        ['HSL',  'hslOutput'],
+        ['HSLA', 'hslaOutput'],
+        ['HSV',  'hsvOutput'],
+        ['CMYK', 'cmykOutput']
+      ].forEach(function(row) { %>
       <div>
-        <label class="label"><%= label %></label>
+        <label class="label"><%= row[0] %></label>
         <div class="flex gap-2">
-          <input type="text" id="<%= id %>" class="input-field font-mono flex-1 bg-slate-50 dark:bg-slate-950" readonly>
-          <button class="btn-secondary text-xs shrink-0 copy-color-btn" data-source="<%= id %>"><%= t('common.copy') %></button>
+          <input type="text" id="<%= row[1] %>" class="input-field font-mono flex-1 bg-slate-50 dark:bg-slate-950" readonly>
+          <button class="btn-secondary text-xs shrink-0 copy-color-btn" data-source="<%= row[1] %>"><%= tc.copy %></button>
         </div>
       </div>
       <% }) %>
     </div>
   </div>
+  <div class="mt-6 card p-5">
+    <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
+    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
+  </div>
 </main>
 <%- include('../partials/footer') %>
-<script>var I18N = { copied: "<%= t('common.copied') %>" };</script>
+<script>var I18N = { copied: "<%= tc.copied %>" };</script>
 <script src="/js/app.js"></script>
 <script src="/js/modules/color.js"></script>
 </body>

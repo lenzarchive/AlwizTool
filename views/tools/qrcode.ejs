@@ -16,15 +16,15 @@
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
     <div class="card p-5 space-y-4">
       <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.input %></h2>
-      <textarea id="qrInput" class="textarea-field min-h-[120px]" placeholder="<%= tl.inputPlaceholder %>"></textarea>
+      <textarea id="inputText" class="textarea-field min-h-[140px]" placeholder="<%= tl.inputPlaceholder %>"></textarea>
       <div class="grid grid-cols-2 gap-3">
         <div>
-          <label class="label" for="qrSize"><%= tl.sizeLabel %></label>
-          <input type="number" id="qrSize" value="300" min="100" max="800" step="50" class="input-field">
+          <label class="label" for="sizeInput"><%= tl.sizeLabel %></label>
+          <input type="number" id="sizeInput" value="300" min="100" max="800" step="50" class="input-field">
         </div>
         <div>
-          <label class="label" for="qrFormat"><%= tl.formatLabel %></label>
-          <select id="qrFormat" class="select-field">
+          <label class="label" for="formatSelect"><%= tl.formatLabel %></label>
+          <select id="formatSelect" class="select-field w-full">
             <option value="png">PNG</option>
             <option value="svg">SVG</option>
           </select>
@@ -32,32 +32,24 @@
       </div>
       <button id="btnGenerate" class="btn-primary w-full justify-center"><%= tl.generateBtn %></button>
     </div>
-    <div class="card p-5 flex flex-col items-center justify-center space-y-4">
-      <div id="qrPlaceholder" class="flex flex-col items-center gap-3 text-slate-300 dark:text-slate-600">
-        <div class="w-48 h-48 border-2 border-dashed border-current rounded-xl flex items-center justify-center">
-          <span class="text-4xl">⬛</span>
-        </div>
-        <p class="text-sm"><%= tl.placeholder %></p>
-      </div>
-      <div id="qrResult" class="hidden flex-col items-center gap-3 w-full">
-        <img id="qrImage" src="" alt="QR Code" class="max-w-[300px] w-full rounded-xl border border-slate-200 dark:border-slate-700">
-        <div id="qrSvgContainer" class="hidden max-w-[300px] w-full"></div>
-        <div class="flex gap-2 w-full max-w-[300px]">
-          <button id="btnDownload" class="btn-primary flex-1 justify-center text-sm"><%= tc.download %></button>
-          <button id="btnCopyQR" class="btn-secondary flex-1 justify-center text-sm"><%= tl.copyImage %></button>
+    <div class="card p-5 space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.result %></h2>
+        <div class="flex gap-2">
+          <button id="btnCopyImg" class="copy-btn"><%= tl.copyImage %></button>
+          <button id="btnDownload" class="copy-btn"><%= tc.download %></button>
         </div>
       </div>
-      <div id="loadingQR" class="hidden flex-col items-center gap-2 text-slate-400">
-        <div class="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
-        <p class="text-sm"><%= tc.generating %></p>
+      <div id="qrPlaceholder" class="min-h-[240px] flex items-center justify-center text-slate-400 text-sm bg-slate-50 dark:bg-slate-800/50 rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-700">
+        <%= tl.placeholder %>
       </div>
-      <div id="errorQR" class="hidden text-sm text-red-500 font-medium text-center"></div>
+      <div id="qrResult" class="hidden flex justify-center items-center min-h-[240px]"></div>
     </div>
   </div>
 </main>
 <%- include('../partials/footer') %>
+<script>var I18N = { pngOnly: "<%= tl.pngOnly %>", copied: "<%= tc.copied %>" };</script>
 <script src="/js/app.js"></script>
-<script>var i18nQr = { copied: '<%= tc.copied %>', pngOnly: '<%= tl.pngOnly %>', error: '<%= tc.error %>' };</script>
 <script src="/js/modules/qrcode.js"></script>
 </body>
 </html>

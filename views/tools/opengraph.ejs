@@ -13,60 +13,87 @@
     <p class="text-sm text-slate-500 dark:text-slate-400"><%= tl.subtitle %></p>
   </div>
   <%- include('../partials/ads', { adType: 'banner728' }) %>
-  <div class="card p-5 mb-6">
-    <div class="flex gap-3">
+
+  <!-- URL input -->
+  <div class="card p-5 mb-6 space-y-3">
+    <div class="flex gap-2">
       <input type="url" id="urlInput" class="input-field flex-1" placeholder="<%= tl.urlPlaceholder %>" autocomplete="off">
-      <button id="checkBtn" class="btn-primary shrink-0"><%= tl.checkBtn %></button>
+      <button id="btnCheck" class="btn-primary shrink-0"><%= tl.checkBtn %></button>
     </div>
-    <p class="text-xs text-slate-400 mt-2"><%= tl.urlHint %></p>
+    <p class="text-xs text-slate-400"><%= tl.urlHint %></p>
+    <div id="errorMsg" class="hidden text-sm text-red-500 font-medium flex items-center gap-2">
+      <svg class="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01"/></svg>
+      <span id="errorText"></span>
+    </div>
   </div>
-  <div id="loadingState" class="hidden card p-8 text-center text-slate-400">
-    <div class="inline-block w-6 h-6 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin mb-3"></div>
+
+  <!-- Loading spinner -->
+  <div id="loadingState" class="hidden text-center py-12 text-slate-400">
+    <svg class="w-7 h-7 animate-spin mx-auto mb-3 text-indigo-500" fill="none" viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+    </svg>
     <p class="text-sm"><%= tl.fetching %></p>
   </div>
-  <div id="errorState" class="hidden card p-5 border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20">
-    <p class="text-sm text-red-600 dark:text-red-400 font-medium" id="errorMsg"></p>
-  </div>
-  <div id="resultState" class="hidden space-y-6">
+
+  <!-- Results -->
+  <div id="results" class="hidden space-y-6">
+
+    <!-- Preview cards -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      <div class="card p-5">
-        <h2 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-4"><%= tl.ogPreview %></h2>
-        <div class="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
-          <div class="bg-slate-100 dark:bg-slate-800 aspect-video flex items-center justify-center">
-            <img id="ogImage" src="" alt="OG Image" class="w-full h-full object-cover hidden">
-            <span id="ogNoImage" class="text-slate-400 text-sm"><%= tl.noImage %></span>
-          </div>
-          <div class="p-3 bg-white dark:bg-slate-900">
-            <p class="text-xs text-slate-400 uppercase tracking-wide mb-1" id="ogSiteName"></p>
-            <p class="font-semibold text-sm text-slate-900 dark:text-slate-100 leading-tight mb-1" id="ogTitle">-</p>
-            <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2" id="ogDesc">-</p>
+      <!-- OG Preview -->
+      <div class="card p-5 space-y-3">
+        <h2 class="font-semibold text-sm text-slate-900 dark:text-slate-100 flex items-center gap-2">
+          <span class="badge bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400">og:</span>
+          <%= tl.ogPreview %>
+        </h2>
+        <div class="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden bg-white dark:bg-slate-900">
+          <div id="ogImage" class="w-full aspect-[1.91/1] bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 text-xs overflow-hidden"></div>
+          <div class="p-3 space-y-1">
+            <p id="ogSite" class="text-[11px] text-slate-400 uppercase tracking-wide font-medium"></p>
+            <p id="ogTitle" class="font-semibold text-sm text-slate-900 dark:text-slate-100 leading-snug line-clamp-2"></p>
+            <p id="ogDesc" class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed"></p>
           </div>
         </div>
       </div>
-      <div class="card p-5">
-        <h2 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-4"><%= tl.metaTags %></h2>
-        <div class="space-y-3 text-sm" id="metaList"></div>
+
+      <!-- Twitter Card Preview -->
+      <div class="card p-5 space-y-3">
+        <h2 class="font-semibold text-sm text-slate-900 dark:text-slate-100 flex items-center gap-2">
+          <span class="badge bg-sky-100 dark:bg-sky-900/40 text-sky-600 dark:text-sky-400">twitter:</span>
+          <%= tl.twitterPreview %>
+        </h2>
+        <div class="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden bg-white dark:bg-slate-900">
+          <div id="twImage" class="w-full aspect-[1.91/1] bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 text-xs overflow-hidden"></div>
+          <div class="p-3 space-y-1">
+            <p id="twCard" class="text-[11px] text-slate-400 uppercase tracking-wide font-medium"></p>
+            <p id="twTitle" class="font-semibold text-sm text-slate-900 dark:text-slate-100 leading-snug line-clamp-2"></p>
+            <p id="twDesc" class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed"></p>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- Extra info bar -->
+    <div id="infoBar" class="card p-4 flex flex-wrap gap-4 text-xs"></div>
+
+    <!-- Meta tags table -->
     <div class="card p-5">
-      <h2 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-4"><%= tl.twitterPreview %></h2>
-      <div class="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden max-w-sm">
-        <div class="bg-slate-100 dark:bg-slate-800 aspect-video flex items-center justify-center">
-          <img id="twImage" src="" alt="Twitter Image" class="w-full h-full object-cover hidden">
-          <span id="twNoImage" class="text-slate-400 text-sm"><%= tl.noImage %></span>
-        </div>
-        <div class="p-3 bg-white dark:bg-slate-900">
-          <p class="font-semibold text-sm text-slate-900 dark:text-slate-100 leading-tight mb-0.5" id="twTitle">-</p>
-          <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mb-1" id="twDesc">-</p>
-          <p class="text-xs text-slate-400" id="twCard"></p>
-        </div>
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="font-semibold text-sm text-slate-900 dark:text-slate-100"><%= tl.metaTags %></h2>
+        <button id="btnCopyMeta" class="copy-btn hidden"><%= tc.copyAll %></button>
       </div>
+      <div id="metaTable" class="divide-y divide-slate-100 dark:divide-slate-800"></div>
     </div>
   </div>
 </main>
 <%- include('../partials/footer') %>
+<script>var I18N = {
+  noImage: "<%= tl.noImage %>",
+  cardType: "<%= tl.cardType %>",
+  copied: "<%= tc.copied %>"
+};</script>
 <script src="/js/app.js"></script>
-<script>var i18nOg = { cardType: '<%= tl.cardType %>' };</script>
 <script src="/js/modules/opengraph.js"></script>
 </body>
 </html>

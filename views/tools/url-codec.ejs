@@ -1,46 +1,76 @@
+<% var tl = t.tools.urlCodec; var tc = t.common; %>
 <%- include('../partials/head') %>
 <body class="bg-slate-50 dark:bg-slate-950 min-h-screen flex flex-col">
 <%- include('../partials/header') %>
 <main class="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">
   <nav class="flex items-center gap-2 text-xs text-slate-400 mb-6">
-    <a href="/" class="hover:text-indigo-600 transition-colors"><%= t('nav.home') %></a>
+    <a href="/" class="hover:text-indigo-600 transition-colors"><%= tc.back %></a>
     <span>/</span>
-    <span class="text-slate-600 dark:text-slate-300"><%= t('page.urlCodec.h1') %></span>
+    <span class="text-slate-600 dark:text-slate-300"><%= tl.title %></span>
   </nav>
   <div class="mb-6">
-    <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-1"><%= t('page.urlCodec.h1') %></h1>
-    <p class="text-sm text-slate-500 dark:text-slate-400"><%= t('page.urlCodec.desc') %></p>
+    <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-1"><%= tl.title %></h1>
+    <p class="text-sm text-slate-500 dark:text-slate-400"><%= tl.subtitle %></p>
   </div>
   <%- include('../partials/ads', { adType: 'banner728' }) %>
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+  <!-- Mode selector -->
+  <div class="card p-4 mb-4">
+    <label class="label"><%= tl.modeLabel %></label>
+    <div class="flex flex-wrap gap-2">
+      <% [
+        { val: 'component', label: tl.modeComponent },
+        { val: 'full',      label: tl.modeFull },
+        { val: 'double',    label: tl.modeDouble },
+        { val: 'rfc',       label: tl.modeRFC }
+      ].forEach(function(m, i) { %>
+      <label class="flex items-center gap-2 cursor-pointer px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-indigo-300 dark:hover:border-indigo-700 transition-colors">
+        <input type="radio" name="modeSelect" value="<%= m.val %>" <%= i === 0 ? 'checked' : '' %> class="accent-indigo-600">
+        <span class="text-xs text-slate-700 dark:text-slate-300"><%= m.label %></span>
+      </label>
+      <% }) %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-[1fr_44px_1fr] items-start gap-2">
     <div class="card p-5 space-y-4">
-      <div class="flex items-center justify-between">
-        <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= t('common.input') %></h2>
-        <select id="modeSelect" class="select-field w-auto text-xs">
-          <option value="component">encodeURIComponent</option>
-          <option value="full">encodeURI (Full URL)</option>
-        </select>
-      </div>
-      <textarea id="inputText" class="textarea-field min-h-[160px]" placeholder="<%= t('page.urlCodec.inputPlaceholder') %>"></textarea>
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-indigo-500 inline-block"></span><%= tc.input %>
+      </h2>
+      <textarea id="inputText" class="textarea-field min-h-[180px]" placeholder="<%= tl.inputPlaceholder %>"></textarea>
       <div class="flex gap-2 flex-wrap">
-        <button id="btnEncode" class="btn-primary"><%= t('common.encode') %></button>
-        <button id="btnDecode" class="btn-secondary"><%= t('common.decode') %></button>
-        <button id="btnClear" class="btn-secondary ml-auto"><%= t('common.clear') %></button>
+        <button id="btnEncode" class="btn-primary"><%= tc.encode %></button>
+        <button id="btnDecode" class="btn-secondary"><%= tc.decode %></button>
+        <button id="btnClear" class="btn-secondary ml-auto"><%= tc.clear %></button>
       </div>
     </div>
+
+    <div class="flex lg:flex-col items-center justify-center py-3 lg:py-0 lg:pt-24">
+      <button id="btnSwap" class="swap-btn" title="<%= tc.swapLabel %>">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4"/></svg>
+      </button>
+      <span class="text-[10px] text-slate-400 mt-1 hidden lg:block text-center"><%= tc.swapIO %></span>
+    </div>
+
     <div class="card p-5 space-y-4">
       <div class="flex items-center justify-between">
-        <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= t('common.output') %></h2>
-        <button id="btnCopy" class="copy-btn"><%= t('common.copy') %></button>
+        <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-green-500 inline-block"></span><%= tc.output %>
+        </h2>
+        <button id="btnCopy" class="copy-btn"><%= tc.copy %></button>
       </div>
-      <textarea id="outputText" class="result-box min-h-[160px]" readonly placeholder="..."></textarea>
-      <div id="errorMsg" class="hidden text-xs text-red-500 font-medium"></div>
-      <button id="btnSwap" class="btn-secondary text-xs"><%= t('common.swap') %></button>
+      <textarea id="outputText" class="result-box min-h-[180px]" readonly placeholder="<%= tl.outputPlaceholder %>"></textarea>
+      <div id="errorMsg" class="hidden text-xs text-red-500 font-medium px-1"></div>
     </div>
+  </div>
+
+  <div class="mt-6 card p-5">
+    <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
+    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
   </div>
 </main>
 <%- include('../partials/footer') %>
-<script>var I18N = { decodeFail: "<%= t('page.urlCodec.decodeFail') %>", nothingToCopy: "<%= t('common.nothingToCopy') %>", copied: "<%= t('common.copied') %>" };</script>
+<script>var I18N = { decodeFail: "<%= tl.decodeFail %>", nothingToCopy: "<%= tc.nothingToCopy %>", copied: "<%= tc.copied %>" };</script>
 <script src="/js/app.js"></script>
 <script src="/js/modules/urlcodec.js"></script>
 </body>

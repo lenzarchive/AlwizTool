@@ -19,7 +19,13 @@ function i18nMiddleware(req, res, next) {
     res.locals.lang = SUPPORTED_LANGS.includes(cookieLang) ? cookieLang : DEFAULT_LANG;
   }
 
-  res.locals.t = locales[res.locals.lang];
+  const locale = locales[res.locals.lang];
+  // Make t work both as function: t('nav.home') AND as object: t.nav.home
+  const t = function(key) {
+    return key.split('.').reduce((obj, k) => (obj && obj[k] !== undefined ? obj[k] : undefined), locale) ?? '';
+  };
+  Object.assign(t, locale);
+  res.locals.t = t;
   res.locals.supportedLangs = SUPPORTED_LANGS;
   next();
 }

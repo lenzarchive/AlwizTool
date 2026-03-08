@@ -1,24 +1,23 @@
 function hexToRgb(hex) {
-  return {
-    r: parseInt(hex.slice(1, 3), 16),
-    g: parseInt(hex.slice(3, 5), 16),
-    b: parseInt(hex.slice(5, 7), 16)
-  };
+  hex = hex.replace(/^#/, '');
+  if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+  const n = parseInt(hex, 16);
+  return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
 }
 
 function rgbToHsl(r, g, b) {
   r /= 255; g /= 255; b /= 255;
   const max = Math.max(r, g, b), min = Math.min(r, g, b);
   let h, s, l = (max + min) / 2;
-  if (max === min) { h = s = 0; } else {
+  if (max === min) { h = s = 0; }
+  else {
     const d = max - min;
     s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
     switch (max) {
-      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-      case g: h = (b - r) / d + 2; break;
-      case b: h = (r - g) / d + 4; break;
+      case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+      case g: h = ((b - r) / d + 2) / 6; break;
+      case b: h = ((r - g) / d + 4) / 6; break;
     }
-    h /= 6;
   }
   return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
 }
@@ -27,14 +26,15 @@ function rgbToHsv(r, g, b) {
   r /= 255; g /= 255; b /= 255;
   const max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min;
   let h;
-  const s = max === 0 ? 0 : d / max, v = max;
-  if (max === min) { h = 0; } else {
+  const s = max === 0 ? 0 : d / max;
+  const v = max;
+  if (d === 0) { h = 0; }
+  else {
     switch (max) {
-      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-      case g: h = (b - r) / d + 2; break;
-      case b: h = (r - g) / d + 4; break;
+      case r: h = ((g - b) / d % 6) / 6; break;
+      case g: h = ((b - r) / d + 2) / 6; break;
+      case b: h = ((r - g) / d + 4) / 6; break;
     }
-    h /= 6;
   }
   return { h: Math.round(h * 360), s: Math.round(s * 100), v: Math.round(v * 100) };
 }
@@ -51,36 +51,36 @@ function rgbToCmyk(r, g, b) {
   };
 }
 
-function updateAll(hex) {
+function updateFromHex(hex) {
+  if (!/^#[0-9a-fA-F]{6}$/.test(hex)) return;
   const { r, g, b } = hexToRgb(hex);
   const hsl = rgbToHsl(r, g, b);
   const hsv = rgbToHsv(r, g, b);
   const cmyk = rgbToCmyk(r, g, b);
+
+  document.getElementById('colorPicker').value = hex;
+  document.getElementById('colorPreview').style.backgroundColor = hex;
   document.getElementById('rgbOutput').value = `rgb(${r}, ${g}, ${b})`;
   document.getElementById('rgbaOutput').value = `rgba(${r}, ${g}, ${b}, 1)`;
   document.getElementById('hslOutput').value = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
   document.getElementById('hslaOutput').value = `hsla(${hsl.h}, ${hsl.s}%, ${hsl.l}%, 1)`;
   document.getElementById('hsvOutput').value = `hsv(${hsv.h}, ${hsv.s}%, ${hsv.v}%)`;
   document.getElementById('cmykOutput').value = `cmyk(${cmyk.c}%, ${cmyk.m}%, ${cmyk.y}%, ${cmyk.k}%)`;
-  document.getElementById('colorPreview').style.backgroundColor = hex;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   const picker = document.getElementById('colorPicker');
   const hexInput = document.getElementById('hexInput');
 
-  picker.addEventListener('input', () => {
-    hexInput.value = picker.value;
-    updateAll(picker.value);
+  picker.addEventListener('input', e => {
+    hexInput.value = e.target.value;
+    updateFromHex(e.target.value);
   });
 
-  hexInput.addEventListener('input', () => {
-    let val = hexInput.value.trim();
-    if (!val.startsWith('#')) val = '#' + val;
-    if (/^#[0-9a-fA-F]{6}$/.test(val)) {
-      picker.value = val;
-      updateAll(val);
-    }
+  hexInput.addEventListener('input', e => {
+    let v = e.target.value.trim();
+    if (!v.startsWith('#')) v = '#' + v;
+    updateFromHex(v);
   });
 
   document.querySelectorAll('.copy-color-btn').forEach(btn => {
@@ -88,9 +88,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const val = document.getElementById(btn.dataset.source).value;
       if (!val) return;
       copyToClipboard(val);
-      showToast(i18nColor.copied);
+      showToast((I18N && I18N.copied) || 'Copied!');
     });
   });
 
-  updateAll('#4f46e5');
+  updateFromHex('#4f46e5');
 });

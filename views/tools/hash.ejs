@@ -14,24 +14,44 @@
   </div>
   <%- include('../partials/ads', { adType: 'banner728' }) %>
   <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
-    <div class="lg:col-span-2 card p-5 space-y-4">
-      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.input %></h2>
-      <textarea id="inputText" class="textarea-field min-h-[140px]" placeholder="<%= tl.inputPlaceholder %>"></textarea>
-      <div class="flex gap-2">
-        <button id="btnGenerate" class="btn-primary flex-1"><%= tc.generate %></button>
-        <button id="btnClear" class="btn-secondary"><%= tc.clear %></button>
+    <div class="lg:col-span-2 space-y-4">
+      <div class="card p-5 space-y-4">
+        <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.input %></h2>
+        <textarea id="inputText" class="textarea-field min-h-[140px]" placeholder="<%= tl.inputPlaceholder %>"></textarea>
+        <div class="flex gap-2">
+          <button id="btnGenerate" class="btn-primary flex-1"><%= tc.generate %></button>
+          <button id="btnClear" class="btn-secondary"><%= tc.clear %></button>
+        </div>
       </div>
-      <div id="loadingIndicator" class="hidden text-xs text-slate-400"><%= tl.generating %></div>
+      <div class="card p-5 space-y-3">
+        <div>
+          <label class="label" for="hmacKey"><%= tl.hmacLabel %></label>
+          <input type="text" id="hmacKey" class="input-field font-mono" placeholder="<%= tl.hmacPlaceholder %>">
+          <p class="text-xs text-slate-400 mt-1.5"><%= tl.hmacHint %></p>
+        </div>
+      </div>
     </div>
     <div class="lg:col-span-3 card p-5 space-y-3">
-      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.result %></h2>
-      <% ['md5', 'sha1', 'sha256', 'sha384', 'sha512'].forEach(function(algo) { %>
-      <div class="space-y-1">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-semibold uppercase text-slate-400 dark:text-slate-500 tracking-wide"><%= algo.toUpperCase() %></span>
-          <button class="copy-btn copy-hash-btn" data-algo="<%= algo %>"><%= tc.copy %></button>
+      <div class="flex items-center justify-between">
+        <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.result %></h2>
+        <button id="btnCopyAll" class="copy-btn"><%= tc.copyAll %></button>
+      </div>
+      <% [
+        { algo: 'md5',    label: 'MD5',    note: '128-bit / legacy' },
+        { algo: 'sha1',   label: 'SHA-1',  note: '160-bit / legacy' },
+        { algo: 'sha256', label: 'SHA-256',note: '256-bit / secure' },
+        { algo: 'sha384', label: 'SHA-384',note: '384-bit / secure' },
+        { algo: 'sha512', label: 'SHA-512',note: '512-bit / secure' }
+      ].forEach(function(h) { %>
+      <div class="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-lg">
+        <div class="flex items-center justify-between mb-1.5">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold uppercase text-slate-700 dark:text-slate-300 font-mono"><%= h.label %></span>
+            <span class="text-[10px] text-slate-400"><%= h.note %></span>
+          </div>
+          <button class="copy-btn copy-hash-btn" data-algo="<%= h.algo %>"><%= tc.copy %></button>
         </div>
-        <input id="hash-<%= algo %>" type="text" class="input-field font-mono text-xs" readonly placeholder="-">
+        <input id="hash-<%= h.algo %>" type="text" class="input-field font-mono text-xs bg-transparent border-0 p-0 focus:ring-0" readonly placeholder="—">
       </div>
       <% }) %>
     </div>
@@ -42,6 +62,7 @@
   </div>
 </main>
 <%- include('../partials/footer') %>
+<script>var I18N = { copied: "<%= tc.copied %>", nothingToCopy: "<%= tc.nothingToCopy %>", generateFirst: "<%= tc.generateFirst %>" };</script>
 <script src="/js/app.js"></script>
 <script src="/js/modules/hash.js"></script>
 </body>

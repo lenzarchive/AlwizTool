@@ -4,24 +4,26 @@ const router = express.Router();
 const SITE_URL = 'https://alwiztool.my.id';
 
 const tools = [
-  { slug: 'base64',        i18nKey: 'base64',        icon: '🔐', category: 'Encoding'   },
-  { slug: 'hash',          i18nKey: 'hash',           icon: '#️⃣', category: 'Hashing'    },
-  { slug: 'opengraph',     i18nKey: 'opengraph',      icon: '🔍', category: 'Analyzer'   },
-  { slug: 'url-codec',     i18nKey: 'urlCodec',       icon: '🔗', category: 'Encoding'   },
-  { slug: 'json-formatter',i18nKey: 'jsonFormatter',  icon: '{ }', category: 'Formatter' },
-  { slug: 'uuid',          i18nKey: 'uuid',           icon: '🆔', category: 'Generator'  },
-  { slug: 'password',      i18nKey: 'password',       icon: '🔑', category: 'Generator'  },
-  { slug: 'timestamp',     i18nKey: 'timestamp',      icon: '🕐', category: 'Converter'  },
-  { slug: 'color',         i18nKey: 'color',          icon: '🎨', category: 'Converter'  },
-  { slug: 'text',          i18nKey: 'text',           icon: '📝', category: 'Text'       },
-  { slug: 'qrcode',        i18nKey: 'qrcode',         icon: '⬛', category: 'Generator'  },
+  { slug: 'base64',         i18nKey: 'base64',        icon: '🔐', category: 'Encoding'   },
+  { slug: 'url-codec',      i18nKey: 'urlCodec',       icon: '🔗', category: 'Encoding'   },
+  { slug: 'hash',           i18nKey: 'hash',           icon: '#',  category: 'Security'   },
+  { slug: 'jwt-decoder',    i18nKey: 'jwt',            icon: '🪪', category: 'Security'   },
+  { slug: 'json-formatter', i18nKey: 'jsonFormatter',  icon: '{}', category: 'Formatter'  },
+  { slug: 'uuid',           i18nKey: 'uuid',           icon: '🆔', category: 'Generator'  },
+  { slug: 'password',       i18nKey: 'password',       icon: '🔑', category: 'Generator'  },
+  { slug: 'regex',          i18nKey: 'regex',          icon: '.*', category: 'Developer'  },
+  { slug: 'timestamp',      i18nKey: 'timestamp',      icon: '🕐', category: 'Converter'  },
+  { slug: 'color',          i18nKey: 'color',          icon: '🎨', category: 'Converter'  },
+  { slug: 'text',           i18nKey: 'text',           icon: '📝', category: 'Text'       },
+  { slug: 'qrcode',         i18nKey: 'qrcode',         icon: '⬛', category: 'Generator'  },
+  { slug: 'opengraph',      i18nKey: 'opengraph',      icon: '🔍', category: 'Web'        },
 ];
 
 router.get('/', (req, res) => {
   const t = res.locals.t;
   res.render('index', {
     title: 'AlwizTool - All-in-One Developer & Utility Tools',
-    description: t.hero.subtitle,
+    description: t('hero.subtitle'),
     canonical: SITE_URL,
     tools,
   });
@@ -32,7 +34,7 @@ router.get('/tools/:slug', (req, res, next) => {
   const tool = tools.find(t => t.slug === slug);
   if (!tool) return next();
   const t = res.locals.t;
-  const toolT = t.tools[tool.i18nKey] || {};
+  const toolT = t('tools.' + tool.i18nKey) || {};
   res.render('tools/' + slug, {
     title: (toolT.title || tool.slug) + ' - AlwizTool',
     description: toolT.subtitle || toolT.desc || '',

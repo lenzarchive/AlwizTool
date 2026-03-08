@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "concurrently \"nodemon server.js\" \"npm run watch:css\"",
-    "build:css": "tailwindcss -i ./public/css/input.css -o ./public/css/style.css --minify",
-    "watch:css": "tailwindcss -i ./public/css/input.css -o ./public/css/style.css --watch"
+    "build:css": "tailwindcss -i ./src/css/input.css -o ./public/css/style.css --minify",
+    "watch:css": "tailwindcss -i ./src/css/input.css -o ./public/css/style.css --watch"
   },
   "dependencies": {
     "cheerio": "^1.0.0",
@@ -19,8 +19,8 @@
     "express-rate-limit": "^7.1.5",
     "helmet": "^7.1.0",
     "morgan": "^1.10.0",
-    "node-fetch": "^2.7.0",
-    "qrcode": "^1.5.3"
+    "qrcode": "^1.5.3",
+    "open-graph-scraper": "^6.7.3"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.16",
