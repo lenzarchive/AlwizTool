@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="<%= lang %>" class="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title><%= title %></title>
+  <meta name="description" content="<%= description %>">
+  <meta name="author" content="AlwizBA">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="<%= canonical %>">
+
+  <meta property="og:title" content="<%= title %>">
+  <meta property="og:description" content="<%= description %>">
+  <meta property="og:url" content="<%= canonical %>">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AlwizTool">
+  <meta property="og:image" content="https://alwiztool.my.id/og-image.png">
+  <meta property="og:locale" content="<%= lang === 'id' ? 'id_ID' : 'en_US' %>">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="<%= title %>">
+  <meta name="twitter:description" content="<%= description %>">
+  <meta name="twitter:image" content="https://alwiztool.my.id/og-image.png">
+
+  <link rel="alternate" hreflang="en" href="<%= canonical %>?lang=en">
+  <link rel="alternate" hreflang="id" href="<%= canonical %>?lang=id">
+  <link rel="alternate" hreflang="x-default" href="<%= canonical %>">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script>
+    (function() {
+      var saved = localStorage.getItem('theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "AlwizTool",
+    "url": "https://alwiztool.my.id",
+    "description": "All-in-one developer and utility tools",
+    "author": { "@type": "Person", "name": "AlwizBA" },
+    "inLanguage": ["en", "id"]
+  }
+  </script>
+</head>

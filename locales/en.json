@@ -1,0 +1,200 @@
+{
+  "lang": "en",
+  "langName": "English",
+
+  "nav": {
+    "home": "Home",
+    "tools": "Tools",
+    "toggleDark": "Toggle dark mode",
+    "menu": "Menu"
+  },
+
+  "footer": {
+    "tagline": "Free tools for developers and everyday users. Built with ❤️ by AlwizBA.",
+    "tools": "Tools",
+    "socials": "Social Media",
+    "support": "Support the Developer",
+    "supportID": "Saweria (ID)",
+    "supportIntl": "Ko-fi (Intl)",
+    "rights": "All rights reserved."
+  },
+
+  "hero": {
+    "badge": "Free Developer Tools",
+    "title1": "Everything you need,",
+    "title2": "in one place.",
+    "subtitle": "Free tools for developers and everyday users. Base64, Hash, Open Graph, QR Code, and more — use right away, no sign-up needed.",
+    "searchPlaceholder": "Search tools...",
+    "noResults": "Tool not found",
+    "noResultsHint": "Try a different keyword"
+  },
+
+  "common": {
+    "back": "Home",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "clear": "Clear",
+    "encode": "Encode",
+    "decode": "Decode",
+    "swapIO": "↕ Swap Input & Output",
+    "input": "Input",
+    "output": "Output",
+    "result": "Result",
+    "generate": "Generate",
+    "convert": "Convert",
+    "download": "Download",
+    "copyAll": "Copy All",
+    "useNow": "Use Current Time",
+    "validate": "Validate",
+    "format": "Format",
+    "minify": "Minify",
+    "loading": "Processing...",
+    "generating": "Generating...",
+    "error": "Error"
+  },
+
+  "tools": {
+    "base64": {
+      "name": "Base64 Encode/Decode",
+      "desc": "Encode or decode text & files to Base64 format",
+      "title": "Base64 Encode / Decode",
+      "subtitle": "Encode or decode text to Base64. Supports plain text and URL-safe Base64.",
+      "urlSafe": "URL-safe",
+      "inputPlaceholder": "Enter text here...",
+      "outputPlaceholder": "Result will appear here...",
+      "about": "About Base64",
+      "aboutText": "Base64 is an encoding that converts binary data into ASCII text using 64 characters. Often used to transmit data through text-only media, like email or JSON payloads. URL-safe Base64 replaces + and / with - and _."
+    },
+    "hash": {
+      "name": "Hash Generator",
+      "desc": "Generate MD5, SHA-1, SHA-256, SHA-512 hash from text",
+      "title": "Hash Generator",
+      "subtitle": "Generate MD5, SHA-1, SHA-256, SHA-384, and SHA-512 hashes from any text.",
+      "inputPlaceholder": "Enter text to hash...",
+      "generating": "Generating...",
+      "about": "About Hashing",
+      "aboutText": "Hash functions convert input into a fixed-size output that is one-way (irreversible). MD5 and SHA-1 are considered insecure for cryptography but are still used for checksums. Use SHA-256 or higher for security."
+    },
+    "opengraph": {
+      "name": "Open Graph Checker",
+      "desc": "Check and preview OG meta & Twitter Card from any URL",
+      "title": "Open Graph Checker",
+      "subtitle": "Check and preview Open Graph meta tags and Twitter Card from any URL.",
+      "urlPlaceholder": "https://example.com",
+      "urlHint": "Make sure the URL includes https://",
+      "checkBtn": "Check URL",
+      "fetching": "Fetching data...",
+      "ogPreview": "Open Graph Preview",
+      "metaTags": "Meta Tags",
+      "twitterPreview": "Twitter Card Preview",
+      "noImage": "No Image",
+      "cardType": "Card"
+    },
+    "urlCodec": {
+      "name": "URL Encoder/Decoder",
+      "desc": "Encode and decode URL or URL components",
+      "title": "URL Encoder / Decoder",
+      "subtitle": "Quickly encode or decode URLs and URL components.",
+      "inputPlaceholder": "Text or URL...",
+      "outputPlaceholder": "Result..."
+    },
+    "jsonFormatter": {
+      "name": "JSON Formatter",
+      "desc": "Format, validate, and minify JSON easily",
+      "title": "JSON Formatter & Validator",
+      "subtitle": "Format, validate, and minify JSON with ease.",
+      "inputPlaceholder": "{\"key\": \"value\"}",
+      "outputPlaceholder": "Result...",
+      "indent": "Indent",
+      "validMsg": "✓ JSON is valid",
+      "minifiedMsg": "✓ Minified",
+      "chars": "chars",
+      "invalidMsg": "✗ Invalid JSON"
+    },
+    "uuid": {
+      "name": "UUID Generator",
+      "desc": "Generate UUID v1 and v4 in bulk",
+      "title": "UUID Generator",
+      "subtitle": "Generate UUID v4 in bulk. Click to copy.",
+      "count": "Count",
+      "formatLabel": "Format",
+      "lowercase": "Lowercase",
+      "uppercase": "UPPERCASE",
+      "noHyphen": "No Hyphens"
+    },
+    "password": {
+      "name": "Password Generator",
+      "desc": "Generate strong passwords with custom configuration",
+      "title": "Password Generator",
+      "subtitle": "Generate strong passwords with custom configuration.",
+      "config": "Configuration",
+      "length": "Length",
+      "uppercase": "Uppercase letters (A-Z)",
+      "lowercase": "Lowercase letters (a-z)",
+      "numbers": "Numbers (0-9)",
+      "symbols": "Symbols (!@#$%...)",
+      "noAmbiguous": "Avoid ambiguous characters (0, O, l, I)",
+      "countLabel": "Number of passwords",
+      "generateBtn": "Generate Password",
+      "strength": "Password Strength",
+      "weak": "Weak",
+      "medium": "Medium",
+      "strong": "Strong",
+      "minOneType": "Choose at least one character type"
+    },
+    "timestamp": {
+      "name": "Timestamp Converter",
+      "desc": "Convert Unix timestamp to date or vice versa",
+      "title": "Timestamp Converter",
+      "subtitle": "Convert Unix timestamps to readable dates, or the other way around.",
+      "currentTime": "Current time",
+      "tsToDate": "Unix Timestamp → Date",
+      "dateToTs": "Date → Unix Timestamp",
+      "tsPlaceholder": "Example: 1700000000",
+      "seconds": "Seconds",
+      "milliseconds": "Milliseconds"
+    },
+    "color": {
+      "name": "Color Converter",
+      "desc": "Convert HEX, RGB, HSL, and other color formats",
+      "title": "Color Converter",
+      "subtitle": "Convert between HEX, RGB, HSL, and other color formats.",
+      "pickColor": "Pick Color",
+      "pickColorHint": "Click to open color picker",
+      "otherFormats": "Other Formats"
+    },
+    "text": {
+      "name": "Text Analyzer",
+      "desc": "Count words, characters, and transform text case",
+      "title": "Text Analyzer",
+      "subtitle": "Count words, characters, lines, and transform text format easily.",
+      "inputPlaceholder": "Type or paste text here...",
+      "chars": "Characters",
+      "noSpace": "No Spaces",
+      "words": "Words",
+      "lines": "Lines",
+      "changeCase": "Change Case",
+      "actions": "Actions",
+      "trim": "Trim Whitespace",
+      "removeSpaces": "Remove Extra Spaces",
+      "reverse": "Reverse Text",
+      "removeDuplicates": "Remove Duplicate Lines",
+      "sortLines": "Sort Lines A-Z",
+      "copyText": "Copy Text",
+      "noText": "No text to copy"
+    },
+    "qrcode": {
+      "name": "QR Code Generator",
+      "desc": "Create QR codes from text or URL",
+      "title": "QR Code Generator",
+      "subtitle": "Generate QR codes from any URL, text, or content.",
+      "inputPlaceholder": "Enter URL or text...",
+      "sizeLabel": "Size (px)",
+      "formatLabel": "Format",
+      "generateBtn": "Generate QR Code",
+      "placeholder": "QR Code will appear here",
+      "copyImage": "Copy Image",
+      "pngOnly": "Only PNG can be copied"
+    }
+  }
+}

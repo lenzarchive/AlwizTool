@@ -1,0 +1,63 @@
+<%- include('../partials/head') %>
+<body class="bg-slate-50 dark:bg-slate-950 min-h-screen flex flex-col">
+<%- include('../partials/header') %>
+<main class="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">
+  <nav class="flex items-center gap-2 text-xs text-slate-400 mb-6">
+    <a href="/" class="hover:text-indigo-600 transition-colors"><%= t('nav.home') %></a>
+    <span>/</span>
+    <span class="text-slate-600 dark:text-slate-300"><%= t('page.timestamp.h1') %></span>
+  </nav>
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-1"><%= t('page.timestamp.h1') %></h1>
+    <p class="text-sm text-slate-500 dark:text-slate-400"><%= t('page.timestamp.desc') %></p>
+  </div>
+  <div class="card p-5 mb-6 bg-indigo-50 dark:bg-indigo-900/20 border-indigo-200 dark:border-indigo-800">
+    <p class="text-sm text-slate-600 dark:text-slate-300"><%= t('page.timestamp.current') %></p>
+    <div class="flex items-baseline gap-3 mt-1">
+      <span id="currentTimestamp" class="text-2xl font-bold font-mono text-indigo-600"></span>
+      <span class="text-sm text-slate-500" id="currentHuman"></span>
+    </div>
+  </div>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="card p-5 space-y-4">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= t('page.timestamp.tsToDate') %></h2>
+      <input type="number" id="tsInput" class="input-field font-mono" placeholder="<%= t('page.timestamp.tsPlaceholder') %>">
+      <div class="flex gap-2">
+        <button id="btnConvertTS" class="btn-primary"><%= t('page.timestamp.convertBtn') %></button>
+        <button id="btnUseNow" class="btn-secondary"><%= t('page.timestamp.useNow') %></button>
+      </div>
+      <div id="tsResult" class="space-y-2 hidden">
+        <% [['UTC','UTC'],['Local','Local'],['ISO8601','ISO 8601'],['RFC2822','RFC 2822']].forEach(([id, label]) => { %>
+        <div class="flex items-center justify-between p-2.5 bg-slate-50 dark:bg-slate-800 rounded-lg">
+          <span class="text-xs text-slate-500 font-medium w-20 shrink-0"><%= label %></span>
+          <span id="ts-<%= id %>" class="text-xs font-mono text-slate-900 dark:text-slate-100 text-right flex-1 px-2"></span>
+          <button class="copy-btn shrink-0 copy-ts-btn" data-target="ts-<%= id %>"><%= t('common.copy') %></button>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+    <div class="card p-5 space-y-4">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= t('page.timestamp.dateToTs') %></h2>
+      <input type="datetime-local" id="dateInput" class="input-field">
+      <button id="btnConvertDate" class="btn-primary"><%= t('page.timestamp.convertBtn') %></button>
+      <div id="dateResult" class="space-y-2 hidden">
+        <div class="flex items-center justify-between p-2.5 bg-slate-50 dark:bg-slate-800 rounded-lg">
+          <span class="text-xs text-slate-500 font-medium"><%= t('page.timestamp.seconds') %></span>
+          <span id="date-seconds" class="text-sm font-mono font-bold text-slate-900 dark:text-slate-100"></span>
+          <button class="copy-btn copy-ts-btn" data-target="date-seconds"><%= t('common.copy') %></button>
+        </div>
+        <div class="flex items-center justify-between p-2.5 bg-slate-50 dark:bg-slate-800 rounded-lg">
+          <span class="text-xs text-slate-500 font-medium"><%= t('page.timestamp.milliseconds') %></span>
+          <span id="date-ms" class="text-sm font-mono font-bold text-slate-900 dark:text-slate-100"></span>
+          <button class="copy-ts-btn copy-btn" data-target="date-ms"><%= t('common.copy') %></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<%- include('../partials/footer') %>
+<script>var I18N = { invalidTs: "<%= t('page.timestamp.invalidTs') %>", pickDate: "<%= t('page.timestamp.pickDate') %>", copied: "<%= t('common.copied') %>" };</script>
+<script src="/js/app.js"></script>
+<script src="/js/modules/timestamp.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<%- include('../partials/head') %>
+<body class="bg-slate-50 dark:bg-slate-950 min-h-screen flex flex-col">
+<%- include('../partials/header') %>
+<main class="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">
+  <nav class="flex items-center gap-2 text-xs text-slate-400 mb-6">
+    <a href="/" class="hover:text-indigo-600 transition-colors"><%= t('nav.home') %></a>
+    <span>/</span>
+    <span class="text-slate-600 dark:text-slate-300"><%= t('page.jsonFormatter.h1') %></span>
+  </nav>
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-1"><%= t('page.jsonFormatter.h1') %></h1>
+    <p class="text-sm text-slate-500 dark:text-slate-400"><%= t('page.jsonFormatter.desc') %></p>
+  </div>
+  <%- include('../partials/ads', { adType: 'banner728' }) %>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="card p-5 space-y-4">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= t('common.input') %> JSON</h2>
+      <textarea id="inputText" class="textarea-field min-h-[300px]" placeholder='<%= t("page.jsonFormatter.inputPlaceholder") %>'></textarea>
+      <div class="flex items-center gap-2 flex-wrap">
+        <button id="btnFormat" class="btn-primary"><%= t('common.format') %></button>
+        <button id="btnMinify" class="btn-secondary"><%= t('common.minify') %></button>
+        <button id="btnValidate" class="btn-secondary"><%= t('common.validate') %></button>
+        <button id="btnClear" class="btn-secondary ml-auto"><%= t('common.clear') %></button>
+      </div>
+      <div class="flex items-center gap-2">
+        <label class="text-xs text-slate-500" for="indentSelect"><%= t('page.jsonFormatter.indent') %></label>
+        <select id="indentSelect" class="select-field w-auto text-xs">
+          <option value="2">2 spaces</option>
+          <option value="4">4 spaces</option>
+          <option value="tab">Tab</option>
+        </select>
+      </div>
+    </div>
+    <div class="card p-5 space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= t('common.output') %></h2>
+        <button id="btnCopy" class="copy-btn"><%= t('common.copy') %></button>
+      </div>
+      <textarea id="outputText" class="result-box min-h-[300px]" readonly placeholder="..."></textarea>
+      <div id="statusMsg" class="text-xs font-medium"></div>
+    </div>
+  </div>
+</main>
+<%- include('../partials/footer') %>
+<script>var I18N = { valid: "<%= t('page.jsonFormatter.valid') %>", invalid: "<%= t('page.jsonFormatter.invalid') %>", minified: "<%= t('page.jsonFormatter.minified') %>", nothingToCopy: "<%= t('common.nothingToCopy') %>", copied: "<%= t('common.copied') %>" };</script>
+<script src="/js/app.js"></script>
+<script src="/js/modules/json-formatter.js"></script>
+</body>
+</html>

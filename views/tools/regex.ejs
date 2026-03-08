@@ -1,0 +1,64 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+  <nav class="flex items-center gap-2 text-xs text-muted mb-6">
+    <a href="/" class="hover:text-secondary transition-colors">Home</a>
+    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+    <span class="text-secondary">Regex Tester</span>
+  </nav>
+  <div class="mb-6">
+    <div class="flex items-center gap-3 mb-2">
+      <h1 class="font-display text-2xl sm:text-3xl font-bold text-primary">Regex Tester</h1>
+      <span class="badge tag-formatters">Formatters</span>
+    </div>
+    <p class="text-secondary text-sm">Test & debug regular expressions secara real-time dengan match highlighting.</p>
+  </div>
+  <%- include('../partials/ad', { type: 'banner728' }) %>
+
+  <div class="space-y-4">
+    <div class="card space-y-3">
+      <div class="flex items-start gap-3">
+        <div class="flex-1">
+          <label class="label">Pattern</label>
+          <div class="flex items-center border border-border rounded-lg overflow-hidden focus-within:border-accent focus-within:ring-1 focus-within:ring-accent/30 transition-all">
+            <span class="px-3 py-2 text-muted font-mono text-sm bg-bg border-r border-border">/</span>
+            <input type="text" id="regex-pattern" class="flex-1 bg-surface px-3 py-2 text-primary font-mono text-sm focus:outline-none" placeholder="[a-zA-Z0-9]+" />
+            <span class="px-3 py-2 text-muted font-mono text-sm bg-bg border-l border-border">/</span>
+            <input type="text" id="regex-flags" class="w-16 bg-surface px-2 py-2 text-accent font-mono text-sm focus:outline-none" placeholder="gim" maxlength="6" />
+          </div>
+        </div>
+      </div>
+      <div id="regex-error" class="hidden text-xs text-error bg-error/10 border border-error/20 rounded-lg p-2.5"></div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div class="card space-y-3">
+        <div class="flex items-center justify-between">
+          <label class="label">Test String</label>
+          <span id="match-count" class="text-xs text-muted"></span>
+        </div>
+        <textarea id="regex-test" class="textarea-base h-52" placeholder="Masukkan teks yang ingin ditest..."></textarea>
+      </div>
+      <div class="card space-y-3">
+        <label class="label">Matches</label>
+        <div id="match-list" class="min-h-52 space-y-1.5 overflow-y-auto">
+          <div class="text-xs text-muted">Matches akan muncul di sini...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="mt-10 pt-8 border-t border-border">
+    <h2 class="section-title mb-4 text-base">Tools Lainnya</h2>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+      <% tools.filter(t => t.id !== 'regex').slice(0, 8).forEach(t => { %>
+      <a href="<%= t.route %>" class="card-tool group text-left">
+        <div class="text-xs font-semibold text-primary mb-1 group-hover:text-accent transition-colors"><%= t.name %></div>
+        <div class="text-[11px] text-muted line-clamp-2"><%= t.description %></div>
+      </a>
+      <% }) %>
+    </div>
+  </section>
+</main>
+<%- include('../partials/footer') %>
+<script src="/js/tools/formatters.js" defer></script>

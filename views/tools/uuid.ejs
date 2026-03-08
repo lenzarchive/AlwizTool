@@ -1,0 +1,42 @@
+<%- include('../partials/head') %>
+<body class="bg-slate-50 dark:bg-slate-950 min-h-screen flex flex-col">
+<%- include('../partials/header') %>
+<main class="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">
+  <nav class="flex items-center gap-2 text-xs text-slate-400 mb-6">
+    <a href="/" class="hover:text-indigo-600 transition-colors"><%= t('nav.home') %></a>
+    <span>/</span>
+    <span class="text-slate-600 dark:text-slate-300"><%= t('page.uuid.h1') %></span>
+  </nav>
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-1"><%= t('page.uuid.h1') %></h1>
+    <p class="text-sm text-slate-500 dark:text-slate-400"><%= t('page.uuid.desc') %></p>
+  </div>
+  <%- include('../partials/ads', { adType: 'banner728' }) %>
+  <div class="card p-5 mb-6">
+    <div class="flex items-center gap-3 flex-wrap">
+      <div class="flex items-center gap-2">
+        <label class="text-sm text-slate-700 dark:text-slate-300 font-medium" for="countInput"><%= t('page.uuid.count') %></label>
+        <input type="number" id="countInput" value="5" min="1" max="100" class="input-field w-20 text-center">
+      </div>
+      <div class="flex items-center gap-2">
+        <label class="text-sm text-slate-700 dark:text-slate-300 font-medium" for="formatSelect"><%= t('page.uuid.format') %></label>
+        <select id="formatSelect" class="select-field w-auto">
+          <option value="lowercase"><%= t('page.uuid.formatLower') %></option>
+          <option value="uppercase"><%= t('page.uuid.formatUpper') %></option>
+          <option value="noHyphen"><%= t('page.uuid.formatNoHyphen') %></option>
+        </select>
+      </div>
+      <button id="btnGenerate" class="btn-primary"><%= t('common.generate') %></button>
+      <button id="btnCopyAll" class="btn-secondary ml-auto"><%= t('common.copyAll') %></button>
+    </div>
+  </div>
+  <div class="card p-5">
+    <div id="uuidList" class="space-y-2 font-mono text-sm"></div>
+  </div>
+</main>
+<%- include('../partials/footer') %>
+<script>var I18N = { generateFirst: "<%= t('common.generateFirst') %>", copied: "<%= t('common.copied') %>" };</script>
+<script src="/js/app.js"></script>
+<script src="/js/modules/uuid.js"></script>
+</body>
+</html>

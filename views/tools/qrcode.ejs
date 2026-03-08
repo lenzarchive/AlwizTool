@@ -1,0 +1,63 @@
+<% var tl = t.tools.qrcode; var tc = t.common; %>
+<%- include('../partials/head') %>
+<body class="bg-slate-50 dark:bg-slate-950 min-h-screen flex flex-col">
+<%- include('../partials/header') %>
+<main class="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">
+  <nav class="flex items-center gap-2 text-xs text-slate-400 mb-6">
+    <a href="/" class="hover:text-indigo-600 transition-colors"><%= tc.back %></a>
+    <span>/</span>
+    <span class="text-slate-600 dark:text-slate-300"><%= tl.title %></span>
+  </nav>
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-1"><%= tl.title %></h1>
+    <p class="text-sm text-slate-500 dark:text-slate-400"><%= tl.subtitle %></p>
+  </div>
+  <%- include('../partials/ads', { adType: 'banner728' }) %>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="card p-5 space-y-4">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.input %></h2>
+      <textarea id="qrInput" class="textarea-field min-h-[120px]" placeholder="<%= tl.inputPlaceholder %>"></textarea>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="label" for="qrSize"><%= tl.sizeLabel %></label>
+          <input type="number" id="qrSize" value="300" min="100" max="800" step="50" class="input-field">
+        </div>
+        <div>
+          <label class="label" for="qrFormat"><%= tl.formatLabel %></label>
+          <select id="qrFormat" class="select-field">
+            <option value="png">PNG</option>
+            <option value="svg">SVG</option>
+          </select>
+        </div>
+      </div>
+      <button id="btnGenerate" class="btn-primary w-full justify-center"><%= tl.generateBtn %></button>
+    </div>
+    <div class="card p-5 flex flex-col items-center justify-center space-y-4">
+      <div id="qrPlaceholder" class="flex flex-col items-center gap-3 text-slate-300 dark:text-slate-600">
+        <div class="w-48 h-48 border-2 border-dashed border-current rounded-xl flex items-center justify-center">
+          <span class="text-4xl">⬛</span>
+        </div>
+        <p class="text-sm"><%= tl.placeholder %></p>
+      </div>
+      <div id="qrResult" class="hidden flex-col items-center gap-3 w-full">
+        <img id="qrImage" src="" alt="QR Code" class="max-w-[300px] w-full rounded-xl border border-slate-200 dark:border-slate-700">
+        <div id="qrSvgContainer" class="hidden max-w-[300px] w-full"></div>
+        <div class="flex gap-2 w-full max-w-[300px]">
+          <button id="btnDownload" class="btn-primary flex-1 justify-center text-sm"><%= tc.download %></button>
+          <button id="btnCopyQR" class="btn-secondary flex-1 justify-center text-sm"><%= tl.copyImage %></button>
+        </div>
+      </div>
+      <div id="loadingQR" class="hidden flex-col items-center gap-2 text-slate-400">
+        <div class="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+        <p class="text-sm"><%= tc.generating %></p>
+      </div>
+      <div id="errorQR" class="hidden text-sm text-red-500 font-medium text-center"></div>
+    </div>
+  </div>
+</main>
+<%- include('../partials/footer') %>
+<script src="/js/app.js"></script>
+<script>var i18nQr = { copied: '<%= tc.copied %>', pngOnly: '<%= tl.pngOnly %>', error: '<%= tc.error %>' };</script>
+<script src="/js/modules/qrcode.js"></script>
+</body>
+</html>

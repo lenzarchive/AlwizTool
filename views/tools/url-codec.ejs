@@ -1,0 +1,47 @@
+<%- include('../partials/head') %>
+<body class="bg-slate-50 dark:bg-slate-950 min-h-screen flex flex-col">
+<%- include('../partials/header') %>
+<main class="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">
+  <nav class="flex items-center gap-2 text-xs text-slate-400 mb-6">
+    <a href="/" class="hover:text-indigo-600 transition-colors"><%= t('nav.home') %></a>
+    <span>/</span>
+    <span class="text-slate-600 dark:text-slate-300"><%= t('page.urlCodec.h1') %></span>
+  </nav>
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-1"><%= t('page.urlCodec.h1') %></h1>
+    <p class="text-sm text-slate-500 dark:text-slate-400"><%= t('page.urlCodec.desc') %></p>
+  </div>
+  <%- include('../partials/ads', { adType: 'banner728' }) %>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="card p-5 space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= t('common.input') %></h2>
+        <select id="modeSelect" class="select-field w-auto text-xs">
+          <option value="component">encodeURIComponent</option>
+          <option value="full">encodeURI (Full URL)</option>
+        </select>
+      </div>
+      <textarea id="inputText" class="textarea-field min-h-[160px]" placeholder="<%= t('page.urlCodec.inputPlaceholder') %>"></textarea>
+      <div class="flex gap-2 flex-wrap">
+        <button id="btnEncode" class="btn-primary"><%= t('common.encode') %></button>
+        <button id="btnDecode" class="btn-secondary"><%= t('common.decode') %></button>
+        <button id="btnClear" class="btn-secondary ml-auto"><%= t('common.clear') %></button>
+      </div>
+    </div>
+    <div class="card p-5 space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= t('common.output') %></h2>
+        <button id="btnCopy" class="copy-btn"><%= t('common.copy') %></button>
+      </div>
+      <textarea id="outputText" class="result-box min-h-[160px]" readonly placeholder="..."></textarea>
+      <div id="errorMsg" class="hidden text-xs text-red-500 font-medium"></div>
+      <button id="btnSwap" class="btn-secondary text-xs"><%= t('common.swap') %></button>
+    </div>
+  </div>
+</main>
+<%- include('../partials/footer') %>
+<script>var I18N = { decodeFail: "<%= t('page.urlCodec.decodeFail') %>", nothingToCopy: "<%= t('common.nothingToCopy') %>", copied: "<%= t('common.copied') %>" };</script>
+<script src="/js/app.js"></script>
+<script src="/js/modules/urlcodec.js"></script>
+</body>
+</html>

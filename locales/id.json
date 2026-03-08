@@ -1,0 +1,200 @@
+{
+  "lang": "id",
+  "langName": "Indonesia",
+
+  "nav": {
+    "home": "Beranda",
+    "tools": "Alat",
+    "toggleDark": "Ganti mode gelap",
+    "menu": "Menu"
+  },
+
+  "footer": {
+    "tagline": "Tools gratis untuk developer dan pengguna umum. Dibuat dengan ❤️ oleh AlwizBA.",
+    "tools": "Alat",
+    "socials": "Sosial Media",
+    "support": "Dukung Pengembang",
+    "supportID": "Saweria (ID)",
+    "supportIntl": "Ko-fi (Intl)",
+    "rights": "Semua hak dilindungi."
+  },
+
+  "hero": {
+    "badge": "Tools Developer Gratis",
+    "title1": "Semua yang kamu butuhkan,",
+    "title2": "dalam satu tempat.",
+    "subtitle": "Tools gratis untuk developer dan pengguna umum. Base64, Hash, Open Graph, QR Code, dan banyak lagi — langsung pakai tanpa daftar.",
+    "searchPlaceholder": "Cari tool...",
+    "noResults": "Tool tidak ditemukan",
+    "noResultsHint": "Coba kata kunci lain"
+  },
+
+  "common": {
+    "back": "Beranda",
+    "copy": "Salin",
+    "copied": "Tersalin!",
+    "clear": "Hapus",
+    "encode": "Encode",
+    "decode": "Decode",
+    "swapIO": "↕ Tukar Input & Output",
+    "input": "Input",
+    "output": "Output",
+    "result": "Hasil",
+    "generate": "Generate",
+    "convert": "Konversi",
+    "download": "Unduh",
+    "copyAll": "Salin Semua",
+    "useNow": "Gunakan Sekarang",
+    "validate": "Validasi",
+    "format": "Format",
+    "minify": "Minify",
+    "loading": "Memproses...",
+    "generating": "Membuat...",
+    "error": "Error"
+  },
+
+  "tools": {
+    "base64": {
+      "name": "Base64 Encode/Decode",
+      "desc": "Encode atau decode teks & file ke format Base64",
+      "title": "Base64 Encode / Decode",
+      "subtitle": "Encode atau decode teks ke format Base64. Mendukung input teks biasa dan URL-safe Base64.",
+      "urlSafe": "URL-safe",
+      "inputPlaceholder": "Masukkan teks di sini...",
+      "outputPlaceholder": "Hasil akan muncul di sini...",
+      "about": "Tentang Base64",
+      "aboutText": "Base64 adalah encoding yang mengubah data biner menjadi teks ASCII menggunakan 64 karakter. Sering digunakan untuk mengirim data melalui media yang hanya mendukung teks, seperti email atau JSON payload. URL-safe Base64 mengganti + dan / dengan - dan _."
+    },
+    "hash": {
+      "name": "Hash Generator",
+      "desc": "Buat hash MD5, SHA-1, SHA-256, SHA-512 dari teks",
+      "title": "Hash Generator",
+      "subtitle": "Generate MD5, SHA-1, SHA-256, SHA-384, dan SHA-512 hash dari teks apapun.",
+      "inputPlaceholder": "Masukkan teks untuk di-hash...",
+      "generating": "Generating...",
+      "about": "Tentang Hashing",
+      "aboutText": "Hash function mengubah input menjadi output berukuran tetap yang bersifat one-way (tidak bisa dikembalikan). MD5 dan SHA-1 sudah dianggap tidak aman untuk kriptografi, tapi masih digunakan untuk checksums. Gunakan SHA-256 atau lebih tinggi untuk keamanan."
+    },
+    "opengraph": {
+      "name": "Open Graph Checker",
+      "desc": "Cek dan preview meta OG & Twitter Card dari URL manapun",
+      "title": "Open Graph Checker",
+      "subtitle": "Cek dan preview meta Open Graph dan Twitter Card dari URL manapun.",
+      "urlPlaceholder": "https://example.com",
+      "urlHint": "Pastikan URL lengkap dengan https://",
+      "checkBtn": "Cek URL",
+      "fetching": "Mengambil data...",
+      "ogPreview": "Open Graph Preview",
+      "metaTags": "Meta Tags",
+      "twitterPreview": "Twitter Card Preview",
+      "noImage": "Tidak Ada Gambar",
+      "cardType": "Card"
+    },
+    "urlCodec": {
+      "name": "URL Encoder/Decoder",
+      "desc": "Encode dan decode URL atau komponen URL",
+      "title": "URL Encoder / Decoder",
+      "subtitle": "Encode atau decode URL dan komponen URL dengan cepat.",
+      "inputPlaceholder": "Teks atau URL...",
+      "outputPlaceholder": "Hasil..."
+    },
+    "jsonFormatter": {
+      "name": "JSON Formatter",
+      "desc": "Format, validasi, dan minify JSON dengan mudah",
+      "title": "JSON Formatter & Validator",
+      "subtitle": "Format, validasi, dan minify JSON dengan mudah.",
+      "inputPlaceholder": "{\"key\": \"value\"}",
+      "outputPlaceholder": "Hasil...",
+      "indent": "Indent",
+      "validMsg": "✓ JSON valid",
+      "minifiedMsg": "✓ Minified",
+      "chars": "karakter",
+      "invalidMsg": "✗ JSON tidak valid"
+    },
+    "uuid": {
+      "name": "UUID Generator",
+      "desc": "Generate UUID v1 dan v4 secara massal",
+      "title": "UUID Generator",
+      "subtitle": "Generate UUID v4 secara massal. Klik untuk menyalin.",
+      "count": "Jumlah",
+      "formatLabel": "Format",
+      "lowercase": "Lowercase",
+      "uppercase": "UPPERCASE",
+      "noHyphen": "Tanpa Tanda Hubung"
+    },
+    "password": {
+      "name": "Password Generator",
+      "desc": "Buat password kuat dengan konfigurasi custom",
+      "title": "Password Generator",
+      "subtitle": "Buat password kuat dengan konfigurasi custom.",
+      "config": "Konfigurasi",
+      "length": "Panjang",
+      "uppercase": "Huruf besar (A-Z)",
+      "lowercase": "Huruf kecil (a-z)",
+      "numbers": "Angka (0-9)",
+      "symbols": "Simbol (!@#$%...)",
+      "noAmbiguous": "Hindari karakter ambigu (0, O, l, I)",
+      "countLabel": "Jumlah password",
+      "generateBtn": "Generate Password",
+      "strength": "Kekuatan Password",
+      "weak": "Lemah",
+      "medium": "Sedang",
+      "strong": "Kuat",
+      "minOneType": "Pilih minimal satu jenis karakter"
+    },
+    "timestamp": {
+      "name": "Timestamp Converter",
+      "desc": "Konversi Unix timestamp ke tanggal atau sebaliknya",
+      "title": "Timestamp Converter",
+      "subtitle": "Konversi Unix timestamp ke tanggal dan waktu yang readable, atau sebaliknya.",
+      "currentTime": "Waktu saat ini",
+      "tsToDate": "Unix Timestamp → Tanggal",
+      "dateToTs": "Tanggal → Unix Timestamp",
+      "tsPlaceholder": "Contoh: 1700000000",
+      "seconds": "Detik",
+      "milliseconds": "Milidetik"
+    },
+    "color": {
+      "name": "Color Converter",
+      "desc": "Konversi HEX, RGB, HSL, dan kode warna lainnya",
+      "title": "Color Converter",
+      "subtitle": "Konversi antara HEX, RGB, HSL, dan format warna lainnya.",
+      "pickColor": "Pilih Warna",
+      "pickColorHint": "Klik untuk membuka color picker",
+      "otherFormats": "Format Lainnya"
+    },
+    "text": {
+      "name": "Text Analyzer",
+      "desc": "Hitung kata, karakter, dan ubah case teks",
+      "title": "Text Analyzer",
+      "subtitle": "Hitung kata, karakter, baris, dan ubah format teks dengan mudah.",
+      "inputPlaceholder": "Ketik atau paste teks di sini...",
+      "chars": "Karakter",
+      "noSpace": "Tanpa Spasi",
+      "words": "Kata",
+      "lines": "Baris",
+      "changeCase": "Ubah Case",
+      "actions": "Aksi",
+      "trim": "Trim Whitespace",
+      "removeSpaces": "Hapus Spasi Ganda",
+      "reverse": "Balik Teks",
+      "removeDuplicates": "Hapus Baris Duplikat",
+      "sortLines": "Sort Baris A-Z",
+      "copyText": "Salin Teks",
+      "noText": "Tidak ada teks untuk disalin"
+    },
+    "qrcode": {
+      "name": "QR Code Generator",
+      "desc": "Buat QR code dari teks atau URL apapun",
+      "title": "QR Code Generator",
+      "subtitle": "Buat QR code dari URL, teks, atau konten apapun.",
+      "inputPlaceholder": "Masukkan URL atau teks...",
+      "sizeLabel": "Ukuran (px)",
+      "formatLabel": "Format",
+      "generateBtn": "Generate QR Code",
+      "placeholder": "QR Code akan tampil di sini",
+      "copyImage": "Salin Gambar",
+      "pngOnly": "Hanya PNG yang bisa disalin"
+    }
+  }
+}

@@ -1,0 +1,48 @@
+function updateCurrent() {
+  const now = new Date();
+  document.getElementById('currentTimestamp').textContent = Math.floor(now.getTime() / 1000);
+  document.getElementById('currentHuman').textContent = now.toLocaleString();
+}
+
+function convertTS() {
+  const ts = document.getElementById('tsInput').value.trim();
+  if (!ts) return showToast((I18N && I18N.invalidTs) || 'Invalid timestamp', 'error');
+  const num = parseInt(ts);
+  const ms = ts.length >= 13 ? num : num * 1000;
+  const date = new Date(ms);
+  if (isNaN(date.getTime())) return showToast((I18N && I18N.invalidTs) || 'Invalid timestamp', 'error');
+  document.getElementById('ts-UTC').textContent = date.toUTCString();
+  document.getElementById('ts-Local').textContent = date.toLocaleString();
+  document.getElementById('ts-ISO8601').textContent = date.toISOString();
+  document.getElementById('ts-RFC2822').textContent = date.toString();
+  document.getElementById('tsResult').classList.remove('hidden');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  updateCurrent();
+  setInterval(updateCurrent, 1000);
+  const now = new Date();
+  now.setSeconds(0, 0);
+  document.getElementById('dateInput').value = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+
+  document.getElementById('btnConvertTS').addEventListener('click', convertTS);
+  document.getElementById('btnUseNow').addEventListener('click', () => {
+    document.getElementById('tsInput').value = Math.floor(Date.now() / 1000);
+    convertTS();
+  });
+  document.getElementById('btnConvertDate').addEventListener('click', () => {
+    const val = document.getElementById('dateInput').value;
+    if (!val) return showToast((I18N && I18N.pickDate) || 'Select a date first', 'error');
+    const date = new Date(val);
+    document.getElementById('date-seconds').textContent = Math.floor(date.getTime() / 1000);
+    document.getElementById('date-ms').textContent = date.getTime();
+    document.getElementById('dateResult').classList.remove('hidden');
+  });
+  document.querySelectorAll('.copy-ts-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const text = document.getElementById(btn.dataset.target).textContent;
+      if (!text) return;
+      copyToClipboard(text); showToast((I18N && I18N.copied) || 'Copied!');
+    });
+  });
+});

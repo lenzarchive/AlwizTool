@@ -1,0 +1,72 @@
+<% var tl = t.tools.opengraph; var tc = t.common; %>
+<%- include('../partials/head') %>
+<body class="bg-slate-50 dark:bg-slate-950 min-h-screen flex flex-col">
+<%- include('../partials/header') %>
+<main class="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">
+  <nav class="flex items-center gap-2 text-xs text-slate-400 mb-6">
+    <a href="/" class="hover:text-indigo-600 transition-colors"><%= tc.back %></a>
+    <span>/</span>
+    <span class="text-slate-600 dark:text-slate-300"><%= tl.title %></span>
+  </nav>
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-1"><%= tl.title %></h1>
+    <p class="text-sm text-slate-500 dark:text-slate-400"><%= tl.subtitle %></p>
+  </div>
+  <%- include('../partials/ads', { adType: 'banner728' }) %>
+  <div class="card p-5 mb-6">
+    <div class="flex gap-3">
+      <input type="url" id="urlInput" class="input-field flex-1" placeholder="<%= tl.urlPlaceholder %>" autocomplete="off">
+      <button id="checkBtn" class="btn-primary shrink-0"><%= tl.checkBtn %></button>
+    </div>
+    <p class="text-xs text-slate-400 mt-2"><%= tl.urlHint %></p>
+  </div>
+  <div id="loadingState" class="hidden card p-8 text-center text-slate-400">
+    <div class="inline-block w-6 h-6 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin mb-3"></div>
+    <p class="text-sm"><%= tl.fetching %></p>
+  </div>
+  <div id="errorState" class="hidden card p-5 border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20">
+    <p class="text-sm text-red-600 dark:text-red-400 font-medium" id="errorMsg"></p>
+  </div>
+  <div id="resultState" class="hidden space-y-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="card p-5">
+        <h2 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-4"><%= tl.ogPreview %></h2>
+        <div class="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden">
+          <div class="bg-slate-100 dark:bg-slate-800 aspect-video flex items-center justify-center">
+            <img id="ogImage" src="" alt="OG Image" class="w-full h-full object-cover hidden">
+            <span id="ogNoImage" class="text-slate-400 text-sm"><%= tl.noImage %></span>
+          </div>
+          <div class="p-3 bg-white dark:bg-slate-900">
+            <p class="text-xs text-slate-400 uppercase tracking-wide mb-1" id="ogSiteName"></p>
+            <p class="font-semibold text-sm text-slate-900 dark:text-slate-100 leading-tight mb-1" id="ogTitle">-</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2" id="ogDesc">-</p>
+          </div>
+        </div>
+      </div>
+      <div class="card p-5">
+        <h2 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-4"><%= tl.metaTags %></h2>
+        <div class="space-y-3 text-sm" id="metaList"></div>
+      </div>
+    </div>
+    <div class="card p-5">
+      <h2 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-4"><%= tl.twitterPreview %></h2>
+      <div class="border border-slate-200 dark:border-slate-700 rounded-xl overflow-hidden max-w-sm">
+        <div class="bg-slate-100 dark:bg-slate-800 aspect-video flex items-center justify-center">
+          <img id="twImage" src="" alt="Twitter Image" class="w-full h-full object-cover hidden">
+          <span id="twNoImage" class="text-slate-400 text-sm"><%= tl.noImage %></span>
+        </div>
+        <div class="p-3 bg-white dark:bg-slate-900">
+          <p class="font-semibold text-sm text-slate-900 dark:text-slate-100 leading-tight mb-0.5" id="twTitle">-</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mb-1" id="twDesc">-</p>
+          <p class="text-xs text-slate-400" id="twCard"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<%- include('../partials/footer') %>
+<script src="/js/app.js"></script>
+<script>var i18nOg = { cardType: '<%= tl.cardType %>' };</script>
+<script src="/js/modules/opengraph.js"></script>
+</body>
+</html>
