@@ -1,25 +1,42 @@
 <% if (ads && ads.enabled) { %>
   <% if (type === 'banner728' && ads.zones.banner728) { %>
-  <div class="ad-slot my-4 py-2">
+  <div class="ad-slot my-4 py-2 flex flex-col items-center">
     <div class="text-[10px] text-slate-400/50 text-center mb-1 uppercase tracking-widest">Advertisement</div>
-    <script async data-cfasync="false" src="//pl<%= ads.zones.banner728 %>.profitablecpmrate.com/invoke.js"></script>
-    <div id="container-<%= ads.zones.banner728 %>"></div>
+    <script>
+      atOptions = { 'key': '<%= ads.zones.banner728 %>', 'format': 'iframe', 'height': 90, 'width': 728, 'params': {} };
+    </script>
+    <script src="https://www.highperformanceformat.com/<%= ads.zones.banner728 %>/invoke.js"></script>
   </div>
   <% } %>
 
   <% if (type === 'banner300' && ads.zones.banner300) { %>
   <div class="ad-slot my-4 py-2 flex flex-col items-center">
     <div class="text-[10px] text-slate-400/50 text-center mb-1 uppercase tracking-widest">Advertisement</div>
-    <script async data-cfasync="false" src="//pl<%= ads.zones.banner300 %>.profitablecpmrate.com/invoke.js"></script>
-    <div id="container-<%= ads.zones.banner300 %>"></div>
+    <script>
+      atOptions = { 'key': '<%= ads.zones.banner300 %>', 'format': 'iframe', 'height': 250, 'width': 300, 'params': {} };
+    </script>
+    <script src="https://www.highperformanceformat.com/<%= ads.zones.banner300 %>/invoke.js"></script>
   </div>
   <% } %>
 
   <% if (type === 'native' && ads.zones.native) { %>
   <div class="ad-slot my-6 py-2">
     <div class="text-[10px] text-slate-400/50 text-center mb-1 uppercase tracking-widest">Sponsored</div>
-    <script async data-cfasync="false" src="//pl<%= ads.zones.native %>.profitablecpmrate.com/invoke.js"></script>
-    <div id="container-<%= ads.zones.native %>"></div>
+    <script async src="https://www.highperformanceformat.com/<%= ads.zones.native %>/invoke.js"></script>
+  </div>
+  <% } %>
+<% } else { %>
+  <% if (type === 'banner728') { %>
+  <div class="my-4 flex justify-center">
+    <img src="https://placehold.co/728x90?text=Ad+slot+728x90" alt="Ad slot" width="728" height="90" class="rounded-lg opacity-40">
+  </div>
+  <% } else if (type === 'banner300') { %>
+  <div class="my-4 flex justify-center">
+    <img src="https://placehold.co/300x250?text=Ad+slot+300x250" alt="Ad slot" width="300" height="250" class="rounded-lg opacity-40">
+  </div>
+  <% } else if (type === 'native') { %>
+  <div class="my-6 flex justify-center">
+    <img src="https://placehold.co/728x90?text=Ad+slot+native" alt="Ad slot" width="728" height="80" class="rounded-lg opacity-40">
   </div>
   <% } %>
 <% } %>
