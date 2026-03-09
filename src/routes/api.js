@@ -39,6 +39,8 @@ router.post('/hash', async (req, res) => {
     const { text, hmacKey } = req.body;
     if (!text || typeof text !== 'string') return res.status(400).json({ error: 'Text is required' });
     if (text.length > 100000) return res.status(400).json({ error: 'Text too large (max 100KB)' });
+    if (hmacKey && typeof hmacKey !== 'string') return res.status(400).json({ error: 'Invalid HMAC key' });
+    if (hmacKey && hmacKey.length > 10000) return res.status(400).json({ error: 'HMAC key too large (max 10KB)' });
     const result = hmacKey ? hashAllHmac(text, hmacKey) : hashAll(text);
     res.json({ success: true, data: result });
   } catch (err) {

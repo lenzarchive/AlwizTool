@@ -12,11 +12,6 @@ function decodeJWT(token) {
   return { header, payload, signature: parts[2] };
 }
 
-function formatDate(ts) {
-  if (!ts) return null;
-  return new Date(ts * 1000).toLocaleString() + ' (' + new Date(ts * 1000).toISOString() + ')';
-}
-
 function renderDecode() {
   const token = document.getElementById('jwtInput').value.trim();
   const errEl = document.getElementById('errorMsg');

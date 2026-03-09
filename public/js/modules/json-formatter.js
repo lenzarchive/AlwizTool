@@ -5,11 +5,11 @@ function getIndent() {
 
 function countKeys(obj) {
   let n = 0;
-  if (typeof obj === 'object' && obj !== null) {
+  if (Array.isArray(obj)) {
+    obj.forEach(v => { n += countKeys(v); });
+  } else if (typeof obj === 'object' && obj !== null) {
     n += Object.keys(obj).length;
     Object.values(obj).forEach(v => { n += countKeys(v); });
-  } else if (Array.isArray(obj)) {
-    obj.forEach(v => { n += countKeys(v); });
   }
   return n;
 }

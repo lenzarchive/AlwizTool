@@ -31,14 +31,15 @@ function applySecurityMiddleware(app) {
           "'unsafe-inline'",
           'https://www.googletagmanager.com',
           'https://*.adsterra.com',
-          'https://*.highperformancedformats.com'
+          'https://*.highperformanceformat.com',
+          'https://*.effectivegatecpm.com',
         ],
         scriptSrcAttr: ["'unsafe-inline'"],
         styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
         fontSrc: ["'self'", 'https://fonts.gstatic.com'],
         imgSrc: ["'self'", 'data:', 'https:', 'http:'],
-        connectSrc: ["'self'"],
-        frameSrc: ["'none'"],
+        connectSrc: ["'self'", 'https:'],
+        frameSrc: ["'self'", 'https:'],
         objectSrc: ["'none'"],
         baseUri: ["'self'"],
       }

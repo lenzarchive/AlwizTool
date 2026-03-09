@@ -9,6 +9,7 @@ const { applySecurityMiddleware } = require('./src/middleware/security');
 const { i18nMiddleware } = require('./src/middleware/i18n');
 const indexRoutes = require('./src/routes/index');
 const apiRoutes = require('./src/routes/api');
+const adsRoutes = require('./src/routes/ads');
 const { tools } = indexRoutes;
 
 const app = express();
@@ -56,6 +57,7 @@ app.use(express.static(path.join(__dirname, 'public'), {
 
 app.use('/', indexRoutes);
 app.use('/api', apiRoutes);
+app.use('/ads', adsRoutes);
 
 app.use((req, res) => {
   res.status(404).render('404', {

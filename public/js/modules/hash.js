@@ -9,34 +9,18 @@ async function generateHashes() {
   }
 
   try {
-    if (hmacKey) {
-      // HMAC via server API (requires crypto module)
-      const res = await fetch('/api/hash', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text, hmacKey })
+    const body = { text };
+    if (hmacKey) body.hmacKey = hmacKey;
+    const res = await fetch('/api/hash', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    const data = await res.json();
+    if (data.success) {
+      algos.forEach(a => {
+        document.getElementById('hash-' + a).value = data.data[a] || '—';
       });
-      const data = await res.json();
-      if (data.success) {
-        algos.forEach(a => {
-          const el = document.getElementById('hash-' + a);
-          el.value = data.data[a] || '—';
-        });
-      }
-    } else {
-      // Plain hash via server (MD5 not available in SubtleCrypto)
-      const res = await fetch('/api/hash', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text })
-      });
-      const data = await res.json();
-      if (data.success) {
-        algos.forEach(a => {
-          const el = document.getElementById('hash-' + a);
-          el.value = data.data[a] || '—';
-        });
-      }
     }
   } catch (e) {
     console.error(e);

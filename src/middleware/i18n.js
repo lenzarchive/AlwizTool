@@ -12,7 +12,7 @@ SUPPORTED_LANGS.forEach(lang => {
 
 function i18nMiddleware(req, res, next) {
   if (req.query.lang && SUPPORTED_LANGS.includes(req.query.lang)) {
-    res.cookie('lang', req.query.lang, { maxAge: 365 * 24 * 60 * 60 * 1000, httpOnly: false, secure: true, sameSite: 'lax' });
+    res.cookie('lang', req.query.lang, { maxAge: 365 * 24 * 60 * 60 * 1000, httpOnly: false, secure: process.env.NODE_ENV === 'production', sameSite: 'lax' });
     res.locals.lang = req.query.lang;
   } else {
     const cookieLang = req.cookies && req.cookies.lang;

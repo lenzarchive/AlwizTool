@@ -10,7 +10,6 @@
     "watch:css": "tailwindcss -i ./src/css/input.css -o ./public/css/style.css --watch"
   },
   "dependencies": {
-    "cheerio": "^1.0.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",

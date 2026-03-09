@@ -20,4 +20,4 @@ function hashAllHmac(text, key) {
   return Object.fromEntries(VALID_ALGOS.map(a => [a, createHmac(text, key, a)]));
 }
 
-module.exports = { createHash, createHmac, hashAll, hashAllHmac };
+module.exports = { hashAll, hashAllHmac };

@@ -2,30 +2,30 @@
   <% if (type === 'banner728' && ads.zones.banner728) { %>
   <div class="ad-slot my-4 py-2 flex flex-col items-center">
     <div class="text-[10px] text-slate-400/50 text-center mb-1 uppercase tracking-widest">Advertisement</div>
-    <script>
-      atOptions = { 'key': '<%= ads.zones.banner728 %>', 'format': 'iframe', 'height': 90, 'width': 728, 'params': {} };
-    </script>
-    <script src="https://www.highperformanceformat.com/<%= ads.zones.banner728 %>/invoke.js"></script>
+    <iframe src="/ads/banner728" width="728" height="90"
+      style="max-width:100%;border:0;display:block;overflow:hidden;"
+      scrolling="no" frameborder="0"></iframe>
   </div>
   <% } %>
 
   <% if (type === 'banner300' && ads.zones.banner300) { %>
   <div class="ad-slot my-4 py-2 flex flex-col items-center">
     <div class="text-[10px] text-slate-400/50 text-center mb-1 uppercase tracking-widest">Advertisement</div>
-    <script>
-      atOptions = { 'key': '<%= ads.zones.banner300 %>', 'format': 'iframe', 'height': 250, 'width': 300, 'params': {} };
-    </script>
-    <script src="https://www.highperformanceformat.com/<%= ads.zones.banner300 %>/invoke.js"></script>
+    <iframe src="/ads/banner300" width="300" height="250"
+      style="border:0;display:block;overflow:hidden;"
+      scrolling="no" frameborder="0"></iframe>
   </div>
   <% } %>
 
   <% if (type === 'native' && ads.zones.native) { %>
   <div class="ad-slot my-6 py-2">
     <div class="text-[10px] text-slate-400/50 text-center mb-1 uppercase tracking-widest">Sponsored</div>
-    <script async src="https://www.highperformanceformat.com/<%= ads.zones.native %>/invoke.js"></script>
+    <iframe src="/ads/native" width="100%" height="90"
+      style="width:100%;border:0;display:block;overflow:hidden;"
+      scrolling="no" frameborder="0"></iframe>
   </div>
   <% } %>
-<% } else { %>
+<% } else if (process.env.NODE_ENV !== 'production') { %>
   <% if (type === 'banner728') { %>
   <div class="my-4 flex justify-center">
     <img src="https://placehold.co/728x90?text=Ad+slot+728x90" alt="Ad slot" width="728" height="90" class="rounded-lg opacity-40">
