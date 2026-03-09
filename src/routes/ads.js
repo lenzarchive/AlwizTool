@@ -7,7 +7,7 @@ const BANNER_CONFIGS = {
   banner300: { width: 300, height: 250, envKey: 'ADS_ZONE_300'  },
 };
 
-const CSP_PERMISSIVE = "default-src 'self'; script-src 'unsafe-inline' 'unsafe-eval' https:; style-src 'unsafe-inline'; frame-src https:; connect-src https:; img-src https: data:;";
+const CSP_PERMISSIVE = "default-src 'self'; script-src 'unsafe-inline' 'unsafe-eval' https: http:; style-src 'unsafe-inline'; frame-src https: http:; connect-src https: http:; img-src https: http: data:;";
 
 // Banner ads (highperformanceformat.com — document.write pattern)
 router.get('/:type(banner728|banner300)', (req, res) => {
