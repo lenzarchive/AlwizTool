@@ -55,11 +55,11 @@ async function checkOG() {
     if (d.charset)     infos.push(['Charset', d.charset]);
     if (d.type)        infos.push(['OG Type', d.type]);
     if (d.imageWidth && d.imageHeight) infos.push(['Image Size', d.imageWidth + '×' + d.imageHeight]);
-    if (d.favicon)     infos.push(['Favicon', `<img src="${escH(d.favicon)}" class="inline w-4 h-4 mr-1 rounded align-middle"><span class="align-middle">${escH(d.favicon)}</span>`]);
+    if (d.favicon)     infos.push(['Favicon', `<img src="${escH(d.favicon)}" class="inline w-4 h-4 mr-1 rounded align-middle"><span class="align-middle break-all">${escH(d.favicon)}</span>`]);
     infoBar.innerHTML = infos.map(([k, v]) =>
-      `<span class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
-        <span class="font-medium text-slate-700 dark:text-slate-300">${k}:</span>
-        <span class="font-mono">${v}</span>
+      `<span class="flex items-start gap-1.5 text-slate-500 dark:text-slate-400 min-w-0">
+        <span class="font-medium text-slate-700 dark:text-slate-300 shrink-0">${k}:</span>
+        <span class="font-mono break-all min-w-0">${v}</span>
       </span>`
     ).join('');
     infoBar.classList.toggle('hidden', infos.length === 0);
@@ -88,12 +88,14 @@ async function checkOG() {
     copyBtn.classList.toggle('hidden', metas.length === 0);
 
     document.getElementById('metaTable').innerHTML = metas.map(([key, val]) =>
-      `<div class="flex gap-3 py-2 group">
-        <span class="font-mono text-xs text-indigo-500 dark:text-indigo-400 shrink-0 w-40">${escH(key)}</span>
-        <span class="text-xs text-slate-700 dark:text-slate-300 break-all flex-1">${escH(String(val))}</span>
-        <button class="copy-btn opacity-0 group-hover:opacity-100 shrink-0 transition-opacity"
-          onclick="copyToClipboard('${escAttr(String(val))}'); showToast('${escAttr(I18N.copied || 'Copied!')}')"
-        >${I18N.copied ? I18N.copied.replace('!','') : 'Copy'}</button>
+      `<div class="py-2 group border-b border-slate-100 dark:border-slate-800 last:border-0">
+        <div class="flex items-center justify-between gap-2 mb-0.5">
+          <span class="font-mono text-xs text-indigo-500 dark:text-indigo-400 shrink-0">${escH(key)}</span>
+          <button class="copy-btn shrink-0 opacity-60 sm:opacity-0 group-hover:opacity-100 transition-opacity"
+            onclick="copyToClipboard('${escAttr(String(val))}'); showToast('${escAttr(I18N.copied || 'Copied!')}')"
+          >${I18N.copied ? I18N.copied.replace('!','') : 'Copy'}</button>
+        </div>
+        <span class="text-xs text-slate-700 dark:text-slate-300 break-all block w-full">${escH(String(val))}</span>
       </div>`
     ).join('');
 

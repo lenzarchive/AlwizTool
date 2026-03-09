@@ -1,11 +1,11 @@
 <% var tl = t.tools.base64; var tc = t.common; %>
   <!-- Options bar: two rows of sub-categories -->
   <div class="card p-4 mb-4 space-y-3">
-    <div class="flex flex-wrap items-center gap-x-6 gap-y-3">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
       <!-- Input Encoding -->
-      <div class="flex items-center gap-2">
-        <label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide whitespace-nowrap" for="encodingMode"><%= tl.inputEncoding %></label>
-        <select id="encodingMode" class="select-field text-xs py-1.5">
+      <div class="flex flex-col gap-1">
+        <label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide" for="encodingMode"><%= tl.inputEncoding %></label>
+        <select id="encodingMode" class="select-field text-xs py-1.5 w-full">
           <option value="utf8"><%= tl.modeUTF8 %></option>
           <option value="latin1"><%= tl.modeLatin1 %></option>
           <option value="hex"><%= tl.modeHex %></option>
@@ -15,9 +15,9 @@
         </select>
       </div>
       <!-- Output Format -->
-      <div class="flex items-center gap-2">
-        <label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide whitespace-nowrap" for="outputFormat"><%= tl.outputFormat %></label>
-        <select id="outputFormat" class="select-field text-xs py-1.5">
+      <div class="flex flex-col gap-1">
+        <label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide" for="outputFormat"><%= tl.outputFormat %></label>
+        <select id="outputFormat" class="select-field text-xs py-1.5 w-full">
           <option value="standard"><%= tl.fmtStandard %></option>
           <option value="nopad"><%= tl.fmtNoPad %></option>
           <option value="urlsafe"><%= tl.fmtUrlSafe %></option>
