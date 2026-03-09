@@ -1,18 +1,4 @@
 <% var tl = t.tools.uuid; var tc = t.common; %>
-<%- include('../partials/head') %>
-<body class="bg-slate-50 dark:bg-slate-950 min-h-screen flex flex-col">
-<%- include('../partials/header') %>
-<main class="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">
-  <nav class="flex items-center gap-2 text-xs text-slate-400 mb-6">
-    <a href="/" class="hover:text-indigo-600 transition-colors"><%= tc.back %></a>
-    <span>/</span>
-    <span class="text-slate-600 dark:text-slate-300"><%= tl.title %></span>
-  </nav>
-  <div class="mb-6">
-    <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-1"><%= tl.title %></h1>
-    <p class="text-sm text-slate-500 dark:text-slate-400"><%= tl.subtitle %></p>
-  </div>
-  <%- include('../partials/ads', { adType: 'banner728' }) %>
   <div class="card p-5 mb-5">
     <div class="flex items-center gap-4 flex-wrap">
       <div class="flex items-center gap-2">
@@ -35,10 +21,6 @@
   <div class="card p-5">
     <div id="uuidList" class="space-y-1.5 font-mono text-sm"></div>
   </div>
-</main>
-<%- include('../partials/footer') %>
 <script>var I18N = { generateFirst: "<%= tc.generateFirst %>", copied: "<%= tc.copied %>" };</script>
 <script src="/js/app.js"></script>
 <script src="/js/modules/uuid.js"></script>
-</body>
-</html>

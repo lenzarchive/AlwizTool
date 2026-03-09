@@ -1,19 +1,4 @@
 <% var tl = t.tools.base64; var tc = t.common; %>
-<%- include('../partials/head') %>
-<body class="bg-slate-50 dark:bg-slate-950 min-h-screen flex flex-col">
-<%- include('../partials/header') %>
-<main class="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">
-  <nav class="flex items-center gap-2 text-xs text-slate-400 mb-6">
-    <a href="/" class="hover:text-indigo-600 transition-colors"><%= tc.back %></a>
-    <span>/</span>
-    <span class="text-slate-600 dark:text-slate-300"><%= tl.title %></span>
-  </nav>
-  <div class="mb-6">
-    <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-1"><%= tl.title %></h1>
-    <p class="text-sm text-slate-500 dark:text-slate-400"><%= tl.subtitle %></p>
-  </div>
-  <%- include('../partials/ads', { adType: 'banner728' }) %>
-
   <!-- Options bar: two rows of sub-categories -->
   <div class="card p-4 mb-4 space-y-3">
     <div class="flex flex-wrap items-center gap-x-6 gap-y-3">
@@ -90,8 +75,6 @@
     <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
     <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
   </div>
-</main>
-<%- include('../partials/footer') %>
 <script>var I18N = {
   copied: "<%= tc.copied %>",
   nothingToCopy: "<%= tc.nothingToCopy %>",
@@ -99,5 +82,3 @@
 };</script>
 <script src="/js/app.js"></script>
 <script src="/js/modules/base64.js"></script>
-</body>
-</html>

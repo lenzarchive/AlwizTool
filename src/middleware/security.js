@@ -51,7 +51,7 @@ function applySecurityMiddleware(app) {
   }));
 
   app.use(cors({
-    origin: isProd ? ['https://alwiztool.my.id'] : '*',
+    origin: isProd ? [process.env.CORS_ORIGIN || 'https://alwiztool.my.id'] : '*',
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type']
   }));

@@ -1,7 +1,7 @@
 <% if (ads && ads.enabled) { %>
   <% if (type === 'banner728' && ads.zones.banner728) { %>
   <div class="ad-slot my-4 py-2">
-    <div class="text-[10px] text-muted/50 text-center mb-1 uppercase tracking-widest">Advertisement</div>
+    <div class="text-[10px] text-slate-400/50 text-center mb-1 uppercase tracking-widest">Advertisement</div>
     <script async data-cfasync="false" src="//pl<%= ads.zones.banner728 %>.profitablecpmrate.com/invoke.js"></script>
     <div id="container-<%= ads.zones.banner728 %>"></div>
   </div>
@@ -9,7 +9,7 @@
 
   <% if (type === 'banner300' && ads.zones.banner300) { %>
   <div class="ad-slot my-4 py-2 flex flex-col items-center">
-    <div class="text-[10px] text-muted/50 text-center mb-1 uppercase tracking-widest">Advertisement</div>
+    <div class="text-[10px] text-slate-400/50 text-center mb-1 uppercase tracking-widest">Advertisement</div>
     <script async data-cfasync="false" src="//pl<%= ads.zones.banner300 %>.profitablecpmrate.com/invoke.js"></script>
     <div id="container-<%= ads.zones.banner300 %>"></div>
   </div>
@@ -17,7 +17,7 @@
 
   <% if (type === 'native' && ads.zones.native) { %>
   <div class="ad-slot my-6 py-2">
-    <div class="text-[10px] text-muted/50 text-center mb-1 uppercase tracking-widest">Sponsored</div>
+    <div class="text-[10px] text-slate-400/50 text-center mb-1 uppercase tracking-widest">Sponsored</div>
     <script async data-cfasync="false" src="//pl<%= ads.zones.native %>.profitablecpmrate.com/invoke.js"></script>
     <div id="container-<%= ads.zones.native %>"></div>
   </div>

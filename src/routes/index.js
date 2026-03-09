@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const SITE_URL = 'https://alwiztool.my.id';
+const SITE_URL = process.env.SITE_URL || 'https://alwiztool.my.id';
 
 const tools = [
   { slug: 'base64',         i18nKey: 'base64',        icon: '🔐', category: 'Encoding'   },
@@ -33,6 +33,7 @@ router.get('/tools/:slug', (req, res, next) => {
   const { slug } = req.params;
   const tool = tools.find(t => t.slug === slug);
   if (!tool) return next();
+  res.locals.layout = 'tools/_layout';
   const t = res.locals.t;
   const toolT = t('tools.' + tool.i18nKey) || {};
   res.render('tools/' + slug, {
@@ -71,3 +72,4 @@ ${urls.map(u => `  <url>
 });
 
 module.exports = router;
+module.exports.tools = tools;

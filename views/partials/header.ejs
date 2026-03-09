@@ -22,7 +22,7 @@
           <% if (typeof tools !== 'undefined') { tools.forEach(tool => { %>
           <a href="/tools/<%= tool.slug %>" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
             <span class="text-base"><%= tool.icon %></span>
-            <%= tool.name %>
+            <%= t('tools.' + tool.i18nKey + '.title') || tool.slug %>
           </a>
           <% }) } %>
         </div>
