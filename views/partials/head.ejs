@@ -27,7 +27,7 @@
   <link rel="alternate" hreflang="id" href="<%= canonical %>?lang=id">
   <link rel="alternate" hreflang="x-default" href="<%= canonical %>">
 
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
 
   <%# Self-hosted fonts: preload 400 & 600 first (used above-the-fold) %>
   <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-400.woff2" crossorigin>
@@ -43,6 +43,24 @@
         document.documentElement.classList.add('dark');
       }
     })();
+
+    function applyLogoTheme() {
+      var isDark = document.documentElement.classList.contains('dark');
+      var lightLogos = document.querySelectorAll('#logo-light-mode, #footer-logo-light-mode');
+      var darkLogos = document.querySelectorAll('#logo-dark-mode, #footer-logo-dark-mode');
+      lightLogos.forEach(function(el) { el.style.display = isDark ? 'none' : 'block'; });
+      darkLogos.forEach(function(el) { el.style.display = isDark ? 'block' : 'none'; });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      applyLogoTheme();
+      var btn = document.getElementById('themeToggle');
+      if (btn) {
+        btn.addEventListener('click', function() {
+          setTimeout(applyLogoTheme, 10);
+        });
+      }
+    });
   </script>
 
   <script type="application/ld+json">
