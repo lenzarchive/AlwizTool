@@ -1,0 +1,38 @@
+<% var tl = t.tools.imageToBase64; var tc = t.common; %>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="card p-5 space-y-4">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.input %></h2>
+      <label id="dropZone" class="flex flex-col items-center justify-center min-h-[180px] border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl cursor-pointer hover:border-indigo-400 dark:hover:border-indigo-600 transition-colors bg-slate-50 dark:bg-slate-800/40 p-6 text-center">
+        <svg class="w-10 h-10 text-slate-300 dark:text-slate-600 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
+        <p class="text-sm text-slate-500 dark:text-slate-400 font-medium"><%= tl.dropLabel %></p>
+        <p class="text-xs text-slate-400 dark:text-slate-500 mt-1"><%= tl.dropHint %></p>
+        <input type="file" id="fileInput" accept="image/*" class="hidden">
+      </label>
+      <div id="previewBox" class="hidden">
+        <p class="text-xs font-medium text-slate-500 dark:text-slate-400 mb-2"><%= tl.imagePreview %></p>
+        <img id="imagePreview" class="max-h-48 rounded-lg border border-slate-200 dark:border-slate-700 object-contain" alt="Preview">
+        <div class="flex gap-4 mt-2 text-xs text-slate-400">
+          <span id="fileSizeInfo"></span>
+          <span id="outputSizeInfo"></span>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <input type="checkbox" id="withoutPrefix" class="accent-indigo-600">
+        <label for="withoutPrefix" class="text-xs text-slate-600 dark:text-slate-400"><%= tl.outputOnlyUri %></label>
+      </div>
+    </div>
+    <div class="card p-5 space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tl.outputLabel %></h2>
+        <button id="btnCopy" class="copy-btn"><%= tc.copy %></button>
+      </div>
+      <textarea id="outputText" class="result-box min-h-[300px] font-mono text-xs" readonly placeholder="data:image/png;base64,..."></textarea>
+    </div>
+  </div>
+  <div class="mt-6 card p-5">
+    <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
+    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
+  </div>
+<script>var I18N = { copied: "<%= tc.copied %>", nothingToCopy: "<%= tc.nothingToCopy %>", fileSizeLabel: "<%= tl.fileSizeLabel %>", outputSizeLabel: "<%= tl.outputSizeLabel %>" };</script>
+<script src="/js/app.js"></script>
+<script src="/js/modules/image-to-base64.js"></script>

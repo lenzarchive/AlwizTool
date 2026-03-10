@@ -9,7 +9,6 @@ const { applySecurityMiddleware } = require('./src/middleware/security');
 const { i18nMiddleware } = require('./src/middleware/i18n');
 const indexRoutes = require('./src/routes/index');
 const apiRoutes = require('./src/routes/api');
-const adsRoutes = require('./src/routes/ads');
 const { tools } = indexRoutes;
 
 const app = express();
@@ -38,18 +37,17 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use((req, res, next) => {
-  res.locals.ads = {
-    enabled: process.env.ADS_ENABLED === 'true',
-    zones: {
-      banner728: process.env.ADS_ZONE_728 || '',
-      banner300: process.env.ADS_ZONE_300 || '',
-      native:    process.env.ADS_ZONE_NATIVE || '',
-    }
-  };
-  next();
-});
+// Fonts: long-lived cache (1 year) — filenames are stable
+app.use('/fonts', express.static(path.join(__dirname, 'public', 'fonts'), {
+  maxAge: '1y',
+  immutable: true,
+  etag: false,
+  setHeaders: (res) => {
+    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+  }
+}));
 
+// CSS/JS: 7 days in production
 app.use(express.static(path.join(__dirname, 'public'), {
   maxAge: process.env.NODE_ENV === 'production' ? '7d' : 0,
   etag: true
@@ -57,7 +55,6 @@ app.use(express.static(path.join(__dirname, 'public'), {
 
 app.use('/', indexRoutes);
 app.use('/api', apiRoutes);
-app.use('/ads', adsRoutes);
 
 app.use((req, res) => {
   res.status(404).render('404', {

@@ -1,0 +1,43 @@
+<% var tl = t.tools.diff; var tc = t.common; %>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+    <div class="card p-5 space-y-3">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tl.originalLabel %></h2>
+      <textarea id="originalText" class="textarea-field font-mono min-h-[260px]" placeholder="<%= tl.originalPlaceholder %>"></textarea>
+    </div>
+    <div class="card p-5 space-y-3">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tl.modifiedLabel %></h2>
+      <textarea id="modifiedText" class="textarea-field font-mono min-h-[260px]" placeholder="<%= tl.modifiedPlaceholder %>"></textarea>
+    </div>
+  </div>
+  <div class="flex gap-2 mb-6">
+    <button id="btnCompare" class="btn-primary"><%= tl.compareBtn %></button>
+    <button id="btnClear" class="btn-secondary"><%= tl.clearBtn %></button>
+    <div id="diffStats" class="ml-auto flex gap-3 items-center text-xs hidden">
+      <span id="statAdded" class="text-emerald-600 dark:text-emerald-400 font-medium"></span>
+      <span id="statRemoved" class="text-rose-600 dark:text-rose-400 font-medium"></span>
+    </div>
+  </div>
+  <div class="card p-5">
+    <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm mb-4"><%= tl.resultLabel %></h2>
+    <div id="diffResult" class="font-mono text-sm leading-relaxed space-y-0.5 min-h-[100px]">
+      <p class="text-slate-400 text-center py-8"><%= tl.noChanges %></p>
+    </div>
+  </div>
+  <div class="mt-6 card p-5">
+    <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
+    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
+  </div>
+<style>
+.diff-added   { background:rgba(16,185,129,.1); color:#059669; padding:.1rem .5rem; border-left:3px solid #10b981; display:block; }
+.diff-removed { background:rgba(239,68,68,.1); color:#dc2626; padding:.1rem .5rem; border-left:3px solid #ef4444; display:block; text-decoration:line-through; }
+.diff-same    { color:#94a3b8; padding:.1rem .5rem; display:block; }
+.dark .diff-added   { color:#34d399; }
+.dark .diff-removed { color:#f87171; }
+</style>
+<script>var I18N = {
+  addedLabel: "<%= tl.addedLabel %>",
+  removedLabel: "<%= tl.removedLabel %>",
+  noChanges: "<%= tl.noChanges %>"
+};</script>
+<script src="/js/app.js"></script>
+<script src="/js/modules/diff.js"></script>

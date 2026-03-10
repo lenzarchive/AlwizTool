@@ -1,0 +1,36 @@
+<% var tl = t.tools.caseConverter; var tc = t.common; %>
+  <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+    <div class="lg:col-span-2 card p-5 space-y-4">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.input %></h2>
+      <textarea id="inputText" class="textarea-field min-h-[180px]" placeholder="<%= tl.inputPlaceholder %>"></textarea>
+      <button id="btnClear" class="btn-secondary w-full"><%= tc.clear %></button>
+    </div>
+    <div class="lg:col-span-3 card p-5 space-y-3">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.result %></h2>
+      <% [
+        ['camelCase',     tl.camelCase],
+        ['pascalCase',    tl.pascalCase],
+        ['snakeCase',     tl.snakeCase],
+        ['kebabCase',     tl.kebabCase],
+        ['screamingSnake',tl.screamingSnake],
+        ['dotCase',       tl.dotCase],
+        ['titleCase',     tl.titleCase],
+        ['sentenceCase',  tl.sentenceCase],
+        ['lowerCase',     tl.lowerCase],
+        ['upperCase',     tl.upperCase]
+      ].forEach(function(row) { %>
+      <div class="p-2.5 bg-slate-50 dark:bg-slate-800/60 rounded-lg flex items-center gap-3">
+        <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wide w-28 shrink-0"><%= row[1] %></span>
+        <input id="case-<%= row[0] %>" type="text" class="input-field font-mono text-xs bg-transparent border-0 p-0 focus:ring-0 flex-1" readonly placeholder="—">
+        <button class="copy-btn copy-case-btn shrink-0" data-id="case-<%= row[0] %>"><%= tc.copy %></button>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+  <div class="mt-6 card p-5">
+    <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
+    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
+  </div>
+<script>var I18N = { copied: "<%= tc.copied %>", nothingToCopy: "<%= tc.nothingToCopy %>" };</script>
+<script src="/js/app.js"></script>
+<script src="/js/modules/case-converter.js"></script>

@@ -1,5 +1,6 @@
 node_modules
 https
+certs
 -e 
-# Environment variables
 .env
+*.pem

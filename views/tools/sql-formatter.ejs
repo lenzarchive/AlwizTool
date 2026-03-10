@@ -1,0 +1,36 @@
+<% var tl = t.tools.sqlFormatter; var tc = t.common; %>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="card p-5 space-y-4">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.input %> SQL</h2>
+      <textarea id="inputText" class="textarea-field font-mono min-h-[320px]" placeholder="<%= tl.inputPlaceholder %>"></textarea>
+      <div class="flex items-center gap-2 flex-wrap">
+        <button id="btnFormat" class="btn-primary"><%= tc.format %></button>
+        <button id="btnMinify" class="btn-secondary"><%= tc.minify %></button>
+        <button id="btnClear" class="btn-secondary ml-auto"><%= tc.clear %></button>
+      </div>
+      <div class="flex items-center gap-3">
+        <label class="text-xs text-slate-500" for="dialectSelect"><%= tl.dialect %>:</label>
+        <select id="dialectSelect" class="select-field text-xs py-1.5 w-auto">
+          <option value="standard">Standard SQL</option>
+          <option value="mysql">MySQL</option>
+          <option value="postgresql">PostgreSQL</option>
+          <option value="sqlite">SQLite</option>
+          <option value="mssql">SQL Server</option>
+        </select>
+      </div>
+    </div>
+    <div class="card p-5 space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.output %></h2>
+        <button id="btnCopy" class="copy-btn"><%= tc.copy %></button>
+      </div>
+      <textarea id="outputText" class="result-box font-mono min-h-[320px]" readonly placeholder="<%= tl.outputPlaceholder %>"></textarea>
+    </div>
+  </div>
+  <div class="mt-6 card p-5">
+    <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
+    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
+  </div>
+<script>var I18N = { copied: "<%= tc.copied %>", nothingToCopy: "<%= tc.nothingToCopy %>" };</script>
+<script src="/js/app.js"></script>
+<script src="/js/modules/sql-formatter.js"></script>

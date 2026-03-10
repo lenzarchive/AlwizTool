@@ -7,7 +7,9 @@
     "start": "node server.js",
     "dev": "concurrently \"nodemon server.js\" \"npm run watch:css\"",
     "build:css": "tailwindcss -i ./src/css/input.css -o ./public/css/style.css --minify",
-    "watch:css": "tailwindcss -i ./src/css/input.css -o ./public/css/style.css --watch"
+    "watch:css": "tailwindcss -i ./src/css/input.css -o ./public/css/style.css --watch",
+    "fonts": "node scripts/download-fonts.js",
+    "setup": "npm run fonts && npm run build:css"
   },
   "dependencies": {
     "compression": "^1.7.4",

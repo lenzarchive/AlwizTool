@@ -15,7 +15,7 @@
         <div class="absolute top-full left-0 mt-1 w-56 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 p-1.5">
           <% if (typeof tools !== 'undefined') { tools.forEach(tool => { %>
           <a href="/tools/<%= tool.slug %>" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
-            <span class="text-base"><%= tool.icon %></span>
+            <span class="text-[10px] font-mono font-bold text-slate-400 w-7 shrink-0"><%= tool.icon %></span>
             <%= t('tools.' + tool.i18nKey + '.title') || tool.slug %>
           </a>
           <% }) } %>
@@ -32,10 +32,10 @@
         </button>
         <div class="absolute top-full right-0 mt-1 w-28 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 p-1 overflow-hidden">
           <a href="?lang=en" class="flex items-center gap-2 px-3 py-2 text-sm rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors <%= lang === 'en' ? 'font-semibold text-indigo-600 dark:text-indigo-400' : '' %>">
-            🇺🇸 English
+            EN — English
           </a>
           <a href="?lang=id" class="flex items-center gap-2 px-3 py-2 text-sm rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors <%= lang === 'id' ? 'font-semibold text-indigo-600 dark:text-indigo-400' : '' %>">
-            🇮🇩 Indonesia
+            ID — Indonesia
           </a>
         </div>
       </div>
@@ -56,12 +56,12 @@
       <a href="/" class="block px-3 py-2 rounded-lg text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"><%= t('nav.home') %></a>
       <% if (typeof tools !== 'undefined') { tools.forEach(tool => { %>
       <a href="/tools/<%= tool.slug %>" class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
-        <span><%= tool.icon %></span><%= t('tools.' + tool.i18nKey + '.name') %>
+        <span class="text-[10px] font-mono font-bold text-slate-400 w-6 shrink-0"><%= tool.icon %></span><%= t('tools.' + tool.i18nKey + '.name') %>
       </a>
       <% }) } %>
       <div class="border-t border-slate-100 dark:border-slate-800 pt-2 mt-2 flex gap-2">
-        <a href="?lang=en" class="flex-1 text-center px-3 py-2 text-xs rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 <%= lang === 'en' ? 'bg-indigo-50 dark:bg-indigo-900/20 border-indigo-300 dark:border-indigo-700 text-indigo-600 dark:text-indigo-400' : '' %>">🇺🇸 English</a>
-        <a href="?lang=id" class="flex-1 text-center px-3 py-2 text-xs rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 <%= lang === 'id' ? 'bg-indigo-50 dark:bg-indigo-900/20 border-indigo-300 dark:border-indigo-700 text-indigo-600 dark:text-indigo-400' : '' %>">🇮🇩 Indonesia</a>
+        <a href="?lang=en" class="flex-1 text-center px-3 py-2 text-xs rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 <%= lang === 'en' ? 'bg-indigo-50 dark:bg-indigo-900/20 border-indigo-300 dark:border-indigo-700 text-indigo-600 dark:text-indigo-400' : '' %>">EN — English</a>
+        <a href="?lang=id" class="flex-1 text-center px-3 py-2 text-xs rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 <%= lang === 'id' ? 'bg-indigo-50 dark:bg-indigo-900/20 border-indigo-300 dark:border-indigo-700 text-indigo-600 dark:text-indigo-400' : '' %>">ID — Indonesia</a>
       </div>
     </div>
   </div>

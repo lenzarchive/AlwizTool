@@ -28,9 +28,11 @@
   <link rel="alternate" hreflang="x-default" href="<%= canonical %>">
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <%# Self-hosted fonts: preload 400 & 600 first (used above-the-fold) %>
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-400.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-600.woff2" crossorigin>
+
   <link rel="stylesheet" href="/css/style.css">
 
   <script>

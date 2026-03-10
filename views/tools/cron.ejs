@@ -1,0 +1,55 @@
+<% var tl = t.tools.cron; var tc = t.common; %>
+  <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+    <div class="lg:col-span-2 space-y-4">
+      <div class="card p-5 space-y-4">
+        <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tl.expressionLabel %></h2>
+        <input type="text" id="cronInput" class="input-field font-mono text-lg tracking-wider" placeholder="<%= tl.expressionPlaceholder %>" value="* * * * *">
+        <div class="grid grid-cols-5 gap-1 text-[10px] text-slate-400 text-center font-mono">
+          <span><%= tl.fields.minute %></span>
+          <span><%= tl.fields.hour %></span>
+          <span><%= tl.fields.day %></span>
+          <span><%= tl.fields.month %></span>
+          <span><%= tl.fields.weekday %></span>
+        </div>
+        <div id="errorMsg" class="hidden text-xs text-rose-500"></div>
+      </div>
+      <div class="card p-5 space-y-3">
+        <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tl.presets %></h2>
+        <div class="space-y-1.5" id="presetList">
+          <% [
+            ['* * * * *',    'Every minute'],
+            ['0 * * * *',    'Every hour'],
+            ['0 0 * * *',    'Daily at midnight'],
+            ['0 9 * * *',    'Daily at 9 AM'],
+            ['0 0 * * 0',    'Every Sunday'],
+            ['0 0 1 * *',    'First of month'],
+            ['0 0 1 1 *',    'Yearly (Jan 1)'],
+            ['*/5 * * * *',  'Every 5 minutes'],
+            ['0 9-17 * * 1-5','Weekdays 9am-5pm']
+          ].forEach(function(p) { %>
+          <button class="preset-btn w-full text-left px-3 py-2 rounded-lg text-xs font-mono hover:bg-indigo-50 dark:hover:bg-indigo-900/20 text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center justify-between" data-expr="<%= p[0] %>">
+            <span class="text-slate-900 dark:text-slate-100"><%= p[0] %></span>
+            <span class="text-slate-400 text-[10px]"><%= p[1] %></span>
+          </button>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+    <div class="lg:col-span-3 space-y-4">
+      <div class="card p-5 space-y-3">
+        <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tl.descriptionLabel %></h2>
+        <p id="humanDesc" class="text-sm text-indigo-600 dark:text-indigo-400 font-medium leading-relaxed"></p>
+      </div>
+      <div class="card p-5 space-y-3">
+        <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tl.nextRunsLabel %></h2>
+        <div id="nextRuns" class="space-y-2"></div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-6 card p-5">
+    <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
+    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
+  </div>
+<script>var I18N = { invalidExpr: "<%= tl.invalidExpr %>" };</script>
+<script src="/js/app.js"></script>
+<script src="/js/modules/cron.js"></script>

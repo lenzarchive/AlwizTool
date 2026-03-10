@@ -1,0 +1,49 @@
+<% var tl = t.tools.markdownPreview; var tc = t.common; %>
+  <div class="flex items-center justify-between mb-4">
+    <div class="flex gap-3 text-xs text-slate-400 font-mono" id="mdStats">
+      <span id="statChars">0 <%= tl.charsLabel %></span>
+      <span id="statWords">0 <%= tl.wordsLabel %></span>
+    </div>
+    <button id="btnCopyHtml" class="copy-btn"><%= tl.copyHtml %></button>
+  </div>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="card p-5 space-y-3">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tl.editorLabel %></h2>
+      <textarea id="inputText" class="textarea-field min-h-[500px] font-mono text-sm" placeholder="<%= tl.inputPlaceholder %>"></textarea>
+    </div>
+    <div class="card p-5 space-y-3">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tl.previewLabel %></h2>
+      <div id="mdPreview" class="prose prose-sm dark:prose-invert max-w-none min-h-[500px] text-sm text-slate-800 dark:text-slate-200 leading-relaxed overflow-auto"></div>
+    </div>
+  </div>
+  <div class="mt-6 card p-5">
+    <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
+    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
+  </div>
+<style>
+#mdPreview h1 { font-size:1.5rem; font-weight:700; margin:1rem 0 .5rem; }
+#mdPreview h2 { font-size:1.25rem; font-weight:700; margin:.8rem 0 .4rem; }
+#mdPreview h3 { font-size:1.1rem; font-weight:600; margin:.6rem 0 .3rem; }
+#mdPreview p  { margin:.5rem 0; }
+#mdPreview ul,#mdPreview ol { margin:.5rem 0 .5rem 1.5rem; }
+#mdPreview li { margin:.2rem 0; }
+#mdPreview code { background:rgba(99,102,241,.1); padding:.1em .35em; border-radius:.3em; font-family:monospace; font-size:.875em; }
+#mdPreview pre { background:#1e293b; color:#e2e8f0; padding:1rem; border-radius:.5rem; overflow-x:auto; margin:.75rem 0; }
+#mdPreview pre code { background:none; padding:0; color:inherit; }
+#mdPreview blockquote { border-left:3px solid #6366f1; margin:.5rem 0; padding:.25rem 1rem; color:#64748b; }
+#mdPreview table { border-collapse:collapse; width:100%; margin:.75rem 0; }
+#mdPreview th,#mdPreview td { border:1px solid #e2e8f0; padding:.4rem .75rem; text-align:left; font-size:.875rem; }
+#mdPreview th { background:#f8fafc; font-weight:600; }
+.dark #mdPreview th { background:#1e293b; }
+.dark #mdPreview th,.dark #mdPreview td { border-color:#334155; }
+#mdPreview a { color:#6366f1; text-decoration:underline; }
+#mdPreview hr { border:0; border-top:1px solid #e2e8f0; margin:1rem 0; }
+.dark #mdPreview hr { border-color:#334155; }
+#mdPreview strong { font-weight:700; }
+#mdPreview em { font-style:italic; }
+#mdPreview del { text-decoration:line-through; color:#94a3b8; }
+</style>
+<script>var I18N = { copied: "<%= tc.copied %>", nothingToCopy: "<%= tc.nothingToCopy %>" };</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+<script src="/js/app.js"></script>
+<script src="/js/modules/markdown-preview.js"></script>

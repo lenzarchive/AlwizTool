@@ -1,0 +1,44 @@
+<% var tl = t.tools.numberBase; var tc = t.common; %>
+  <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+    <div class="lg:col-span-2 card p-5 space-y-4">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.input %></h2>
+      <input type="text" id="inputText" class="input-field font-mono text-lg" placeholder="<%= tl.inputPlaceholder %>">
+      <div>
+        <label class="label"><%= tl.baseLabel %></label>
+        <select id="baseSelect" class="select-field">
+          <option value="10"><%= tl.decimal %></option>
+          <option value="2"><%= tl.binary %></option>
+          <option value="8"><%= tl.octal %></option>
+          <option value="16"><%= tl.hex %></option>
+        </select>
+      </div>
+      <div id="errorMsg" class="hidden text-xs text-rose-500"><%= tl.invalidInput %></div>
+    </div>
+    <div class="lg:col-span-3 card p-5 space-y-3">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tl.resultLabel %></h2>
+      <% [
+        { id: 'dec', label: 'Decimal',     note: 'Base 10' },
+        { id: 'bin', label: 'Binary',      note: 'Base 2'  },
+        { id: 'oct', label: 'Octal',       note: 'Base 8'  },
+        { id: 'hex', label: 'Hexadecimal', note: 'Base 16' }
+      ].forEach(function(row) { %>
+      <div class="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-lg">
+        <div class="flex items-center justify-between mb-1.5">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold font-mono uppercase text-slate-700 dark:text-slate-300"><%= row.label %></span>
+            <span class="text-[10px] text-slate-400"><%= row.note %></span>
+          </div>
+          <button class="copy-btn copy-result-btn" data-id="result-<%= row.id %>"><%= tc.copy %></button>
+        </div>
+        <input id="result-<%= row.id %>" type="text" class="input-field font-mono text-sm bg-transparent border-0 p-0 focus:ring-0" readonly placeholder="—">
+      </div>
+      <% }) %>
+    </div>
+  </div>
+  <div class="mt-6 card p-5">
+    <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
+    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
+  </div>
+<script>var I18N = { copied: "<%= tc.copied %>", nothingToCopy: "<%= tc.nothingToCopy %>" };</script>
+<script src="/js/app.js"></script>
+<script src="/js/modules/number-base.js"></script>

@@ -1,0 +1,48 @@
+<% var tl = t.tools.xmlFormatter; var tc = t.common; %>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="card p-5 space-y-4">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.input %> XML</h2>
+      <textarea id="inputText" class="textarea-field min-h-[300px]" placeholder="<%= tl.inputPlaceholder %>"></textarea>
+      <div class="flex items-center gap-2 flex-wrap">
+        <button id="btnFormat" class="btn-primary"><%= tc.format %></button>
+        <button id="btnMinify" class="btn-secondary"><%= tc.minify %></button>
+        <button id="btnValidate" class="btn-secondary"><%= tc.validate %></button>
+        <button id="btnClear" class="btn-secondary ml-auto"><%= tc.clear %></button>
+      </div>
+      <div class="flex items-center gap-3">
+        <label class="text-xs text-slate-500" for="indentSelect"><%= tl.indent %>:</label>
+        <select id="indentSelect" class="select-field text-xs py-1.5 w-auto">
+          <option value="2">2 spaces</option>
+          <option value="4">4 spaces</option>
+          <option value="tab">Tab</option>
+        </select>
+      </div>
+    </div>
+    <div class="card p-5 space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.output %></h2>
+        <button id="btnCopy" class="copy-btn"><%= tc.copy %></button>
+      </div>
+      <textarea id="outputText" class="result-box min-h-[300px]" readonly placeholder="..."></textarea>
+      <div id="statusMsg" class="text-xs font-medium flex items-center gap-2"></div>
+      <div id="statsBar" class="hidden flex flex-wrap gap-3 text-xs text-slate-400 font-mono">
+        <span id="statChars"></span>
+        <span id="statTags"></span>
+      </div>
+    </div>
+  </div>
+  <div class="mt-6 card p-5">
+    <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
+    <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
+  </div>
+<script>var I18N = {
+  valid: "<%= tl.validMsg %>",
+  invalid: "<%= tl.invalidMsg %>",
+  minified: "<%= tl.minifiedMsg %>",
+  chars: "<%= tl.chars %>",
+  tags: "<%= tl.tags %>",
+  nothingToCopy: "<%= tc.nothingToCopy %>",
+  copied: "<%= tc.copied %>"
+};</script>
+<script src="/js/app.js"></script>
+<script src="/js/modules/xml-formatter.js"></script>
