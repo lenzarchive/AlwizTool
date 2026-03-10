@@ -27,7 +27,7 @@
   <link rel="alternate" hreflang="id" href="<%= canonical %>?lang=id">
   <link rel="alternate" hreflang="x-default" href="<%= canonical %>">
 
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
   <%# Self-hosted fonts: preload 400 & 600 first (used above-the-fold) %>
   <link rel="preload" as="font" type="font/woff2" href="/fonts/v2/inter-400.woff2" crossorigin>
@@ -37,6 +37,16 @@
   <link rel="preload" href="/css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
 
+  <%# Preload LCP logo image %>
+  <link rel="preload" as="image" href="/logo_dark.webp" type="image/webp">
+
+  <style>
+    .logo-dark { display: none; }
+    .logo-light { display: block; }
+    html.dark .logo-dark { display: block; }
+    html.dark .logo-light { display: none; }
+  </style>
+
   <script>
     (function() {
       var saved = localStorage.getItem('theme');
@@ -45,24 +55,6 @@
         document.documentElement.classList.add('dark');
       }
     })();
-
-    function applyLogoTheme() {
-      var isDark = document.documentElement.classList.contains('dark');
-      var lightLogos = document.querySelectorAll('#logo-light-mode, #footer-logo-light-mode');
-      var darkLogos = document.querySelectorAll('#logo-dark-mode, #footer-logo-dark-mode');
-      lightLogos.forEach(function(el) { el.style.display = isDark ? 'none' : 'block'; });
-      darkLogos.forEach(function(el) { el.style.display = isDark ? 'block' : 'none'; });
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      applyLogoTheme();
-      var btn = document.getElementById('themeToggle');
-      if (btn) {
-        btn.addEventListener('click', function() {
-          setTimeout(applyLogoTheme, 10);
-        });
-      }
-    });
   </script>
 
   <script type="application/ld+json">

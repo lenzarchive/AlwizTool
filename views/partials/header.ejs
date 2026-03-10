@@ -1,8 +1,14 @@
 <header class="sticky top-0 z-50 bg-white/90 dark:bg-slate-950/90 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800">
   <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between gap-4">
     <a href="/" class="flex items-center shrink-0">
-      <img src="/logo_dark.png" id="logo-light-mode" class="h-12 w-auto" style="display:block; background:transparent;" alt="AlwizTool Logo">
-      <img src="/logo_light.png" id="logo-dark-mode" class="h-12 w-auto" style="display:none; background:transparent;" alt="AlwizTool Logo">
+      <picture class="logo-light">
+        <source srcset="/logo_dark.webp" type="image/webp">
+        <img src="/logo_dark.png" class="h-12 w-auto" width="199" height="108" alt="AlwizTool Logo" fetchpriority="high">
+      </picture>
+      <picture class="logo-dark">
+        <source srcset="/logo_light.webp" type="image/webp">
+        <img src="/logo_light.png" class="h-12 w-auto" width="199" height="108" alt="AlwizTool Logo">
+      </picture>
     </a>
 
     <nav class="hidden md:flex items-center gap-1">

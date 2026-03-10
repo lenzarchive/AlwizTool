@@ -3,8 +3,14 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <div>
         <div class="flex items-center mb-2">
-          <img src="/logo_dark.png" id="footer-logo-light-mode" class="h-12 w-auto" style="display:block; background:transparent;" alt="AlwizTool Logo">
-          <img src="/logo_light.png" id="footer-logo-dark-mode" class="h-12 w-auto" style="display:none; background:transparent;" alt="AlwizTool Logo">
+          <picture class="logo-light">
+            <source srcset="/logo_dark.webp" type="image/webp">
+            <img src="/logo_dark.png" class="h-12 w-auto" width="199" height="108" alt="AlwizTool Logo">
+          </picture>
+          <picture class="logo-dark">
+            <source srcset="/logo_light.webp" type="image/webp">
+            <img src="/logo_light.png" class="h-12 w-auto" width="199" height="108" alt="AlwizTool Logo">
+          </picture>
         </div>
         <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= t.footer.tagline %></p>
       </div>

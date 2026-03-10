@@ -48,10 +48,24 @@ app.use('/fonts/v2', express.static(path.join(__dirname, 'public', 'fonts'), {
   }
 }));
 
-// CSS/JS: 7 days in production
+// Static files: tiered cache headers berdasarkan tipe file
+const immutableFiles = new Set(['logo_light.webp', 'logo_dark.webp', 'logo_light.png', 'logo_dark.png', 'favicon.ico']);
+
 app.use(express.static(path.join(__dirname, 'public'), {
-  maxAge: process.env.NODE_ENV === 'production' ? '7d' : 0,
-  etag: true
+  etag: true,
+  setHeaders: (res, filePath) => {
+    const name = path.basename(filePath);
+    const ext = path.extname(filePath);
+    if (immutableFiles.has(name)) {
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    } else if (ext === '.css' || ext === '.js') {
+      const age = process.env.NODE_ENV === 'production' ? 2592000 : 0;
+      res.setHeader('Cache-Control', age ? `public, max-age=${age}` : 'no-cache');
+    } else {
+      const age = process.env.NODE_ENV === 'production' ? 604800 : 0;
+      res.setHeader('Cache-Control', age ? `public, max-age=${age}` : 'no-cache');
+    }
+  }
 }));
 
 app.use('/', indexRoutes);
