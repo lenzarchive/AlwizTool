@@ -1,0 +1,3 @@
+# Font files are not tracked in git.
+# Run: npm run fonts
+# This will download Inter and JetBrains Mono woff2 files into this directory.
