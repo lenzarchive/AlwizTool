@@ -9,7 +9,9 @@
     "build:css": "tailwindcss -i ./src/css/input.css -o ./public/css/style.css --minify",
     "watch:css": "tailwindcss -i ./src/css/input.css -o ./public/css/style.css --watch",
     "fonts": "node scripts/download-fonts.js",
-    "setup": "npm run fonts && npm run build:css"
+    "setup": "npm run fonts && npm run build:css",
+    "fonts:clean": "node scripts/clean-fonts.js",
+    "fonts:reset": "npm run fonts:clean && npm run fonts"
   },
   "dependencies": {
     "compression": "^1.7.4",
@@ -23,9 +25,12 @@
     "helmet": "^7.1.0",
     "morgan": "^1.10.0",
     "open-graph-scraper": "^6.7.3",
-    "qrcode": "^1.5.3"
+    "qrcode": "^1.5.3",
+    "spdy": "^4.0.2"
   },
   "devDependencies": {
+    "@fontsource/inter": "^5.2.8",
+    "@fontsource/jetbrains-mono": "^5.2.8",
     "autoprefixer": "^10.4.16",
     "concurrently": "^8.2.2",
     "nodemon": "^3.0.2",

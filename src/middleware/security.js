@@ -29,6 +29,7 @@ function applySecurityMiddleware(app) {
         scriptSrc: [
           "'self'",
           "'unsafe-inline'",
+          'https://cdnjs.cloudflare.com',
           'https://www.googletagmanager.com',
           'https://*.adsterra.com',
           'https://*.highperformanceformat.com',

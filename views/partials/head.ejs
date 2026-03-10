@@ -30,10 +30,12 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 
   <%# Self-hosted fonts: preload 400 & 600 first (used above-the-fold) %>
-  <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-400.woff2" crossorigin>
-  <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-600.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/v2/inter-400.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/v2/inter-600.woff2" crossorigin>
 
-  <link rel="stylesheet" href="/css/style.css">
+  <%# Non-render-blocking CSS load — eliminates render-blocking penalty %>
+  <link rel="preload" href="/css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
 
   <script>
     (function() {

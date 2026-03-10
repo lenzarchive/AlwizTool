@@ -4,6 +4,8 @@ const compression = require('compression');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const fs = require('fs');
+const http = require('http');
 const ejsLayouts = require('express-ejs-layouts');
 const { applySecurityMiddleware } = require('./src/middleware/security');
 const { i18nMiddleware } = require('./src/middleware/i18n');
@@ -12,7 +14,6 @@ const apiRoutes = require('./src/routes/api');
 const { tools } = indexRoutes;
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -37,8 +38,8 @@ app.use((req, res, next) => {
   next();
 });
 
-// Fonts: long-lived cache (1 year) — filenames are stable
-app.use('/fonts', express.static(path.join(__dirname, 'public', 'fonts'), {
+// Fonts: long-lived cache (1 year) — bump path version to bust stale cache
+app.use('/fonts/v2', express.static(path.join(__dirname, 'public', 'fonts'), {
   maxAge: '1y',
   immutable: true,
   etag: false,
@@ -71,7 +72,27 @@ app.use((err, req, res, next) => {
 });
 
 if (require.main === module) {
-  app.listen(PORT, () => console.log(`AlwizTool running on port ${PORT}`));
+  const PORT = process.env.PORT || 3000;
+
+  // HTTP/2 with TLS (spdy) — falls back to HTTP/1.1 if no certs available
+  const certPath = process.env.SSL_CERT || path.join(__dirname, 'certs', 'cert.pem');
+  const keyPath  = process.env.SSL_KEY  || path.join(__dirname, 'certs', 'key.pem');
+
+  if (fs.existsSync(certPath) && fs.existsSync(keyPath)) {
+    const spdy = require('spdy');
+    const opts = {
+      key:  fs.readFileSync(keyPath),
+      cert: fs.readFileSync(certPath),
+    };
+    spdy.createServer(opts, app).listen(PORT, () =>
+      console.log(`AlwizTool running on https://localhost:${PORT} (HTTP/2)`)
+    );
+  } else {
+    // Dev fallback: plain HTTP/1.1
+    http.createServer(app).listen(PORT, () =>
+      console.log(`AlwizTool running on http://localhost:${PORT} (HTTP/1.1 — add certs/ for HTTP/2)`)
+    );
+  }
 }
 
 module.exports = app;

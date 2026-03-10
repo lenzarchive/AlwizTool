@@ -1,52 +1,74 @@
 /**
- * Download Google Fonts to public/fonts/ for self-hosting.
+ * Copy fonts from @fontsource npm packages to public/fonts/ for self-hosting.
+ * Reliable alternative to downloading from Google Fonts CDN (URLs expire/change).
+ *
  * Run once: node scripts/download-fonts.js
+ * Dependencies: npm install --save-dev @fontsource/inter @fontsource/jetbrains-mono
  */
 
-const https = require('https');
-const fs    = require('fs');
-const path  = require('path');
+const fs   = require('fs');
+const path = require('path');
 
-const FONTS_DIR = path.join(__dirname, '..', 'public', 'fonts');
+const ROOT      = path.join(__dirname, '..');
+const FONTS_DIR = path.join(ROOT, 'public', 'fonts');
+
 if (!fs.existsSync(FONTS_DIR)) fs.mkdirSync(FONTS_DIR, { recursive: true });
 
-// Fonts to download — URLs from Google Fonts CDN (Latin subset, woff2)
+// Map: destination filename → source path inside node_modules/@fontsource
 const FONTS = [
-  // Inter
-  { file: 'inter-400.woff2',   url: 'https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2ZL7W0Q5nw.woff2' },
-  { file: 'inter-500.woff2',   url: 'https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2' },
-  { file: 'inter-600.woff2',   url: 'https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa0pL7W0Q5nw.woff2' },
-  { file: 'inter-700.woff2',   url: 'https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7W0Q5nw.woff2' },
-  // JetBrains Mono
-  { file: 'jb-mono-400.woff2', url: 'https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKxBNntkaToggR7BYRbKPxDcwgknk-4.woff2' },
-  { file: 'jb-mono-500.woff2', url: 'https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKxBNntkaToggR7BYRbKPxDcwgknk-4.woff2' },
+  // Inter (latin subset)
+  { dest: 'inter-400.woff2', src: '@fontsource/inter/files/inter-latin-400-normal.woff2' },
+  { dest: 'inter-500.woff2', src: '@fontsource/inter/files/inter-latin-500-normal.woff2' },
+  { dest: 'inter-600.woff2', src: '@fontsource/inter/files/inter-latin-600-normal.woff2' },
+  { dest: 'inter-700.woff2', src: '@fontsource/inter/files/inter-latin-700-normal.woff2' },
+  // JetBrains Mono (latin subset)
+  { dest: 'jb-mono-400.woff2', src: '@fontsource/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2' },
+  { dest: 'jb-mono-500.woff2', src: '@fontsource/jetbrains-mono/files/jetbrains-mono-latin-500-normal.woff2' },
 ];
 
-function download(url, dest) {
-  return new Promise((resolve, reject) => {
-    if (fs.existsSync(dest)) { console.log('  skip (exists):', path.basename(dest)); return resolve(); }
-    const file = fs.createWriteStream(dest);
-    https.get(url, (res) => {
-      if (res.statusCode === 301 || res.statusCode === 302) {
-        file.close();
-        fs.unlinkSync(dest);
-        return download(res.headers.location, dest).then(resolve).catch(reject);
-      }
-      res.pipe(file);
-      file.on('finish', () => { file.close(); console.log('  downloaded:', path.basename(dest)); resolve(); });
-    }).on('error', (err) => {
-      fs.unlink(dest, () => {});
-      reject(err);
-    });
-  });
+function validateWoff2(filePath) {
+  const fd  = fs.openSync(filePath, 'r');
+  const buf = Buffer.alloc(4);
+  fs.readSync(fd, buf, 0, 4, 0);
+  fs.closeSync(fd);
+  return buf.toString('ascii') === 'wOF2';
 }
 
-(async () => {
-  console.log('Downloading fonts to public/fonts/ ...');
-  for (const font of FONTS) {
-    const dest = path.join(FONTS_DIR, font.file);
-    try { await download(font.url, dest); }
-    catch (e) { console.error('  FAILED:', font.file, e.message); }
+console.log('Copying fonts to public/fonts/ ...\n');
+
+let ok = 0, skip = 0, fail = 0;
+
+for (const { dest, src } of FONTS) {
+  const destPath = path.join(FONTS_DIR, dest);
+  const srcPath  = path.join(ROOT, 'node_modules', src);
+
+  if (fs.existsSync(destPath)) {
+    console.log('  skip (exists):', dest);
+    skip++;
+    continue;
   }
-  console.log('Done. Run "npm run build:css" to rebuild styles.');
-})();
+
+  if (!fs.existsSync(srcPath)) {
+    console.error(`  FAILED: ${dest}`);
+    console.error(`    Source not found: ${srcPath}`);
+    console.error(`    Run: npm install --save-dev @fontsource/inter @fontsource/jetbrains-mono\n`);
+    fail++;
+    continue;
+  }
+
+  try {
+    fs.copyFileSync(srcPath, destPath);
+    if (!validateWoff2(destPath)) {
+      fs.unlinkSync(destPath);
+      throw new Error('Copied file is not a valid woff2');
+    }
+    console.log('  copied:', dest);
+    ok++;
+  } catch (e) {
+    console.error(`  FAILED: ${dest} — ${e.message}`);
+    fail++;
+  }
+}
+
+console.log(`\nDone. ${ok} copied, ${skip} skipped, ${fail} failed.`);
+if (fail === 0) console.log('Run "npm run build:css" to rebuild styles.');
