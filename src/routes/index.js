@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const SITE_URL = process.env.SITE_URL || 'https://alwiztool.my.id';
+const SITE_URL = process.env.SITE_URL || 'https://alwiztool.work.gd';
 
 const tools = [
   // Encoding

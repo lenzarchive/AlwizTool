@@ -53,7 +53,7 @@ function applySecurityMiddleware(app) {
   }));
 
   app.use(cors({
-    origin: isProd ? [process.env.CORS_ORIGIN || 'https://alwiztool.my.id'] : '*',
+    origin: isProd ? [process.env.CORS_ORIGIN || 'https://alwiztool.work.gd'] : '*',
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type']
   }));

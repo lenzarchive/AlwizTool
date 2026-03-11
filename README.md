@@ -2,7 +2,7 @@
 
 All-in-one free tools for developers and everyday users. No sign-up, no tracking.
 
-Live: [alwiztool.my.id](https://alwiztool.my.id)
+Live: [alwiztool.work.gd](https://alwiztool.work.gd)
 
 ---
 
@@ -87,4 +87,4 @@ The `t` object works both as a function (`t('nav.home')`) and as a plain object 
 
 ---
 
-Built by [AlwizBA](https://alwiztool.my.id)
+Built by [AlwizBA](https://alwiztool.work.gd)

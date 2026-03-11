@@ -75,7 +75,7 @@ app.use((req, res) => {
   res.status(404).render('404', {
     title: '404 - Page Not Found | AlwizTool',
     description: 'The page you are looking for does not exist.',
-    canonical: process.env.SITE_URL || 'https://alwiztool.my.id',
+    canonical: process.env.SITE_URL || 'https://alwiztool.work.gd',
     tools,
   });
 });
