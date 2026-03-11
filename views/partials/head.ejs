@@ -37,9 +37,14 @@
     header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.9);border-bottom:1px solid #e2e8f0;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
     html.dark header{background:rgba(2,6,23,.9);border-bottom-color:#1e293b}
     header>div{max-width:72rem;margin:0 auto;padding:0 1rem;height:3.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
-    header img{height:3rem;width:auto}
+    header img{height:3rem;width:auto;aspect-ratio:199/108}
     .logo-dark{display:none}.logo-light{display:block}
     html.dark .logo-dark{display:block}html.dark .logo-light{display:none}
+    main>section:first-child{max-width:72rem;margin:0 auto;padding:3rem 1rem;text-align:center}
+    .tool-category{margin-bottom:2.5rem}
+    .tool-category>.grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:.75rem}
+    @media(min-width:640px){.tool-category>.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(min-width:1024px){.tool-category>.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
   </style>
   <script nonce="<%= nonce %>">(function() {
       var saved = localStorage.getItem('theme');
