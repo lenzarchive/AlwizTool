@@ -30,12 +30,15 @@ function isPrivateHostname(hostname) {
 }
 async function validateHostnamePostDNS(hostname) {
   const addrs = [];
-  try { addrs.push(...await dns.resolve4(hostname)); } catch {}
+  const dnsTimeout = (fn) => Promise.race([
+    fn(),
+    new Promise((_, reject) => setTimeout(() => reject(new Error('DNS timeout')), 5000))
+  ]);
+  try { addrs.push(...await dnsTimeout(() => dns.resolve4(hostname))); } catch {}
   try {
-    const v6 = await dns.resolve6(hostname);
+    const v6 = await dnsTimeout(() => dns.resolve6(hostname));
     addrs.push(...v6.map(a => a.replace(/^\[|\]$/g, '')));
   } catch {}
-  if (addrs.length === 0) throw new Error('Could not resolve hostname');
   for (const addr of addrs) {
     if (isPrivateHostname(addr)) throw new Error('URL not allowed');
   }

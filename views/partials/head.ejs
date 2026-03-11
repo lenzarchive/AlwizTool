@@ -24,21 +24,29 @@
   <link rel="alternate" hreflang="id" href="<%= canonical %>?lang=id">
   <link rel="alternate" hreflang="x-default" href="<%= canonical %>">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="preload" as="font" type="font/woff2" href="/fonts/v2/inter-400.woff2" crossorigin>
-  <link rel="preload" as="font" type="font/woff2" href="/fonts/v2/inter-600.woff2" crossorigin>
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/v2/inter-500.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/v2/inter-700.woff2" crossorigin>
+  <link rel="preload" as="style" href="/css/style.css" id="mainCss">
+  <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
   <link rel="preload" as="image" href="/logo_dark.webp" type="image/webp">
   <style>
-    .logo-dark { display: none; }
-    .logo-light { display: block; }
-    html.dark .logo-dark { display: block; }
-    html.dark .logo-light { display: none; }
+    *,::before,::after{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,sans-serif;background:#f8fafc;color:#0f172a;min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
+    html.dark body{background:#020617;color:#f8fafc}
+    header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.9);border-bottom:1px solid #e2e8f0;backdrop-filter:blur(4px)}
+    html.dark header{background:rgba(2,6,23,.9);border-bottom-color:#1e293b}
+    .logo-dark{display:none}.logo-light{display:block}
+    html.dark .logo-dark{display:block}html.dark .logo-light{display:none}
   </style>
   <script nonce="<%= nonce %>">(function() {
       var saved = localStorage.getItem('theme');
       var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       if (saved === 'dark' || (!saved && prefersDark)) {
         document.documentElement.classList.add('dark');
+      }
+      var css = document.getElementById('mainCss');
+      if (css) {
+        css.addEventListener('load', function() { this.rel = 'stylesheet'; });
       }
     })();
 </script>
