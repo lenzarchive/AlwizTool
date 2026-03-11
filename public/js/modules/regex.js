@@ -13,7 +13,45 @@ function syncCheckboxes(flags) {
     cb.checked = flags.includes(cb.dataset.flag);
   });
 }
-function runRegex() {
+function runRegexInWorker(pattern, flags, testStr) {
+  return new Promise((resolve, reject) => {
+    const workerCode = `
+      self.onmessage = function(e) {
+        const { pattern, flags, testStr } = e.data;
+        try {
+          const safeFlags = flags.includes('g') ? flags : flags + 'g';
+          const matches = [...testStr.matchAll(new RegExp(pattern, safeFlags))];
+          self.postMessage({ ok: true, matches: matches.map(m => ({
+            index: m.index,
+            full: m[0],
+            groups: Array.from(m).slice(1)
+          }))});
+        } catch(err) {
+          self.postMessage({ ok: false, error: err.message });
+        }
+      };
+    `;
+    const blob = new Blob([workerCode], { type: 'application/javascript' });
+    const worker = new Worker(URL.createObjectURL(blob));
+    const timer = setTimeout(() => {
+      worker.terminate();
+      reject(new Error('Regex execution timed out (possible catastrophic backtracking)'));
+    }, 2000);
+    worker.onmessage = (e) => {
+      clearTimeout(timer);
+      worker.terminate();
+      if (e.data.ok) resolve(e.data.matches);
+      else reject(new Error(e.data.error));
+    };
+    worker.onerror = (err) => {
+      clearTimeout(timer);
+      worker.terminate();
+      reject(err);
+    };
+    worker.postMessage({ pattern, flags, testStr });
+  });
+}
+async function runRegex() {
   const pattern = document.getElementById('regexPattern').value;
   const flags = getFlags();
   const testStr = document.getElementById('testString').value;
@@ -36,7 +74,14 @@ function runRegex() {
     errEl.classList.remove('hidden');
     return;
   }
-  const matches = [...testStr.matchAll(new RegExp(pattern, flags.includes('g') ? flags : flags + 'g'))];
+  let matches;
+  try {
+    matches = await runRegexInWorker(pattern, flags, testStr);
+  } catch (e) {
+    errEl.textContent = ((I18N && I18N.invalidRegex) || 'Regex error') + ': ' + e.message;
+    errEl.classList.remove('hidden');
+    return;
+  }
   countEl.textContent = matches.length + ' ' + (matches.length === 1
     ? ((I18N && I18N.matchCount) || 'match')
     : ((I18N && I18N.matchCountPlural) || 'matches'));
@@ -49,8 +94,8 @@ function runRegex() {
   matches.forEach((m, i) => {
     const color = HIGHLIGHT_COLORS[i % HIGHLIGHT_COLORS.length];
     highlighted += escapeHtml(testStr.slice(lastIdx, m.index));
-    highlighted += `<mark class="rounded px-0.5 ${color} text-inherit">${escapeHtml(m[0])}</mark>`;
-    lastIdx = m.index + m[0].length;
+    highlighted += `<mark class="rounded px-0.5 ${color} text-inherit">${escapeHtml(m.full)}</mark>`;
+    lastIdx = m.index + m.full.length;
   });
   highlighted += escapeHtml(testStr.slice(lastIdx));
   highlightEl.innerHTML = highlighted;
@@ -59,15 +104,14 @@ function runRegex() {
     div.className = 'p-2.5 bg-slate-50 dark:bg-slate-800/60 rounded-lg text-xs space-y-1';
     const header = document.createElement('div');
     header.className = 'flex items-center gap-2';
-    header.innerHTML = `<span class="font-mono font-semibold text-indigo-600 dark:text-indigo-400">Match ${i + 1}</span><span class="text-slate-400">index ${m.index}–${m.index + m[0].length}</span>`;
+    header.innerHTML = `<span class="font-mono font-semibold text-indigo-600 dark:text-indigo-400">Match ${i + 1}</span><span class="text-slate-400">index ${m.index}–${m.index + m.full.length}</span>`;
     const fullMatch = document.createElement('div');
-    fullMatch.className = 'font-mono text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 px-2 py-1 rounded border border-slate-200 dark:border-slate-700 break-all';
-    fullMatch.textContent = m[0] || '(empty match)';
+    fullMatch.className = 'font-mono text-sm text-slate-700 dark:text-slate-300 bg-white dark:bg-slate-900 px-2 py-1 rounded border border-slate-200 dark:border-slate-700 break-all';
+    fullMatch.textContent = m.full || '(empty match)';
     div.append(header, fullMatch);
-    if (m.length > 1) {
-      const groups = m.slice(1);
-      groups.forEach((g, gi) => {
-        if (g === undefined) return;
+    if (m.groups && m.groups.length > 0) {
+      m.groups.forEach((g, gi) => {
+        if (g === undefined || g === null) return;
         const gEl = document.createElement('div');
         gEl.className = 'text-slate-500 dark:text-slate-400 pl-2 border-l-2 border-indigo-200 dark:border-indigo-800';
         gEl.innerHTML = `<span class="text-xs font-medium mr-1">Group ${gi + 1}:</span><span class="font-mono">${escapeHtml(g)}</span>`;

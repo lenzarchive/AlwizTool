@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const dns = require('dns').promises;
 const { hashAll, hashAllHmac } = require('../utils/hash');
 const { fetchOGData } = require('../utils/opengraph');
 const QRCode = require('qrcode');
@@ -11,16 +12,28 @@ function isPrivateHostname(hostname) {
   const ipv4 = host.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/);
   if (ipv4) {
     const [, a, b, c] = ipv4.map(Number);
-    if (a === 127) return true;                          
-    if (a === 10) return true;                           
-    if (a === 192 && b === 168) return true;             
-    if (a === 172 && b >= 16 && b <= 31) return true;   
-    if (a === 169 && b === 254) return true;             
-    if (a === 0) return true;                            
+    if (a === 127) return true;
+    if (a === 10) return true;
+    if (a === 192 && b === 168) return true;
+    if (a === 172 && b >= 16 && b <= 31) return true;
+    if (a === 169 && b === 254) return true;
+    if (a === 0) return true;
   }
-  if (host.startsWith('fc') || host.startsWith('fd')) return true; 
-  if (host.startsWith('fe80')) return true;                         
+  if (host.startsWith('fc') || host.startsWith('fd')) return true;
+  if (host.startsWith('fe80')) return true;
   return false;
+}
+async function validateHostnamePostDNS(hostname) {
+  const addrs = [];
+  try { addrs.push(...await dns.resolve4(hostname)); } catch {}
+  try {
+    const v6 = await dns.resolve6(hostname);
+    addrs.push(...v6.map(a => a.replace(/^\[|\]$/g, '')));
+  } catch {}
+  if (addrs.length === 0) throw new Error('Could not resolve hostname');
+  for (const addr of addrs) {
+    if (isPrivateHostname(addr)) throw new Error('URL not allowed');
+  }
 }
 router.post('/hash', async (req, res) => {
   try {
@@ -47,6 +60,12 @@ router.post('/opengraph', async (req, res) => {
     }
     if (isPrivateHostname(parsedUrl.hostname)) {
       return res.status(400).json({ error: 'URL not allowed' });
+    }
+    // Post-DNS validation: resolve hostname and check all resulting IPs (prevents DNS rebinding)
+    try {
+      await validateHostnamePostDNS(parsedUrl.hostname);
+    } catch (dnsErr) {
+      return res.status(400).json({ error: dnsErr.message });
     }
     const data = await fetchOGData(url);
     res.json({ success: true, data });

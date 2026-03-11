@@ -6,6 +6,14 @@ const CHARS = {
   ambiguous: '0Ol1I'
 };
 const WORDS = ['apple','bridge','cloud','dance','earth','flame','grace','house','ivory','jewel','knife','lemon','mango','night','ocean','piano','quest','river','stone','tiger','ultra','vapor','water','xenon','yacht','zebra','amber','brave','coral','dream','eagle','frost','globe','heart','input','joker','karma','light','magic','noble','olive','pearl','queen','radar','silver','torch','unity','voice','wheat','index','young','above','below','chair','drive','enter','float','great','hotel','inner','juice','kings','laugh','mercy','north','outer','price','quota','raise','south','track','upset','valid','waste','xerox','yield','zones','alert','bench','clear','delta','event','field','grant','hurry','image','joint','knock','layer','metal','nerve','orbit','plant','quick','reach','sharp','table','ultra','value','watch','extra','yearl','zipper','actor','baker','chess','depot','eager','facet','group','hinge','infer','judge','kiosk','lunar','micro','nanny','optic','proxy','quake','range','serve','title','urban','venus','woven','axiom','blaze','candy','decay','elite','fairy','grasp','hedge','intro','jazzy','kluge','lance','march','nexus','oxide','pixel','quart','relay','solar','tempo','under','vista','windy','oxide','brave','craft','draft','elite','final','grade','happy','irony','joust','lunar','mauve','nurse','other','power','query','rocky','stoic','triad','unite','vault','world','xenon','young','zeros','album','black','civic','dunno','earns','faint','gavel','haste','ideal','jelly','krill','lower','mount','novel','opine','plumb','quiet','rainy','spare','theta','uncle','uvula','viola','wring','xylem','yodel','zonal'];
+function secureRandomIndex(max) {
+  const limit = Math.floor(0x100000000 / max) * max;
+  let n;
+  do {
+    [n] = crypto.getRandomValues(new Uint32Array(1));
+  } while (n >= limit);
+  return n % max;
+}
 function generatePassword(len, opts) {
   let charset = '';
   if (opts.upper) charset += CHARS.upper;
@@ -14,14 +22,10 @@ function generatePassword(len, opts) {
   if (opts.symbols) charset += CHARS.symbols;
   if (opts.excAmbiguous) charset = [...charset].filter(c => !CHARS.ambiguous.includes(c)).join('');
   if (!charset) return '';
-  const arr = new Uint32Array(len);
-  crypto.getRandomValues(arr);
-  return Array.from(arr, n => charset[n % charset.length]).join('');
+  return Array.from({ length: len }, () => charset[secureRandomIndex(charset.length)]).join('');
 }
 function generatePassphrase(wordCount, separator) {
-  const arr = new Uint32Array(wordCount);
-  crypto.getRandomValues(arr);
-  return Array.from(arr, n => WORDS[n % WORDS.length]).join(separator);
+  return Array.from({ length: wordCount }, () => WORDS[secureRandomIndex(WORDS.length)]).join(separator);
 }
 function getStrength(pw) {
   let s = 0;

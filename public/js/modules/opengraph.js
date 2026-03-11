@@ -70,17 +70,30 @@ async function checkOG() {
     ].filter(([, v]) => v != null && v !== '');
     const copyBtn = document.getElementById('btnCopyMeta');
     copyBtn.classList.toggle('hidden', metas.length === 0);
-    document.getElementById('metaTable').innerHTML = metas.map(([key, val]) =>
-      `<div class="py-2 group border-b border-slate-100 dark:border-slate-800 last:border-0">
-        <div class="flex items-center justify-between gap-2 mb-0.5">
-          <span class="font-mono text-xs text-indigo-500 dark:text-indigo-400 shrink-0">${escH(key)}</span>
-          <button class="copy-btn shrink-0 opacity-60 sm:opacity-0 group-hover:opacity-100 transition-opacity"
-            onclick="copyToClipboard('${escAttr(String(val))}'); showToast('${escAttr(I18N.copied || 'Copied!')}')"
-          >${I18N.copied ? I18N.copied.replace('!','') : 'Copy'}</button>
-        </div>
-        <span class="text-xs text-slate-700 dark:text-slate-300 break-all block w-full">${escH(String(val))}</span>
-      </div>`
-    ).join('');
+    const metaTable = document.getElementById('metaTable');
+    metaTable.innerHTML = '';
+    metas.forEach(([key, val]) => {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'py-2 group border-b border-slate-100 dark:border-slate-800 last:border-0';
+      const header = document.createElement('div');
+      header.className = 'flex items-center justify-between gap-2 mb-0.5';
+      const keySpan = document.createElement('span');
+      keySpan.className = 'font-mono text-xs text-indigo-500 dark:text-indigo-400 shrink-0';
+      keySpan.textContent = key;
+      const btn = document.createElement('button');
+      btn.className = 'copy-btn shrink-0 opacity-60 sm:opacity-0 group-hover:opacity-100 transition-opacity';
+      btn.textContent = I18N.copied ? I18N.copied.replace('!','') : 'Copy';
+      btn.addEventListener('click', () => {
+        copyToClipboard(String(val));
+        showToast(I18N.copied || 'Copied!');
+      });
+      const valSpan = document.createElement('span');
+      valSpan.className = 'text-xs text-slate-700 dark:text-slate-300 break-all block w-full';
+      valSpan.textContent = String(val);
+      header.append(keySpan, btn);
+      wrapper.append(header, valSpan);
+      metaTable.appendChild(wrapper);
+    });
     copyBtn.onclick = () => {
       const obj = Object.fromEntries(metas);
       copyToClipboard(JSON.stringify(obj, null, 2));
@@ -110,7 +123,12 @@ function escH(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 function escAttr(s) {
-  return String(s).replace(/'/g,"\\'").replace(/\n/g,' ');
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
 }
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btnCheck').addEventListener('click', checkOG);

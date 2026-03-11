@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const fs = require('fs');
 const http = require('http');
+const http2 = require('http2');
 const ejsLayouts = require('express-ejs-layouts');
 const { applySecurityMiddleware } = require('./src/middleware/security');
 const { i18nMiddleware } = require('./src/middleware/i18n');
@@ -13,6 +14,9 @@ const indexRoutes = require('./src/routes/index');
 const apiRoutes = require('./src/routes/api');
 const { tools } = indexRoutes;
 const app = express();
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1);
+}
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.set('layout', 'layout');
@@ -75,12 +79,12 @@ if (require.main === module) {
   const certPath = process.env.SSL_CERT || path.join(__dirname, 'certs', 'cert.pem');
   const keyPath  = process.env.SSL_KEY  || path.join(__dirname, 'certs', 'key.pem');
   if (fs.existsSync(certPath) && fs.existsSync(keyPath)) {
-    const spdy = require('spdy');
     const opts = {
       key:  fs.readFileSync(keyPath),
       cert: fs.readFileSync(certPath),
+      allowHTTP1: true, // Backwards compatible with HTTP/1.1 clients
     };
-    spdy.createServer(opts, app).listen(PORT, () =>
+    http2.createSecureServer(opts, app).listen(PORT, () =>
       console.log(`AlwizTool running on https://localhost:${PORT} (HTTP/2)`)
     );
   } else {

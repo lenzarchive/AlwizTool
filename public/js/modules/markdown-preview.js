@@ -12,7 +12,7 @@ function renderMarkdown() {
   }
   marked.setOptions({ breaks: true, gfm: true });
   htmlOutput = marked.parse(input);
-  preview.innerHTML = htmlOutput;
+  preview.innerHTML = DOMPurify.sanitize(htmlOutput);
 }
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('inputText').addEventListener('input', renderMarkdown);
