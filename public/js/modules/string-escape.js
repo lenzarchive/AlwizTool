@@ -11,11 +11,11 @@ const escapers = {
   },
   html: {
     escape: s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'),
-    unescape: s => s.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#39;/g,"'")
+    unescape: s => s.replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&')
   },
   sql: {
     escape: s => s.replace(/'/g,"''").replace(/\\/g,'\\\\').replace(/\x00/g,'\\0').replace(/\n/g,'\\n').replace(/\r/g,'\\r').replace(/\x1a/g,'\\Z'),
-    unescape: s => s.replace(/''/g,"'").replace(/\\\\/g,'\\')
+    unescape: s => s.replace(/''/g,"'").replace(/\\\\/g,'\\').replace(/\\n/g,'\n').replace(/\\r/g,'\r').replace(/\\0/g,'\0').replace(/\\Z/g,'\x1a')
   },
   regex: {
     escape: s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
