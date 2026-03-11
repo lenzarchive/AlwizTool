@@ -3,7 +3,7 @@ const escapers = {
     escape: s => s.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'\\"')
                   .replace(/\n/g,'\\n').replace(/\r/g,'\\r').replace(/\t/g,'\\t')
                   .replace(/\0/g,'\\0').replace(/\u2028/g,'\\u2028').replace(/\u2029/g,'\\u2029'),
-    unescape: s => { try { return Function('"use strict"; return ' + JSON.stringify(s).replace(/^"|"$/g,'').split('').reduce((acc,c,i,a) => acc, s) } catch(e) { return s; } }
+    unescape: s => { try { return JSON.parse('"' + s.replace(/"/g, '\\"').replace(/\\'/g, "'") + '"'); } catch(e) { return s; } }
   },
   json: {
     escape: s => JSON.stringify(s).slice(1,-1),

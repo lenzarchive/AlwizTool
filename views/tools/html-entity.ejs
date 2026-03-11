@@ -1,37 +1,50 @@
 <% var tl = t.tools.htmlEntity; var tc = t.common; %>
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <div class="card p-4 mb-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div class="flex flex-col gap-1">
+        <label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide" for="modeSelect"><%= tl.modeLabel %></label>
+        <select id="modeSelect" class="select-field text-xs py-1.5 w-full">
+          <option value="encode"><%= tc.encode %></option>
+          <option value="decode"><%= tc.decode %></option>
+        </select>
+      </div>
+      <div class="flex flex-col gap-1">
+        <label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide" for="formatSelect"><%= tl.formatLabel %></label>
+        <select id="formatSelect" class="select-field text-xs py-1.5 w-full">
+          <option value="named"><%= tl.fmtNamed %></option>
+          <option value="decimal"><%= tl.fmtDecimal %></option>
+          <option value="hex"><%= tl.fmtHex %></option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-cols-1 lg:grid-cols-[1fr_44px_1fr] items-start gap-2">
     <div class="card p-5 space-y-4">
-      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.input %></h2>
-      <textarea id="inputText" class="textarea-field min-h-[220px]" placeholder="<%= tl.inputPlaceholder %>"></textarea>
-      <div class="flex items-center gap-3 flex-wrap">
-        <div class="flex items-center gap-2">
-          <label class="text-xs text-slate-500"><%= tl.modeLabel %>:</label>
-          <select id="modeSelect" class="select-field text-xs py-1.5 w-auto">
-            <option value="encode"><%= tc.encode %></option>
-            <option value="decode"><%= tc.decode %></option>
-          </select>
-        </div>
-        <div class="flex items-center gap-2">
-          <label class="text-xs text-slate-500"><%= tl.formatLabel %>:</label>
-          <select id="formatSelect" class="select-field text-xs py-1.5 w-auto">
-            <option value="named"><%= tl.fmtNamed %></option>
-            <option value="decimal"><%= tl.fmtDecimal %></option>
-            <option value="hex"><%= tl.fmtHex %></option>
-          </select>
-        </div>
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-indigo-500 inline-block"></span><%= tc.input %>
+      </h2>
+      <textarea id="inputText" class="textarea-field min-h-[180px]" placeholder="<%= tl.inputPlaceholder %>"></textarea>
+      <div class="flex gap-2 flex-wrap">
+        <button id="btnConvert" class="btn-primary"><%= tc.convert %></button>
+        <button id="btnClear" class="btn-secondary ml-auto"><%= tc.clear %></button>
       </div>
-      <div class="flex gap-2">
-        <button id="btnConvert" class="btn-primary flex-1"><%= tc.convert %></button>
-        <button id="btnSwap" class="btn-secondary"><%= tc.swapLabel %></button>
-        <button id="btnClear" class="btn-secondary"><%= tc.clear %></button>
-      </div>
+    </div>
+    <div class="flex lg:flex-col items-center justify-center py-3 lg:py-0 lg:pt-24">
+      <button id="btnSwap" class="swap-btn" title="<%= tc.swapLabel %>">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4"/>
+        </svg>
+      </button>
+      <span class="text-[10px] text-slate-400 mt-1 hidden lg:block text-center leading-tight"><%= tc.swapIO %></span>
     </div>
     <div class="card p-5 space-y-4">
       <div class="flex items-center justify-between">
-        <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.output %></h2>
+        <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-green-500 inline-block"></span><%= tc.output %>
+        </h2>
         <button id="btnCopy" class="copy-btn"><%= tc.copy %></button>
       </div>
-      <textarea id="outputText" class="result-box min-h-[220px]" readonly placeholder="<%= tl.outputPlaceholder %>"></textarea>
+      <textarea id="outputText" class="result-box min-h-[180px]" readonly placeholder="<%= tl.outputPlaceholder %>"></textarea>
     </div>
   </div>
   <div class="mt-6 card p-5">
