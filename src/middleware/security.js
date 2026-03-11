@@ -32,6 +32,7 @@ function applySecurityMiddleware(app) {
             "'self'",
             (req, res) => `'nonce-${res.locals.nonce}'`,
             'https://cdnjs.cloudflare.com',
+            'https://static.cloudflareinsights.com',
             'https://www.googletagmanager.com',
             'https://*.adsterra.com',
             'https://*.highperformanceformat.com',
