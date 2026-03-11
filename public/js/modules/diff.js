@@ -11,8 +11,8 @@ function lcs(a, b) {
     else if (dp[i-1][j] >= dp[i][j-1]) { result.unshift({type:'removed', val:a[i-1]}); i--; }
     else { result.unshift({type:'added', val:b[j-1]}); j--; }
   }
-  while (i-- > 0) result.unshift({type:'removed', val:a[i+1]});
-  while (j-- > 0) result.unshift({type:'added',   val:b[j+1]});
+  while (i > 0) result.unshift({type:'removed', val:a[--i]});
+  while (j > 0) result.unshift({type:'added',   val:b[--j]});
   return result;
 }
 function diff() {
