@@ -8,15 +8,20 @@ const IS_PROD = process.env.NODE_ENV === 'production';
 const GENERIC_ERROR = 'Internal server error';
 function isPrivateHostname(hostname) {
   const host = hostname.replace(/^\[|\]$/g, '').toLowerCase();
-  if (host === 'localhost' || host === '::1') return true;
+  if (host === 'localhost' || host === '::1' || host === '0:0:0:0:0:0:0:1') return true;
+  if (/^::ffff:/i.test(host)) {
+    const v4part = host.replace(/^::ffff:/i, '');
+    if (isPrivateHostname(v4part)) return true;
+  }
   const ipv4 = host.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/);
   if (ipv4) {
-    const [, a, b, c] = ipv4.map(Number);
+    const [, a, b, c, d] = ipv4.map(Number);
     if (a === 127) return true;
     if (a === 10) return true;
     if (a === 192 && b === 168) return true;
     if (a === 172 && b >= 16 && b <= 31) return true;
     if (a === 169 && b === 254) return true;
+    if (a === 100 && b >= 64 && b <= 127) return true;
     if (a === 0) return true;
   }
   if (host.startsWith('fc') || host.startsWith('fd')) return true;

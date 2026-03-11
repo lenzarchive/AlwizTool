@@ -26,8 +26,7 @@
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="preload" as="font" type="font/woff2" href="/fonts/v2/inter-400.woff2" crossorigin>
   <link rel="preload" as="font" type="font/woff2" href="/fonts/v2/inter-600.woff2" crossorigin>
-  <link rel="preload" href="/css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="/css/style.css"></noscript>
+  <link rel="stylesheet" href="/css/style.css">
   <link rel="preload" as="image" href="/logo_dark.webp" type="image/webp">
   <style>
     .logo-dark { display: none; }
@@ -35,7 +34,7 @@
     html.dark .logo-dark { display: block; }
     html.dark .logo-light { display: none; }
   </style>
-  <script>(function() {
+  <script nonce="<%= nonce %>">(function() {
       var saved = localStorage.getItem('theme');
       var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       if (saved === 'dark' || (!saved && prefersDark)) {
@@ -43,7 +42,7 @@
       }
     })();
 </script>
-  <script type="application/ld+json">{
+  <script type="application/ld+json" nonce="<%= nonce %>">{
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "AlwizTool",

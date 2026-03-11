@@ -23,6 +23,7 @@ function describeCron(expr) {
   const [min, hr, dom, mon, dow] = parts;
   let desc = 'Runs ';
   if (min === '*' && hr === '*') desc += 'every minute';
+  else if (min.startsWith('*/') && hr.startsWith('*/')) desc += 'every ' + min.slice(2) + ' minute(s) of every ' + hr.slice(2) + ' hour(s)';
   else if (min.startsWith('*/')) desc += 'every ' + min.slice(2) + ' minute(s)';
   else if (hr === '*') desc += 'at minute ' + min + ' of every hour';
   else {
@@ -62,7 +63,7 @@ function getNextRuns(expr, count = 5) {
   d.setSeconds(0, 0);
   d.setMinutes(d.getMinutes() + 1);
   let safety = 0;
-  while (runs.length < count && safety++ < 100000) {
+  while (runs.length < count && safety++ < 527040) {
     const ok_mon = !mons || mons.includes(d.getMonth() + 1);
     const ok_dom = !doms || doms.includes(d.getDate());
     const ok_dow = !dows || dows.includes(d.getDay()) || (dows.includes(7) && d.getDay() === 0);
@@ -91,7 +92,7 @@ function update() {
   }
   descEl.textContent = desc;
   const runs = getNextRuns(expr);
-  if (!runs || !runs.length) { runsEl.innerHTML = ''; return; }
+  if (!runs || !runs.length) { runsEl.innerHTML = '<div class="text-sm text-slate-500 dark:text-slate-400">No runs found within 1 year</div>'; return; }
   runsEl.innerHTML = runs.map((d, i) => {
     const formatted = d.toLocaleString('en-US', {
       weekday:'short', year:'numeric', month:'short', day:'numeric',

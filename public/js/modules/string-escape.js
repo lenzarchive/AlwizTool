@@ -3,11 +3,11 @@ const escapers = {
     escape: s => s.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'\\"')
                   .replace(/\n/g,'\\n').replace(/\r/g,'\\r').replace(/\t/g,'\\t')
                   .replace(/\0/g,'\\0').replace(/\u2028/g,'\\u2028').replace(/\u2029/g,'\\u2029'),
-    unescape: s => { try { return JSON.parse('"' + s.replace(/"/g, '\\"').replace(/\\'/g, "'") + '"'); } catch(e) { return s; } }
+    unescape: s => { try { return JSON.parse('"' + s.replace(/"/g, '\\"').replace(/\\'/g, "'") + '"'); } catch(e) { throw new Error('Invalid JS escape sequence: ' + e.message); } }
   },
   json: {
     escape: s => JSON.stringify(s).slice(1,-1),
-    unescape: s => { try { return JSON.parse('"' + s + '"'); } catch(e) { return s; } }
+    unescape: s => { try { return JSON.parse('"' + s + '"'); } catch(e) { throw new Error('Invalid JSON escape sequence: ' + e.message); } }
   },
   html: {
     escape: s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'),

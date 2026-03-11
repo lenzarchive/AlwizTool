@@ -72,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
   hexInput.addEventListener('input', e => {
     let v = e.target.value.trim();
     if (!v.startsWith('#')) v = '#' + v;
+    e.target.value = v;
     updateFromHex(v);
   });
   document.querySelectorAll('.copy-color-btn').forEach(btn => {

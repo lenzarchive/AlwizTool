@@ -9,7 +9,15 @@ function convertTS() {
   if (!ts) return showToast((I18N && I18N.invalidTs) || 'Invalid timestamp', 'error');
   const num = parseInt(ts);
   if (isNaN(num)) return showToast((I18N && I18N.invalidTs) || 'Invalid timestamp', 'error');
-  const ms = ts.length >= 13 ? num : num * 1000;
+  let ms;
+  const manualUnit = document.querySelector('input[name="tsUnit"]:checked');
+  if (manualUnit) {
+    ms = manualUnit.value === 'ms' ? num : num * 1000;
+  } else if (num >= 1e12 && num <= 1e13) {
+    ms = num;
+  } else {
+    ms = num * 1000;
+  }
   const date = new Date(ms);
   if (isNaN(date.getTime())) return showToast((I18N && I18N.invalidTs) || 'Invalid timestamp', 'error');
   document.getElementById('ts-UTC').textContent = date.toUTCString();

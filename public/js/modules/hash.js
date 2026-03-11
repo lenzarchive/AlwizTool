@@ -1,3 +1,4 @@
+let hashCtrl;
 async function generateHashes() {
   const text = document.getElementById('inputText').value;
   const hmacKey = document.getElementById('hmacKey').value;
@@ -6,13 +7,16 @@ async function generateHashes() {
     algos.forEach(a => { document.getElementById('hash-' + a).value = ''; });
     return;
   }
+  if (hashCtrl) hashCtrl.abort();
+  hashCtrl = new AbortController();
   try {
     const body = { text };
     if (hmacKey) body.hmacKey = hmacKey;
     const res = await fetch('/api/hash', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
+      signal: hashCtrl.signal
     });
     const data = await res.json();
     if (data.success) {
@@ -21,17 +25,15 @@ async function generateHashes() {
       });
     }
   } catch (e) {
-    console.error(e);
+    if (e.name !== 'AbortError') console.error(e);
   }
 }
 document.addEventListener('DOMContentLoaded', () => {
+  let hashDebounce;
+  const debouncedHash = () => { clearTimeout(hashDebounce); hashDebounce = setTimeout(generateHashes, 400); };
   document.getElementById('btnGenerate').addEventListener('click', generateHashes);
-  document.getElementById('inputText').addEventListener('input', function() {
-    if (this.value) generateHashes();
-  });
-  document.getElementById('hmacKey').addEventListener('input', function() {
-    if (document.getElementById('inputText').value) generateHashes();
-  });
+  document.getElementById('inputText').addEventListener('input', debouncedHash);
+  document.getElementById('hmacKey').addEventListener('input', debouncedHash);
   document.getElementById('btnClear').addEventListener('click', () => {
     document.getElementById('inputText').value = '';
     document.getElementById('hmacKey').value = '';

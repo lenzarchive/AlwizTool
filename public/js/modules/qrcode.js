@@ -1,3 +1,4 @@
+let qrController;
 async function generateQR() {
   const text = document.getElementById('inputText').value.trim();
   const size = parseInt(document.getElementById('sizeInput').value) || 300;
@@ -5,6 +6,8 @@ async function generateQR() {
   const placeholder = document.getElementById('qrPlaceholder');
   const resultEl = document.getElementById('qrResult');
   if (!text) return showToast('Enter some text first', 'error');
+  if (qrController) qrController.abort();
+  qrController = new AbortController();
   placeholder.classList.add('hidden');
   resultEl.classList.remove('hidden');
   resultEl.innerHTML = '<svg class="w-8 h-8 animate-spin text-indigo-400" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>';
@@ -12,7 +15,8 @@ async function generateQR() {
     const res = await fetch('/api/qrcode', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text, size, format })
+      body: JSON.stringify({ text, size, format }),
+      signal: qrController.signal
     });
     const data = await res.json();
     if (!data.success) throw new Error(data.error);
@@ -26,7 +30,7 @@ async function generateQR() {
     resultEl.dataset.dataUrl = data.data;
     resultEl.dataset.format = format;
   } catch (e) {
-    resultEl.innerHTML = '<span class="text-red-500 text-sm">' + e.message + '</span>';
+    if (e.name !== 'AbortError') resultEl.innerHTML = '<span class="text-red-500 text-sm">' + e.message + '</span>';
   }
 }
 document.addEventListener('DOMContentLoaded', () => {

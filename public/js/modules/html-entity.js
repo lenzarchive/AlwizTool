@@ -10,11 +10,10 @@ const NAMED_REVERSE = Object.fromEntries(Object.entries(NAMED_MAP).map(([k,v]) =
 function encodeHtml(text, fmt) {
   const chars = Object.keys(NAMED_MAP);
   return text.split('').map(ch => {
-    if (!chars.includes(ch) && ch.charCodeAt(0) < 128) return ch;
     const code = ch.charCodeAt(0);
-    if (fmt === 'named' && NAMED_MAP[ch]) return NAMED_MAP[ch];
-    if (fmt === 'decimal') return `&#${code};`;
-    if (fmt === 'hex') return `&#x${code.toString(16).toUpperCase()};`;
+    if (fmt === 'named') return NAMED_MAP[ch] || (code >= 128 ? `&#${code};` : ch);
+    if (fmt === 'decimal') return (chars.includes(ch) || code >= 128) ? `&#${code};` : ch;
+    if (fmt === 'hex') return (chars.includes(ch) || code >= 128) ? `&#x${code.toString(16).toUpperCase()};` : ch;
     return NAMED_MAP[ch] || ch;
   }).join('');
 }

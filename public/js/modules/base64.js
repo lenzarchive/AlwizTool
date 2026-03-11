@@ -9,7 +9,7 @@ function applyOutputFormat(b64) {
     return b64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
   }
   if (fmt === 'mime') {
-    return b64.match(/.{1,76}/g).join('\r\n');
+    return (b64.match(/.{1,76}/g) || []).join('\r\n');
   }
   return b64; 
 }

@@ -17,15 +17,16 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileMenu.classList.add('hidden');
       }
     });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.add('hidden');
+        mobileMenuBtn.focus();
+      }
+    });
   }
 });
-function copyToClipboard(text, btn) {
-  navigator.clipboard.writeText(text).then(() => {
-    if (!btn) return;
-    const original = btn.textContent;
-    btn.textContent = (window.I18N && I18N.copied) || 'Copied!';
-    setTimeout(() => { btn.textContent = original; }, 1500);
-  }).catch(() => {
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).catch(() => {
     const ta = document.createElement('textarea');
     ta.value = text;
     ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;';

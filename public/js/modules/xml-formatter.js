@@ -4,21 +4,30 @@ function getIndent(size) {
 function formatXml(xml, indent) {
   let depth = 0;
   const ind = getIndent(indent);
-  return xml
-    .replace(/>\s*</g, '><')
-    .replace(/(<\/?[^>]+>)/g, (match) => {
-      let result = '';
-      if (match.startsWith('</')) {
-        depth = Math.max(0, depth - 1);
-        result = '\n' + ind.repeat(depth) + match;
-      } else if (match.endsWith('/>') || match.startsWith('<?') || match.startsWith('<!')) {
-        result = '\n' + ind.repeat(depth) + match;
+  const normalized = xml.replace(/>\s*</g, '><');
+  const tokens = normalized.split(/(<[^>]+>)/);
+  const lines = [];
+  for (let i = 0; i < tokens.length; i++) {
+    const token = tokens[i];
+    if (!token.trim()) continue;
+    if (token.startsWith('</')) {
+      depth = Math.max(0, depth - 1);
+      if (lines.length && !lines[lines.length - 1].endsWith('>')) {
+        lines[lines.length - 1] += token;
       } else {
-        result = '\n' + ind.repeat(depth) + match;
-        depth++;
+        lines.push(ind.repeat(depth) + token);
       }
-      return result;
-    }).trim();
+    } else if (token.startsWith('<') && !token.endsWith('/>') && !token.startsWith('<?') && !token.startsWith('<!')) {
+      lines.push(ind.repeat(depth) + token);
+      depth++;
+    } else if (token.startsWith('<')) {
+      lines.push(ind.repeat(depth) + token);
+    } else {
+      if (lines.length) lines[lines.length - 1] += token;
+      else lines.push(token);
+    }
+  }
+  return lines.join('\n').trim();
 }
 function minifyXml(xml) {
   return xml.replace(/>\s+</g, '><').replace(/\s{2,}/g, ' ').trim();

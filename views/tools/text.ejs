@@ -63,9 +63,9 @@
     <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
     <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
   </div>
-<script>var I18N = { noText: "<%= tl.noText %>", copied: "<%= tc.copied %>" };
+<script nonce="<%= nonce %>">var I18N = { noText: "<%= tl.noText %>", copied: "<%= tc.copied %>" };
 </script>
-<script src="/js/app.js">
+<script nonce="<%= nonce %>" src="/js/app.js">
 </script>
-<script src="/js/modules/text.js">
+<script nonce="<%= nonce %>" src="/js/modules/text.js">
 </script>

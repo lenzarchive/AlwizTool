@@ -1,6 +1,7 @@
 const helmet = require('helmet');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
+const crypto = require('crypto');
 const isProd = process.env.NODE_ENV === 'production';
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -17,36 +18,42 @@ const apiLimiter = rateLimit({
   message: { error: 'API rate limit exceeded.' }
 });
 function applySecurityMiddleware(app) {
-  app.use(helmet({
-    contentSecurityPolicy: {
-      useDefaults: false,
-      directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: [
-          "'self'",
-          "'unsafe-inline'",
-          'https://cdnjs.cloudflare.com',
-          'https://www.googletagmanager.com',
-          'https://*.adsterra.com',
-          'https://*.highperformanceformat.com',
-          'https://*.effectivegatecpm.com',
-        ],
-        scriptSrcAttr: ["'unsafe-inline'"],
-        styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
-        fontSrc: ["'self'", 'https://fonts.gstatic.com'],
-        imgSrc: ["'self'", 'data:', 'https:'],
-        connectSrc: ["'self'", 'https:'],
-        frameSrc: ["'self'", 'https:'],
-        objectSrc: ["'none'"],
-        baseUri: ["'self'"],
-      }
-    },
-    hsts: isProd ? { maxAge: 31536000, includeSubDomains: true } : false,
-    crossOriginOpenerPolicy: false,
-    crossOriginEmbedderPolicy: false,
-    originAgentCluster: false,
-    referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
-  }));
+  app.use((req, res, next) => {
+    res.locals.nonce = crypto.randomBytes(16).toString('base64');
+    next();
+  });
+  app.use((req, res, next) => {
+    helmet({
+      contentSecurityPolicy: {
+        useDefaults: false,
+        directives: {
+          defaultSrc: ["'self'"],
+          scriptSrc: [
+            "'self'",
+            (req, res) => `'nonce-${res.locals.nonce}'`,
+            'https://cdnjs.cloudflare.com',
+            'https://www.googletagmanager.com',
+            'https://*.adsterra.com',
+            'https://*.highperformanceformat.com',
+            'https://*.effectivegatecpm.com',
+          ],
+          scriptSrcAttr: ["'none'"],
+          styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
+          fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+          imgSrc: ["'self'", 'data:', 'https:'],
+          connectSrc: ["'self'", 'https:'],
+          frameSrc: ["'self'", 'https:'],
+          objectSrc: ["'none'"],
+          baseUri: ["'self'"],
+        }
+      },
+      hsts: isProd ? { maxAge: 31536000, includeSubDomains: true } : false,
+      crossOriginOpenerPolicy: false,
+      crossOriginEmbedderPolicy: false,
+      originAgentCluster: false,
+      referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
+    })(req, res, next);
+  });
   app.use(cors({
     origin: isProd ? [process.env.CORS_ORIGIN || 'https://alwiztool.work.gd'] : '*',
     methods: ['GET', 'POST'],

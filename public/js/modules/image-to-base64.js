@@ -5,6 +5,7 @@ function formatBytes(b) {
 }
 function processFile(file) {
   if (!file || !file.type.startsWith('image/')) return;
+  if (file.size > 10 * 1024 * 1024) return showToast(I18N.fileTooLarge || 'File exceeds 10 MB limit', 'error');
   const reader = new FileReader();
   reader.onload = (e) => {
     const dataUri = e.target.result;

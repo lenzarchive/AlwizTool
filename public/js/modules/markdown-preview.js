@@ -4,8 +4,8 @@ function renderMarkdown() {
   const preview = document.getElementById('mdPreview');
   const charCount = input.length;
   const wordCount = input.trim() ? input.trim().split(/\s+/).length : 0;
-  document.getElementById('statChars').textContent = charCount + ' ' + (document.getElementById('statChars').textContent.split(' ').slice(1).join(' ') || 'chars');
-  document.getElementById('statWords').textContent = wordCount + ' ' + (document.getElementById('statWords').textContent.split(' ').slice(1).join(' ') || 'words');
+  document.getElementById('statChars').textContent = charCount + ' ' + (document.getElementById('statChars').dataset.label || 'chars');
+  document.getElementById('statWords').textContent = wordCount + ' ' + (document.getElementById('statWords').dataset.label || 'words');
   if (typeof marked === 'undefined') {
     preview.textContent = 'Markdown library loading...';
     return;

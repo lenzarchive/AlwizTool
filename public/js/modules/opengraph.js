@@ -82,7 +82,7 @@ async function checkOG() {
       keySpan.textContent = key;
       const btn = document.createElement('button');
       btn.className = 'copy-btn shrink-0 opacity-60 sm:opacity-0 group-hover:opacity-100 transition-opacity';
-      btn.textContent = I18N.copied ? I18N.copied.replace('!','') : 'Copy';
+      btn.textContent = (I18N && I18N.copy) || 'Copy';
       btn.addEventListener('click', () => {
         copyToClipboard(String(val));
         showToast(I18N.copied || 'Copied!');

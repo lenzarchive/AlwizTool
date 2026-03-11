@@ -32,9 +32,9 @@
       <div id="qrResult" class="hidden flex justify-center items-center min-h-[240px]"></div>
     </div>
   </div>
-<script>var I18N = { pngOnly: "<%= tl.pngOnly %>", copied: "<%= tc.copied %>" };
+<script nonce="<%= nonce %>">var I18N = { pngOnly: "<%= tl.pngOnly %>", copied: "<%= tc.copied %>" };
 </script>
-<script src="/js/app.js">
+<script nonce="<%= nonce %>" src="/js/app.js">
 </script>
-<script src="/js/modules/qrcode.js">
+<script nonce="<%= nonce %>" src="/js/modules/qrcode.js">
 </script>

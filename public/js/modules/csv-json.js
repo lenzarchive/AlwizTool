@@ -1,8 +1,9 @@
 function csvToJson(csv, delimiter, hasHeader, pretty) {
   const lines = csv.trim().split('\n').map(l => l.trim()).filter(Boolean);
   if (!lines.length) return '[]';
+  const escapeRegex = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const parseRow = (line) => {
-    const result = [], re = new RegExp(`(?:^|${delimiter === '\t' ? '\\t' : delimiter})("(?:[^"]|"")*"|[^${delimiter === '\t' ? '\\t' : delimiter}]*)`, 'g');
+    const result = [], re = new RegExp(`(?:^|${delimiter === '\t' ? '\\t' : escapeRegex(delimiter)})("(?:[^"]|"")*"|[^${delimiter === '\t' ? '\\t' : escapeRegex(delimiter)}]*)`, 'g');
     let m;
     while ((m = re.exec(line)) !== null) {
       let val = m[1] ?? '';
