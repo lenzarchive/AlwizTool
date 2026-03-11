@@ -1,5 +1,4 @@
 <% var tl = t.tools.opengraph; var tc = t.common; %>
-  <!-- URL input -->
   <div class="card p-5 mb-6 space-y-3">
     <div class="flex gap-2">
       <input type="url" id="urlInput" class="input-field flex-1" placeholder="<%= tl.urlPlaceholder %>" autocomplete="off">
@@ -11,8 +10,6 @@
       <span id="errorText"></span>
     </div>
   </div>
-
-  <!-- Loading spinner -->
   <div id="loadingState" class="hidden text-center py-12 text-slate-400">
     <svg class="w-7 h-7 animate-spin mx-auto mb-3 text-indigo-500" fill="none" viewBox="0 0 24 24">
       <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
@@ -20,13 +17,8 @@
     </svg>
     <p class="text-sm"><%= tl.fetching %></p>
   </div>
-
-  <!-- Results -->
   <div id="results" class="hidden space-y-6">
-
-    <!-- Preview cards -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      <!-- OG Preview -->
       <div class="card p-5 space-y-3">
         <h2 class="font-semibold text-sm text-slate-900 dark:text-slate-100 flex items-center gap-2">
           <span class="badge bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400">og:</span>
@@ -41,8 +33,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Twitter Card Preview -->
       <div class="card p-5 space-y-3">
         <h2 class="font-semibold text-sm text-slate-900 dark:text-slate-100 flex items-center gap-2">
           <span class="badge bg-sky-100 dark:bg-sky-900/40 text-sky-600 dark:text-sky-400">twitter:</span>
@@ -58,11 +48,7 @@
         </div>
       </div>
     </div>
-
-    <!-- Extra info bar -->
     <div id="infoBar" class="card p-4 flex flex-wrap gap-4 text-xs"></div>
-
-    <!-- Meta tags table -->
     <div class="card p-5">
       <div class="flex items-center justify-between mb-3">
         <h2 class="font-semibold text-sm text-slate-900 dark:text-slate-100"><%= tl.metaTags %></h2>
@@ -75,6 +61,9 @@
   noImage: "<%= tl.noImage %>",
   cardType: "<%= tl.cardType %>",
   copied: "<%= tc.copied %>"
-};</script>
-<script src="/js/app.js"></script>
-<script src="/js/modules/opengraph.js"></script>
+};
+</script>
+<script src="/js/app.js">
+</script>
+<script src="/js/modules/opengraph.js">
+</script>

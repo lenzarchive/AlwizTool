@@ -4,13 +4,10 @@ async function generateQR() {
   const format = document.getElementById('formatSelect').value;
   const placeholder = document.getElementById('qrPlaceholder');
   const resultEl = document.getElementById('qrResult');
-
   if (!text) return showToast('Enter some text first', 'error');
-
   placeholder.classList.add('hidden');
   resultEl.classList.remove('hidden');
   resultEl.innerHTML = '<svg class="w-8 h-8 animate-spin text-indigo-400" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>';
-
   try {
     const res = await fetch('/api/qrcode', {
       method: 'POST',
@@ -19,7 +16,6 @@ async function generateQR() {
     });
     const data = await res.json();
     if (!data.success) throw new Error(data.error);
-
     if (format === 'svg') {
       resultEl.innerHTML = data.data;
       const svg = resultEl.querySelector('svg');
@@ -27,20 +23,17 @@ async function generateQR() {
     } else {
       resultEl.innerHTML = `<img src="${data.data}" alt="QR Code" style="max-width:${size}px;width:100%;height:auto;" class="rounded-lg">`;
     }
-    // store for download
     resultEl.dataset.dataUrl = data.data;
     resultEl.dataset.format = format;
   } catch (e) {
     resultEl.innerHTML = '<span class="text-red-500 text-sm">' + e.message + '</span>';
   }
 }
-
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btnGenerate').addEventListener('click', generateQR);
   document.getElementById('inputText').addEventListener('keydown', e => {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); generateQR(); }
   });
-
   document.getElementById('btnCopyImg').addEventListener('click', async () => {
     const r = document.getElementById('qrResult');
     if (!r.dataset.dataUrl) return showToast((I18N && I18N.pngOnly) || 'Generate first', 'error');
@@ -54,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
       showToast('Copy failed — try downloading instead', 'error');
     }
   });
-
   document.getElementById('btnDownload').addEventListener('click', () => {
     const r = document.getElementById('qrResult');
     if (!r.dataset.dataUrl) return showToast('Generate first', 'error');

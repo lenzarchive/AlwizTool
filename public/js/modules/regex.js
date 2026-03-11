@@ -5,17 +5,14 @@ const HIGHLIGHT_COLORS = [
   'bg-pink-200 dark:bg-pink-700/60',
   'bg-orange-200 dark:bg-orange-700/60',
 ];
-
 function getFlags() {
   return document.getElementById('regexFlagsInput').value;
 }
-
 function syncCheckboxes(flags) {
   document.querySelectorAll('.flag-check').forEach(cb => {
     cb.checked = flags.includes(cb.dataset.flag);
   });
 }
-
 function runRegex() {
   const pattern = document.getElementById('regexPattern').value;
   const flags = getFlags();
@@ -25,15 +22,12 @@ function runRegex() {
   const highlightEl = document.getElementById('highlightedText');
   const matchList = document.getElementById('matchList');
   const noMatchMsg = document.getElementById('noMatchMsg');
-
   errEl.classList.add('hidden');
   highlightEl.innerHTML = escapeHtml(testStr);
   countEl.textContent = '';
   matchList.innerHTML = '';
   noMatchMsg.classList.add('hidden');
-
   if (!pattern) return;
-
   let regex;
   try {
     regex = new RegExp(pattern, flags);
@@ -42,19 +36,14 @@ function runRegex() {
     errEl.classList.remove('hidden');
     return;
   }
-
   const matches = [...testStr.matchAll(new RegExp(pattern, flags.includes('g') ? flags : flags + 'g'))];
-
   countEl.textContent = matches.length + ' ' + (matches.length === 1
     ? ((I18N && I18N.matchCount) || 'match')
     : ((I18N && I18N.matchCountPlural) || 'matches'));
-
   if (matches.length === 0) {
     noMatchMsg.classList.remove('hidden');
     return;
   }
-
-  // Highlighted text
   let highlighted = '';
   let lastIdx = 0;
   matches.forEach((m, i) => {
@@ -65,8 +54,6 @@ function runRegex() {
   });
   highlighted += escapeHtml(testStr.slice(lastIdx));
   highlightEl.innerHTML = highlighted;
-
-  // Match list with groups
   matches.forEach((m, i) => {
     const div = document.createElement('div');
     div.className = 'p-2.5 bg-slate-50 dark:bg-slate-800/60 rounded-lg text-xs space-y-1';
@@ -90,20 +77,16 @@ function runRegex() {
     matchList.appendChild(div);
   });
 }
-
 function escapeHtml(str) {
   return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
-
 document.addEventListener('DOMContentLoaded', () => {
   const patternInput = document.getElementById('regexPattern');
   const flagsInput = document.getElementById('regexFlagsInput');
   const testInput = document.getElementById('testString');
-
   patternInput.addEventListener('input', runRegex);
   flagsInput.addEventListener('input', () => { syncCheckboxes(flagsInput.value); runRegex(); });
   testInput.addEventListener('input', runRegex);
-
   document.querySelectorAll('.flag-check').forEach(cb => {
     cb.addEventListener('change', () => {
       const active = [...document.querySelectorAll('.flag-check:checked')].map(c => c.dataset.flag).join('');

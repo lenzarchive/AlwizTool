@@ -2,12 +2,10 @@ function getMode() {
   const r = document.querySelector('input[name="modeSelect"]:checked');
   return r ? r.value : 'component';
 }
-
 function encodeRFC3986(str) {
   return encodeURIComponent(str)
     .replace(/[!'()*]/g, c => '%' + c.charCodeAt(0).toString(16).toUpperCase());
 }
-
 function doEncode() {
   const input = document.getElementById('inputText').value;
   const errEl = document.getElementById('errorMsg');
@@ -25,7 +23,6 @@ function doEncode() {
     errEl.classList.remove('hidden');
   }
 }
-
 function doDecode() {
   const input = document.getElementById('inputText').value.trim();
   const errEl = document.getElementById('errorMsg');
@@ -41,7 +38,6 @@ function doDecode() {
     errEl.classList.remove('hidden');
   }
 }
-
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btnEncode').addEventListener('click', doEncode);
   document.getElementById('btnDecode').addEventListener('click', doDecode);

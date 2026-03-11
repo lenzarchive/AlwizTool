@@ -1,8 +1,6 @@
 <% var tl = t.tools.base64; var tc = t.common; %>
-  <!-- Options bar: two rows of sub-categories -->
   <div class="card p-4 mb-4 space-y-3">
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-      <!-- Input Encoding -->
       <div class="flex flex-col gap-1">
         <label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide" for="encodingMode"><%= tl.inputEncoding %></label>
         <select id="encodingMode" class="select-field text-xs py-1.5 w-full">
@@ -14,7 +12,6 @@
           <option value="utf16be"><%= tl.modeUTF16BE %></option>
         </select>
       </div>
-      <!-- Output Format -->
       <div class="flex flex-col gap-1">
         <label class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide" for="outputFormat"><%= tl.outputFormat %></label>
         <select id="outputFormat" class="select-field text-xs py-1.5 w-full">
@@ -25,16 +22,12 @@
         </select>
       </div>
     </div>
-    <!-- Hint when mode changes -->
     <div id="modeHint" class="hidden flex items-center gap-1.5 text-xs text-amber-600 dark:text-amber-400">
       <svg class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
       <span id="modeHintText"></span>
     </div>
   </div>
-
-  <!-- Two-panel layout with swap -->
   <div class="grid grid-cols-1 lg:grid-cols-[1fr_44px_1fr] items-start gap-2">
-    <!-- Input -->
     <div class="card p-5 space-y-4">
       <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm flex items-center gap-2">
         <span class="w-2 h-2 rounded-full bg-indigo-500 inline-block"></span><%= tc.input %>
@@ -46,8 +39,6 @@
         <button id="btnClear" class="btn-secondary ml-auto"><%= tc.clear %></button>
       </div>
     </div>
-
-    <!-- Swap (center column) -->
     <div class="flex lg:flex-col items-center justify-center py-3 lg:py-0 lg:pt-24">
       <button id="btnSwap" class="swap-btn" title="<%= tc.swapLabel %>">
         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -56,8 +47,6 @@
       </button>
       <span class="text-[10px] text-slate-400 mt-1 hidden lg:block text-center leading-tight"><%= tc.swapIO %></span>
     </div>
-
-    <!-- Output -->
     <div class="card p-5 space-y-4">
       <div class="flex items-center justify-between">
         <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm flex items-center gap-2">
@@ -70,7 +59,6 @@
       <div id="statBar" class="hidden text-xs text-slate-400 font-mono"></div>
     </div>
   </div>
-
   <div class="mt-6 card p-5">
     <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
     <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
@@ -79,6 +67,9 @@
   copied: "<%= tc.copied %>",
   nothingToCopy: "<%= tc.nothingToCopy %>",
   modeChanged: "Mode changed — press Encode or Decode to re-run."
-};</script>
-<script src="/js/app.js"></script>
-<script src="/js/modules/base64.js"></script>
+};
+</script>
+<script src="/js/app.js">
+</script>
+<script src="/js/modules/base64.js">
+</script>

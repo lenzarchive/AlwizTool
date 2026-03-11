@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Theme toggle
   const themeToggle = document.getElementById('themeToggle');
   if (themeToggle) {
     themeToggle.addEventListener('click', () => {
@@ -7,15 +6,12 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.setItem('theme', isDark ? 'dark' : 'light');
     });
   }
-
-  // Mobile menu
   const mobileMenuBtn = document.getElementById('mobileMenuBtn');
   const mobileMenu = document.getElementById('mobileMenu');
   if (mobileMenuBtn && mobileMenu) {
     mobileMenuBtn.addEventListener('click', () => {
       mobileMenu.classList.toggle('hidden');
     });
-    // Close on outside click
     document.addEventListener('click', e => {
       if (!mobileMenuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
         mobileMenu.classList.add('hidden');
@@ -23,8 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
-
-// Global clipboard helper
 function copyToClipboard(text, btn) {
   navigator.clipboard.writeText(text).then(() => {
     if (!btn) return;
@@ -32,7 +26,6 @@ function copyToClipboard(text, btn) {
     btn.textContent = (window.I18N && I18N.copied) || 'Copied!';
     setTimeout(() => { btn.textContent = original; }, 1500);
   }).catch(() => {
-    // Fallback for non-secure contexts
     const ta = document.createElement('textarea');
     ta.value = text;
     ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;';
@@ -42,8 +35,6 @@ function copyToClipboard(text, btn) {
     ta.remove();
   });
 }
-
-// Toast notification
 function showToast(msg, type = 'success') {
   const existing = document.getElementById('_toast');
   if (existing) existing.remove();

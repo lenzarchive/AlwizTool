@@ -2,12 +2,10 @@ async function generateHashes() {
   const text = document.getElementById('inputText').value;
   const hmacKey = document.getElementById('hmacKey').value;
   const algos = ['md5', 'sha1', 'sha256', 'sha384', 'sha512'];
-
   if (!text) {
     algos.forEach(a => { document.getElementById('hash-' + a).value = ''; });
     return;
   }
-
   try {
     const body = { text };
     if (hmacKey) body.hmacKey = hmacKey;
@@ -26,7 +24,6 @@ async function generateHashes() {
     console.error(e);
   }
 }
-
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btnGenerate').addEventListener('click', generateHashes);
   document.getElementById('inputText').addEventListener('input', function() {

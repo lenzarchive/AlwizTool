@@ -1,9 +1,5 @@
-// ─── Helpers ────────────────────────────────────────────────────────────────
-
 function getInputMode()   { return document.getElementById('encodingMode').value; }
 function getOutputFormat(){ return document.getElementById('outputFormat').value; }
-
-// Apply output format to a raw standard base64 string
 function applyOutputFormat(b64) {
   const fmt = getOutputFormat();
   if (fmt === 'nopad') {
@@ -13,47 +9,32 @@ function applyOutputFormat(b64) {
     return b64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
   }
   if (fmt === 'mime') {
-    // MIME: insert CRLF every 76 chars
     return b64.match(/.{1,76}/g).join('\r\n');
   }
-  return b64; // standard
+  return b64; 
 }
-
-// Normalise input base64 before passing to atob:
-// strip whitespace, reverse url-safe substitutions, restore padding
 function normaliseBase64(s) {
-  // strip whitespace & CRLF (handles MIME-wrapped input)
   s = s.replace(/\s/g, '');
-  // reverse url-safe chars
   s = s.replace(/-/g, '+').replace(/_/g, '/');
-  // restore padding
   const rem = s.length % 4;
   if (rem === 2) s += '==';
   else if (rem === 3) s += '=';
   return s;
 }
-
-// ─── Encode ─────────────────────────────────────────────────────────────────
-
 function encodeInput(text) {
   const mode = getInputMode();
-
   if (mode === 'utf8') {
-    // Use TextEncoder — reliable, no escape() nonsense
     const bytes = new TextEncoder().encode(text);
     const bin = Array.from(bytes, b => String.fromCharCode(b)).join('');
     return btoa(bin);
   }
-
   if (mode === 'latin1') {
-    // Caller must ensure all chars are in 0–255; throw otherwise
     for (let i = 0; i < text.length; i++) {
       if (text.charCodeAt(i) > 255)
         throw new Error('Character "' + text[i] + '" (U+' + text.charCodeAt(i).toString(16).toUpperCase() + ') is out of Latin-1 range (0–255).');
     }
     return btoa(text);
   }
-
   if (mode === 'hex') {
     const clean = text.replace(/[\s:]/g, '');
     if (clean.length % 2 !== 0) throw new Error('Hex string must have an even number of digits.');
@@ -61,7 +42,6 @@ function encodeInput(text) {
     const bin = clean.match(/.{2}/g).map(b => String.fromCharCode(parseInt(b, 16))).join('');
     return btoa(bin);
   }
-
   if (mode === 'binary') {
     const clean = text.replace(/\s/g, '');
     if (!/^[01]*$/.test(clean)) throw new Error('Binary string must contain only 0 and 1.');
@@ -69,7 +49,6 @@ function encodeInput(text) {
     const bin = clean.match(/.{8}/g).map(b => String.fromCharCode(parseInt(b, 2))).join('');
     return btoa(bin);
   }
-
   if (mode === 'utf16le' || mode === 'utf16be') {
     const le = mode === 'utf16le';
     const bytes = [];
@@ -81,44 +60,31 @@ function encodeInput(text) {
     const bin = bytes.map(b => String.fromCharCode(b)).join('');
     return btoa(bin);
   }
-
   throw new Error('Unknown encoding mode: ' + mode);
 }
-
-// ─── Decode ─────────────────────────────────────────────────────────────────
-
 function decodeInput(raw) {
   const mode  = getInputMode();
   const b64   = normaliseBase64(raw);
-
-  // atob() throws a DOMException with a clear message on invalid input
   let bin;
   try { bin = atob(b64); }
   catch(e) { throw new Error('Input is not valid Base64. (' + e.message + ')'); }
-
   const bytes = Uint8Array.from(bin, c => c.charCodeAt(0));
-
   if (mode === 'utf8') {
     try {
       return new TextDecoder('utf-8', { fatal: true }).decode(bytes);
     } catch(e) {
-      // Fallback: if it's not valid UTF-8, decode as Latin-1 and warn
       throw new Error('Byte sequence is not valid UTF-8. Try Latin-1 mode if the data uses a single-byte encoding.');
     }
   }
-
   if (mode === 'latin1') {
     return Array.from(bytes, b => String.fromCharCode(b)).join('');
   }
-
   if (mode === 'hex') {
     return Array.from(bytes, b => b.toString(16).padStart(2, '0')).join(' ');
   }
-
   if (mode === 'binary') {
     return Array.from(bytes, b => b.toString(2).padStart(8, '0')).join(' ');
   }
-
   if (mode === 'utf16le' || mode === 'utf16be') {
     if (bytes.length % 2 !== 0) throw new Error('Byte count must be even for UTF-16 decoding.');
     const le = mode === 'utf16le';
@@ -131,12 +97,8 @@ function decodeInput(raw) {
     }
     return result;
   }
-
   throw new Error('Unknown encoding mode: ' + mode);
 }
-
-// ─── UI ─────────────────────────────────────────────────────────────────────
-
 function setError(msg) {
   const e = document.getElementById('errorMsg');
   e.textContent = msg;
@@ -153,7 +115,6 @@ function setStat(msg) {
 function clearStat() {
   document.getElementById('statBar').classList.add('hidden');
 }
-
 function doEncode() {
   const input = document.getElementById('inputText').value;
   clearError(); clearStat();
@@ -166,7 +127,6 @@ function doEncode() {
     setError(e.message);
   }
 }
-
 function doDecode() {
   const input = document.getElementById('inputText').value.trim();
   clearError(); clearStat();
@@ -178,7 +138,6 @@ function doDecode() {
     setError(e.message);
   }
 }
-
 function showModeHint() {
   const hint = document.getElementById('modeHint');
   const hintText = document.getElementById('modeHintText');
@@ -188,9 +147,6 @@ function showModeHint() {
     hint.classList.remove('hidden');
   }
 }
-
-// ─── Init ────────────────────────────────────────────────────────────────────
-
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btnEncode').addEventListener('click', () => {
     document.getElementById('modeHint').classList.add('hidden');
@@ -221,11 +177,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('modeHint').classList.add('hidden');
     clearError(); clearStat();
   });
-
-  // Show hint when mode or format changes while there's already output
   document.getElementById('encodingMode').addEventListener('change', showModeHint);
   document.getElementById('outputFormat').addEventListener('change', () => {
-    // Output format can be re-applied instantly if there's a raw result in input
     const out = document.getElementById('outputText').value;
     if (out) showModeHint();
   });

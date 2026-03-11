@@ -4,19 +4,15 @@ async function checkOG() {
   const errTxt = document.getElementById('errorText');
   const loading = document.getElementById('loadingState');
   const results = document.getElementById('results');
-
   errEl.classList.add('hidden');
   results.classList.add('hidden');
-
   if (!url) {
     errTxt.textContent = 'Please enter a URL first.';
     errEl.classList.remove('hidden');
     return;
   }
-
   loading.classList.remove('hidden');
   document.getElementById('btnCheck').disabled = true;
-
   try {
     const res = await fetch('/api/opengraph', {
       method: 'POST',
@@ -24,32 +20,23 @@ async function checkOG() {
       body: JSON.stringify({ url })
     });
     const json = await res.json();
-
     loading.classList.add('hidden');
     document.getElementById('btnCheck').disabled = false;
-
     if (!json.success) {
       errTxt.textContent = json.error || 'Failed to fetch page.';
       errEl.classList.remove('hidden');
       return;
     }
-
     const d = json.data;
     results.classList.remove('hidden');
-
-    // ── OG Preview ────────────────────────────────────────
     renderImageSlot('ogImage', d.image);
     document.getElementById('ogSite').textContent  = d.siteName || extractDomain(d.canonical || url);
     document.getElementById('ogTitle').textContent = d.title || '(no title)';
     document.getElementById('ogDesc').textContent  = d.description || '';
-
-    // ── Twitter Card Preview ───────────────────────────────
     renderImageSlot('twImage', d.twitterImage || d.image);
     document.getElementById('twCard').textContent  = d.twitterCard ? ((I18N.cardType || 'Card') + ': ' + d.twitterCard) : (d.twitterSite ? '@' + d.twitterSite : '');
     document.getElementById('twTitle').textContent = d.twitterTitle  || d.title || '(no title)';
     document.getElementById('twDesc').textContent  = d.twitterDescription || d.description || '';
-
-    // ── Info bar ───────────────────────────────────────────
     const infoBar = document.getElementById('infoBar');
     const infos = [];
     if (d.charset)     infos.push(['Charset', d.charset]);
@@ -63,8 +50,6 @@ async function checkOG() {
       </span>`
     ).join('');
     infoBar.classList.toggle('hidden', infos.length === 0);
-
-    // ── Meta table ─────────────────────────────────────────
     const metas = [
       ['og:title',              d.title],
       ['og:description',        d.description],
@@ -83,10 +68,8 @@ async function checkOG() {
       ['charset',               d.charset],
       ['favicon',               d.favicon],
     ].filter(([, v]) => v != null && v !== '');
-
     const copyBtn = document.getElementById('btnCopyMeta');
     copyBtn.classList.toggle('hidden', metas.length === 0);
-
     document.getElementById('metaTable').innerHTML = metas.map(([key, val]) =>
       `<div class="py-2 group border-b border-slate-100 dark:border-slate-800 last:border-0">
         <div class="flex items-center justify-between gap-2 mb-0.5">
@@ -98,14 +81,11 @@ async function checkOG() {
         <span class="text-xs text-slate-700 dark:text-slate-300 break-all block w-full">${escH(String(val))}</span>
       </div>`
     ).join('');
-
-    // Copy all as JSON
     copyBtn.onclick = () => {
       const obj = Object.fromEntries(metas);
       copyToClipboard(JSON.stringify(obj, null, 2));
       showToast(I18N.copied || 'Copied!');
     };
-
   } catch (e) {
     loading.classList.add('hidden');
     document.getElementById('btnCheck').disabled = false;
@@ -113,7 +93,6 @@ async function checkOG() {
     errEl.classList.remove('hidden');
   }
 }
-
 function renderImageSlot(id, imgUrl) {
   const el = document.getElementById(id);
   if (imgUrl) {
@@ -124,18 +103,15 @@ function renderImageSlot(id, imgUrl) {
     el.innerHTML = `<span class="text-slate-400 text-xs">${I18N.noImage || 'No Image'}</span>`;
   }
 }
-
 function extractDomain(url) {
   try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return ''; }
 }
-
 function escH(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 function escAttr(s) {
   return String(s).replace(/'/g,"\\'").replace(/\n/g,' ');
 }
-
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btnCheck').addEventListener('click', checkOG);
   document.getElementById('urlInput').addEventListener('keydown', e => {

@@ -4,14 +4,12 @@ function generateUUID() {
     return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
   });
 }
-
 function formatUUID(uuid, fmt) {
   if (fmt === 'uppercase') return uuid.toUpperCase();
   if (fmt === 'noHyphen') return uuid.replace(/-/g, '');
   if (fmt === 'braces') return '{' + uuid + '}';
   return uuid;
 }
-
 function renderUUIDs() {
   const count = Math.min(parseInt(document.getElementById('countInput').value) || 10, 100);
   const fmt = document.getElementById('formatSelect').value;
@@ -32,7 +30,6 @@ function renderUUIDs() {
     list.appendChild(row);
   }
 }
-
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btnGenerate').addEventListener('click', renderUUIDs);
   document.getElementById('btnCopyAll').addEventListener('click', () => {

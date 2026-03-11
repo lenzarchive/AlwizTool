@@ -4,7 +4,6 @@ function hexToRgb(hex) {
   const n = parseInt(hex, 16);
   return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
 }
-
 function rgbToHsl(r, g, b) {
   r /= 255; g /= 255; b /= 255;
   const max = Math.max(r, g, b), min = Math.min(r, g, b);
@@ -21,7 +20,6 @@ function rgbToHsl(r, g, b) {
   }
   return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
 }
-
 function rgbToHsv(r, g, b) {
   r /= 255; g /= 255; b /= 255;
   const max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min;
@@ -38,7 +36,6 @@ function rgbToHsv(r, g, b) {
   }
   return { h: Math.round(h * 360), s: Math.round(s * 100), v: Math.round(v * 100) };
 }
-
 function rgbToCmyk(r, g, b) {
   r /= 255; g /= 255; b /= 255;
   const k = 1 - Math.max(r, g, b);
@@ -50,14 +47,12 @@ function rgbToCmyk(r, g, b) {
     k: Math.round(k * 100)
   };
 }
-
 function updateFromHex(hex) {
   if (!/^#[0-9a-fA-F]{6}$/.test(hex)) return;
   const { r, g, b } = hexToRgb(hex);
   const hsl = rgbToHsl(r, g, b);
   const hsv = rgbToHsv(r, g, b);
   const cmyk = rgbToCmyk(r, g, b);
-
   document.getElementById('colorPicker').value = hex;
   document.getElementById('colorPreview').style.backgroundColor = hex;
   document.getElementById('rgbOutput').value = `rgb(${r}, ${g}, ${b})`;
@@ -67,22 +62,18 @@ function updateFromHex(hex) {
   document.getElementById('hsvOutput').value = `hsv(${hsv.h}, ${hsv.s}%, ${hsv.v}%)`;
   document.getElementById('cmykOutput').value = `cmyk(${cmyk.c}%, ${cmyk.m}%, ${cmyk.y}%, ${cmyk.k}%)`;
 }
-
 document.addEventListener('DOMContentLoaded', () => {
   const picker = document.getElementById('colorPicker');
   const hexInput = document.getElementById('hexInput');
-
   picker.addEventListener('input', e => {
     hexInput.value = e.target.value;
     updateFromHex(e.target.value);
   });
-
   hexInput.addEventListener('input', e => {
     let v = e.target.value.trim();
     if (!v.startsWith('#')) v = '#' + v;
     updateFromHex(v);
   });
-
   document.querySelectorAll('.copy-color-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const val = document.getElementById(btn.dataset.source).value;
@@ -91,6 +82,5 @@ document.addEventListener('DOMContentLoaded', () => {
       showToast((I18N && I18N.copied) || 'Copied!');
     });
   });
-
   updateFromHex('#4f46e5');
 });

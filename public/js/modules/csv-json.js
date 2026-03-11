@@ -1,7 +1,6 @@
 function csvToJson(csv, delimiter, hasHeader, pretty) {
   const lines = csv.trim().split('\n').map(l => l.trim()).filter(Boolean);
   if (!lines.length) return '[]';
-
   const parseRow = (line) => {
     const result = [], re = new RegExp(`(?:^|${delimiter === '\t' ? '\\t' : delimiter})("(?:[^"]|"")*"|[^${delimiter === '\t' ? '\\t' : delimiter}]*)`, 'g');
     let m;
@@ -12,7 +11,6 @@ function csvToJson(csv, delimiter, hasHeader, pretty) {
     }
     return result;
   };
-
   if (hasHeader) {
     const headers = parseRow(lines[0]);
     const rows = lines.slice(1).map(l => {
@@ -26,18 +24,15 @@ function csvToJson(csv, delimiter, hasHeader, pretty) {
     return JSON.stringify(lines.map(l => parseRow(l)), null, pretty ? 2 : 0);
   }
 }
-
 function jsonToCsv(jsonStr, delimiter) {
   let data;
   try { data = JSON.parse(jsonStr); } catch(e) { throw new Error('Invalid JSON: ' + e.message); }
   if (!Array.isArray(data) || !data.length) throw new Error('JSON must be a non-empty array');
-
   const d = delimiter === '\\t' ? '\t' : delimiter;
   const escapeCell = v => {
     const s = String(v ?? '');
     return (s.includes(d) || s.includes('"') || s.includes('\n')) ? '"' + s.replace(/"/g,'""') + '"' : s;
   };
-
   if (typeof data[0] === 'object' && !Array.isArray(data[0])) {
     const keys = Object.keys(data[0]);
     const header = keys.map(escapeCell).join(d);
@@ -47,7 +42,6 @@ function jsonToCsv(jsonStr, delimiter) {
     return data.map(row => (Array.isArray(row) ? row : [row]).map(escapeCell).join(d)).join('\n');
   }
 }
-
 function convert() {
   const input = document.getElementById('inputText').value.trim();
   const mode = document.getElementById('modeSelect').value;
@@ -56,10 +50,8 @@ function convert() {
   const hasHeader = document.getElementById('includeHeader').checked;
   const errEl = document.getElementById('errorMsg');
   const outputEl = document.getElementById('outputText');
-
   errEl.classList.add('hidden');
   if (!input) { outputEl.value = ''; return; }
-
   try {
     if (mode === 'csv2json') {
       outputEl.value = csvToJson(input, delimiter, hasHeader, pretty);
@@ -72,7 +64,6 @@ function convert() {
     outputEl.value = '';
   }
 }
-
 document.addEventListener('DOMContentLoaded', () => {
   ['inputText','modeSelect','delimiterSelect','prettyPrint','includeHeader'].forEach(id => {
     document.getElementById(id).addEventListener('change', convert);

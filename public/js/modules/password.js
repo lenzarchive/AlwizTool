@@ -5,10 +5,7 @@ const CHARS = {
   symbols: '!@#$%^&*()_+-=[]{}|;:,.<>?',
   ambiguous: '0Ol1I'
 };
-
-// ~1000 common English words suitable for passphrases
 const WORDS = ['apple','bridge','cloud','dance','earth','flame','grace','house','ivory','jewel','knife','lemon','mango','night','ocean','piano','quest','river','stone','tiger','ultra','vapor','water','xenon','yacht','zebra','amber','brave','coral','dream','eagle','frost','globe','heart','input','joker','karma','light','magic','noble','olive','pearl','queen','radar','silver','torch','unity','voice','wheat','index','young','above','below','chair','drive','enter','float','great','hotel','inner','juice','kings','laugh','mercy','north','outer','price','quota','raise','south','track','upset','valid','waste','xerox','yield','zones','alert','bench','clear','delta','event','field','grant','hurry','image','joint','knock','layer','metal','nerve','orbit','plant','quick','reach','sharp','table','ultra','value','watch','extra','yearl','zipper','actor','baker','chess','depot','eager','facet','group','hinge','infer','judge','kiosk','lunar','micro','nanny','optic','proxy','quake','range','serve','title','urban','venus','woven','axiom','blaze','candy','decay','elite','fairy','grasp','hedge','intro','jazzy','kluge','lance','march','nexus','oxide','pixel','quart','relay','solar','tempo','under','vista','windy','oxide','brave','craft','draft','elite','final','grade','happy','irony','joust','lunar','mauve','nurse','other','power','query','rocky','stoic','triad','unite','vault','world','xenon','young','zeros','album','black','civic','dunno','earns','faint','gavel','haste','ideal','jelly','krill','lower','mount','novel','opine','plumb','quiet','rainy','spare','theta','uncle','uvula','viola','wring','xylem','yodel','zonal'];
-
 function generatePassword(len, opts) {
   let charset = '';
   if (opts.upper) charset += CHARS.upper;
@@ -21,13 +18,11 @@ function generatePassword(len, opts) {
   crypto.getRandomValues(arr);
   return Array.from(arr, n => charset[n % charset.length]).join('');
 }
-
 function generatePassphrase(wordCount, separator) {
   const arr = new Uint32Array(wordCount);
   crypto.getRandomValues(arr);
   return Array.from(arr, n => WORDS[n % WORDS.length]).join(separator);
 }
-
 function getStrength(pw) {
   let s = 0;
   if (pw.length >= 12) s++; if (pw.length >= 16) s++;
@@ -38,15 +33,12 @@ function getStrength(pw) {
   if (s <= 4) return { label: (I18N && I18N.medium) || 'Medium', color: 'bg-yellow-500', pct: 60 };
   return { label: (I18N && I18N.strong) || 'Strong', color: 'bg-green-500', pct: 100 };
 }
-
 function isPassphrase() {
   return document.querySelector('input[name="pwMode"]:checked')?.value === 'passphrase';
 }
-
 function generatePasswords() {
   const count = Math.min(parseInt(document.getElementById('pwCount').value) || 5, 50);
   let passwords;
-
   if (isPassphrase()) {
     const wordCount = parseInt(document.getElementById('wordCountRange').value) || 4;
     const sep = document.getElementById('separatorSelect').value;
@@ -65,7 +57,6 @@ function generatePasswords() {
     }
     passwords = Array.from({ length: count }, () => generatePassword(len, opts));
   }
-
   const list = document.getElementById('passwordList');
   list.innerHTML = '';
   passwords.forEach(pw => {
@@ -81,7 +72,6 @@ function generatePasswords() {
     row.append(span, btn);
     list.appendChild(row);
   });
-
   if (passwords.length > 0) {
     const st = getStrength(passwords[0]);
     document.getElementById('strengthBar').classList.remove('hidden');
@@ -91,7 +81,6 @@ function generatePasswords() {
     fill.style.width = st.pct + '%';
   }
 }
-
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('lengthRange').addEventListener('input', () => {
     document.getElementById('lengthVal').textContent = document.getElementById('lengthRange').value;

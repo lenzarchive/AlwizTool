@@ -1,11 +1,5 @@
-/**
- * Fetch Open Graph data using open-graph-scraper (v6, ESM).
- * We use dynamic import() since this project is CommonJS.
- */
 async function fetchOGData(url) {
-  // Dynamic import for ESM package in CJS context
   const { default: ogs } = await import('open-graph-scraper');
-
   const { error, result } = await ogs({
     url,
     timeout: 10000,
@@ -19,15 +13,11 @@ async function fetchOGData(url) {
       }
     }
   });
-
   if (error) {
     throw new Error(result.error || 'Failed to fetch page');
   }
-
-  // ogImage is an array in v6
   const ogImageUrl  = Array.isArray(result.ogImage)  ? result.ogImage[0]?.url  : result.ogImage  || null;
   const twImageUrl  = Array.isArray(result.twitterImage) ? result.twitterImage[0]?.url : result.twitterImage || null;
-
   return {
     url,
     title:              result.ogTitle       || result.twitterTitle || null,
@@ -48,5 +38,4 @@ async function fetchOGData(url) {
     themeColor:         result.themeColor    || null,
   };
 }
-
 module.exports = { fetchOGData };

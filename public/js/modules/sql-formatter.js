@@ -8,28 +8,20 @@ const SQL_KEYWORDS = [
   'PRIMARY KEY','FOREIGN KEY','REFERENCES','UNIQUE','NOT NULL','DEFAULT','CHECK','INDEX',
   'BEGIN','COMMIT','ROLLBACK','TRANSACTION'
 ];
-
 function formatSql(sql) {
-  // Normalize whitespace
   let s = sql.replace(/\s+/g, ' ').trim();
-
-  // Uppercase keywords
   SQL_KEYWORDS.sort((a, b) => b.length - a.length).forEach(kw => {
     const re = new RegExp('\\b' + kw.replace(/ /g, '\\s+') + '\\b', 'gi');
     s = s.replace(re, kw);
   });
-
   const BREAK_BEFORE = ['SELECT','FROM','WHERE','JOIN','LEFT JOIN','RIGHT JOIN','INNER JOIN',
     'OUTER JOIN','FULL JOIN','CROSS JOIN','ON','AND','OR','GROUP BY','ORDER BY','HAVING',
     'LIMIT','OFFSET','UNION','UNION ALL','INTERSECT','EXCEPT','INSERT INTO','VALUES',
     'UPDATE','SET','DELETE FROM'];
-
   BREAK_BEFORE.forEach(kw => {
     const re = new RegExp('\\s+' + kw.replace(/ /g, '\\s+') + '(?=\\s|$)', 'g');
     s = s.replace(re, '\n' + kw);
   });
-
-  // Indent sub-clauses
   const lines = s.split('\n');
   const INDENT_WORDS = ['AND','OR','ON','SET'];
   return lines.map((line, i) => {
@@ -41,11 +33,9 @@ function formatSql(sql) {
     return '  ' + trimmed;
   }).join('\n');
 }
-
 function minifySql(sql) {
   return sql.replace(/\s+/g, ' ').trim();
 }
-
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btnFormat').addEventListener('click', () => {
     const sql = document.getElementById('inputText').value.trim();

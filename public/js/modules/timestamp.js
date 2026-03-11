@@ -4,7 +4,6 @@ function updateCurrent() {
   document.getElementById('currentMs').textContent = now;
   document.getElementById('currentISO').textContent = new Date(now).toISOString();
 }
-
 function convertTS() {
   const ts = document.getElementById('tsInput').value.trim();
   if (!ts) return showToast((I18N && I18N.invalidTs) || 'Invalid timestamp', 'error');
@@ -19,15 +18,12 @@ function convertTS() {
   document.getElementById('ts-RFC2822').textContent = date.toString();
   document.getElementById('tsResult').classList.remove('hidden');
 }
-
 document.addEventListener('DOMContentLoaded', () => {
   updateCurrent();
   setInterval(updateCurrent, 100);
-
   const now = new Date();
   now.setSeconds(0, 0);
   document.getElementById('dateInput').value = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
-
   document.getElementById('btnConvertTS').addEventListener('click', convertTS);
   document.getElementById('tsInput').addEventListener('keydown', e => { if (e.key === 'Enter') convertTS(); });
   document.getElementById('btnUseNow').addEventListener('click', () => {

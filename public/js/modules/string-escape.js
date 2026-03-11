@@ -36,7 +36,6 @@ const escapers = {
     }
   }
 };
-
 function convert() {
   const input = document.getElementById('inputText').value;
   const mode  = document.getElementById('modeSelect').value;
@@ -49,7 +48,6 @@ function convert() {
     document.getElementById('outputText').value = 'Error: ' + e.message;
   }
 }
-
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('inputText').addEventListener('input', convert);
   document.getElementById('modeSelect').addEventListener('change', convert);

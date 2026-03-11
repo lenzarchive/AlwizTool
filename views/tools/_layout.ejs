@@ -3,7 +3,6 @@
 <%- include('../partials/head') %>
 <body class="bg-slate-50 dark:bg-slate-950 min-h-screen flex flex-col overflow-x-hidden">
 <%- include('../partials/header') %>
-
 <% var _tl = t.tools[tool.i18nKey] || {}; var _tc = t.common || {}; %>
 <main class="flex-1 max-w-6xl mx-auto px-4 py-8 w-full">
   <nav class="flex items-center gap-2 text-xs text-slate-400 mb-6">
@@ -11,14 +10,11 @@
     <span>/</span>
     <span class="text-slate-600 dark:text-slate-300"><%= _tl.title %></span>
   </nav>
-
   <div class="mb-6">
     <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-1"><%= _tl.title %></h1>
     <p class="text-sm text-slate-500 dark:text-slate-400"><%= _tl.subtitle %></p>
   </div>
-
   <%- body %>
-
   <section class="mt-10 pt-8 border-t border-slate-200 dark:border-slate-800">
     <h2 class="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-4"><%= _tc.otherTools || 'Other Tools' %></h2>
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -36,7 +32,6 @@
     </div>
   </section>
 </main>
-
 <%- include('../partials/footer') %>
 <%- script %>
 </body>

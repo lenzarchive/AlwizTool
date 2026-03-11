@@ -3,7 +3,6 @@ function formatBytes(b) {
   if (b < 1024 * 1024) return (b / 1024).toFixed(1) + ' KB';
   return (b / (1024 * 1024)).toFixed(2) + ' MB';
 }
-
 function processFile(file) {
   if (!file || !file.type.startsWith('image/')) return;
   const reader = new FileReader();
@@ -19,14 +18,11 @@ function processFile(file) {
   };
   reader.readAsDataURL(file);
 }
-
 document.addEventListener('DOMContentLoaded', () => {
   const dropZone = document.getElementById('dropZone');
   const fileInput = document.getElementById('fileInput');
-
   dropZone.addEventListener('click', () => fileInput.click());
   fileInput.addEventListener('change', (e) => processFile(e.target.files[0]));
-
   dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('border-indigo-500'); });
   dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-indigo-500'));
   dropZone.addEventListener('drop', (e) => {
@@ -34,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
     dropZone.classList.remove('border-indigo-500');
     processFile(e.dataTransfer.files[0]);
   });
-
   document.getElementById('withoutPrefix').addEventListener('change', () => {
     const output = document.getElementById('outputText').value;
     if (!output) return;
@@ -47,7 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (wasStripped) document.getElementById('outputText').value = src;
     }
   });
-
   document.getElementById('btnCopy').addEventListener('click', () => {
     const val = document.getElementById('outputText').value;
     if (!val) return showToast(I18N.nothingToCopy, 'error');

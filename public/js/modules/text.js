@@ -10,7 +10,6 @@ function updateStats() {
   const readMins = Math.max(1, Math.ceil(words / 200));
   document.getElementById('statReadTime').textContent = words > 0 ? readMins : 0;
 }
-
 function transformText(action) {
   const ta = document.getElementById('inputText');
   let t = ta.value;
@@ -37,7 +36,6 @@ function transformText(action) {
   ta.value = t;
   updateStats();
 }
-
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('inputText').addEventListener('input', updateStats);
   document.querySelectorAll('.text-action-btn').forEach(btn => {

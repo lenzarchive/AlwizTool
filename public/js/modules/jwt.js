@@ -3,7 +3,6 @@ function base64UrlDecode(str) {
   while (str.length % 4) str += '=';
   return atob(str);
 }
-
 function decodeJWT(token) {
   const parts = token.trim().split('.');
   if (parts.length !== 3) throw new Error((I18N && I18N.invalidToken) || 'Invalid JWT format');
@@ -11,25 +10,19 @@ function decodeJWT(token) {
   const payload = JSON.parse(base64UrlDecode(parts[1]));
   return { header, payload, signature: parts[2] };
 }
-
 function renderDecode() {
   const token = document.getElementById('jwtInput').value.trim();
   const errEl = document.getElementById('errorMsg');
   const results = document.getElementById('results');
   errEl.classList.add('hidden');
   results.classList.add('hidden');
-
   try {
     const { header, payload } = decodeJWT(token);
-
     document.getElementById('headerJson').textContent = JSON.stringify(header, null, 2);
     document.getElementById('payloadJson').textContent = JSON.stringify(payload, null, 2);
-
-    // Token info bar
     const bar = document.getElementById('tokenInfoBar');
     bar.innerHTML = '';
     const now = Math.floor(Date.now() / 1000);
-
     const addInfo = (label, value, highlight) => {
       const div = document.createElement('div');
       div.className = 'flex flex-col gap-0.5';
@@ -42,7 +35,6 @@ function renderDecode() {
       div.append(labelEl, valEl);
       bar.appendChild(div);
     };
-
     if (header.alg) addInfo(I18N.algorithm || 'Algorithm', header.alg, 'text-indigo-600 dark:text-indigo-400 font-mono');
     if (payload.iat) addInfo(I18N.issued || 'Issued At', new Date(payload.iat * 1000).toLocaleString());
     if (payload.exp) {
@@ -55,14 +47,12 @@ function renderDecode() {
     }
     if (payload.sub) addInfo('sub', payload.sub);
     if (payload.iss) addInfo('iss', payload.iss);
-
     results.classList.remove('hidden');
   } catch (e) {
     errEl.textContent = e.message;
     errEl.classList.remove('hidden');
   }
 }
-
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btnDecode').addEventListener('click', renderDecode);
   document.getElementById('jwtInput').addEventListener('paste', () => setTimeout(renderDecode, 50));

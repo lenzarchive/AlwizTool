@@ -1,5 +1,4 @@
 <% var tl = t.tools.timestamp; var tc = t.common; %>
-  <!-- Live clock -->
   <div class="card p-5 mb-6 border-indigo-200 dark:border-indigo-800 bg-indigo-50/50 dark:bg-indigo-900/10">
     <p class="text-xs font-medium uppercase tracking-wide text-indigo-400 mb-2"><%= tl.currentTime %></p>
     <div class="flex flex-wrap items-baseline gap-4">
@@ -17,9 +16,7 @@
       </div>
     </div>
   </div>
-
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-    <!-- TS to Date -->
     <div class="card p-5 space-y-4">
       <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tl.tsToDate %></h2>
       <input type="number" id="tsInput" class="input-field font-mono" placeholder="<%= tl.tsPlaceholder %>">
@@ -37,8 +34,6 @@
         <% }) %>
       </div>
     </div>
-
-    <!-- Date to TS -->
     <div class="card p-5 space-y-4">
       <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tl.dateToTs %></h2>
       <input type="datetime-local" id="dateInput" class="input-field">
@@ -61,11 +56,13 @@
       </div>
     </div>
   </div>
-
   <div class="mt-6 card p-5">
     <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
     <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
   </div>
-<script>var I18N = { invalidTs: "<%= tl.invalidTs %>", pickDate: "<%= tl.pickDate %>", copied: "<%= tc.copied %>" };</script>
-<script src="/js/app.js"></script>
-<script src="/js/modules/timestamp.js"></script>
+<script>var I18N = { invalidTs: "<%= tl.invalidTs %>", pickDate: "<%= tl.pickDate %>", copied: "<%= tc.copied %>" };
+</script>
+<script src="/js/app.js">
+</script>
+<script src="/js/modules/timestamp.js">
+</script>

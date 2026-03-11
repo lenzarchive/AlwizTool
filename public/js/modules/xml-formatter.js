@@ -1,7 +1,6 @@
 function getIndent(size) {
   return size === 'tab' ? '\t' : ' '.repeat(parseInt(size));
 }
-
 function formatXml(xml, indent) {
   let depth = 0;
   const ind = getIndent(indent);
@@ -21,11 +20,9 @@ function formatXml(xml, indent) {
       return result;
     }).trim();
 }
-
 function minifyXml(xml) {
   return xml.replace(/>\s+</g, '><').replace(/\s{2,}/g, ' ').trim();
 }
-
 function validateXml(xml) {
   try {
     const parser = new DOMParser();
@@ -37,7 +34,6 @@ function validateXml(xml) {
     return { valid: false, error: e.message };
   }
 }
-
 function updateOutput(content) {
   document.getElementById('outputText').value = content;
   const v = validateXml(content);
@@ -53,7 +49,6 @@ function updateOutput(content) {
     stats.classList.add('hidden');
   }
 }
-
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btnFormat').addEventListener('click', () => {
     const xml = document.getElementById('inputText').value.trim();

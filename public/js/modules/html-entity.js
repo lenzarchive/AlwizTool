@@ -7,7 +7,6 @@ const NAMED_MAP = {
   '\u00a0': '&nbsp;', '¡': '&iexcl;', '¿': '&iquest;'
 };
 const NAMED_REVERSE = Object.fromEntries(Object.entries(NAMED_MAP).map(([k,v]) => [v, k]));
-
 function encodeHtml(text, fmt) {
   const chars = Object.keys(NAMED_MAP);
   return text.split('').map(ch => {
@@ -19,21 +18,18 @@ function encodeHtml(text, fmt) {
     return NAMED_MAP[ch] || ch;
   }).join('');
 }
-
 function decodeHtml(text) {
   return text
     .replace(/&[a-zA-Z]+;/g, m => NAMED_REVERSE[m] || m)
     .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(parseInt(n)))
     .replace(/&#x([0-9a-fA-F]+);/g, (_, h) => String.fromCharCode(parseInt(h, 16)));
 }
-
 function convert() {
   const input = document.getElementById('inputText').value;
   const mode = document.getElementById('modeSelect').value;
   const fmt = document.getElementById('formatSelect').value;
   document.getElementById('outputText').value = mode === 'encode' ? encodeHtml(input, fmt) : decodeHtml(input);
 }
-
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('inputText').addEventListener('input', convert);
   document.getElementById('modeSelect').addEventListener('change', convert);

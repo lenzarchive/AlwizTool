@@ -12,33 +12,25 @@ const { i18nMiddleware } = require('./src/middleware/i18n');
 const indexRoutes = require('./src/routes/index');
 const apiRoutes = require('./src/routes/api');
 const { tools } = indexRoutes;
-
 const app = express();
-
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.set('layout', 'layout');
 app.set('layout extractScripts', true);
 app.use(ejsLayouts);
-
 app.use(compression());
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true, limit: '1mb' }));
 app.use(cookieParser());
-
 if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('dev'));
 }
-
 applySecurityMiddleware(app);
 app.use(i18nMiddleware);
-
 app.use((req, res, next) => {
   res.locals.tools = tools;
   next();
 });
-
-// Fonts: long-lived cache (1 year) — bump path version to bust stale cache
 app.use('/fonts/v2', express.static(path.join(__dirname, 'public', 'fonts'), {
   maxAge: '1y',
   immutable: true,
@@ -47,10 +39,7 @@ app.use('/fonts/v2', express.static(path.join(__dirname, 'public', 'fonts'), {
     res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
   }
 }));
-
-// Static files: tiered cache headers berdasarkan tipe file
 const immutableFiles = new Set(['logo_light.webp', 'logo_dark.webp', 'logo_light.png', 'logo_dark.png', 'favicon.ico']);
-
 app.use(express.static(path.join(__dirname, 'public'), {
   etag: true,
   setHeaders: (res, filePath) => {
@@ -67,10 +56,8 @@ app.use(express.static(path.join(__dirname, 'public'), {
     }
   }
 }));
-
 app.use('/', indexRoutes);
 app.use('/api', apiRoutes);
-
 app.use((req, res) => {
   res.status(404).render('404', {
     title: '404 - Page Not Found | AlwizTool',
@@ -79,19 +66,14 @@ app.use((req, res) => {
     tools,
   });
 });
-
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ error: 'Internal server error' });
 });
-
 if (require.main === module) {
   const PORT = process.env.PORT || 3000;
-
-  // HTTP/2 with TLS (spdy) — falls back to HTTP/1.1 if no certs available
   const certPath = process.env.SSL_CERT || path.join(__dirname, 'certs', 'cert.pem');
   const keyPath  = process.env.SSL_KEY  || path.join(__dirname, 'certs', 'key.pem');
-
   if (fs.existsSync(certPath) && fs.existsSync(keyPath)) {
     const spdy = require('spdy');
     const opts = {
@@ -102,11 +84,9 @@ if (require.main === module) {
       console.log(`AlwizTool running on https://localhost:${PORT} (HTTP/2)`)
     );
   } else {
-    // Dev fallback: plain HTTP/1.1
     http.createServer(app).listen(PORT, () =>
       console.log(`AlwizTool running on http://localhost:${PORT} (HTTP/1.1 — add certs/ for HTTP/2)`)
     );
   }
 }
-
 module.exports = app;

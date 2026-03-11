@@ -1,6 +1,5 @@
 <% var tl = t.tools.regex; var tc = t.common; %>
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-    <!-- Left: Pattern + Test string -->
     <div class="space-y-4">
       <div class="card p-5 space-y-3">
         <label class="label"><%= tl.patternLabel %></label>
@@ -21,14 +20,11 @@
           <% }) %>
         </div>
       </div>
-
       <div class="card p-5 space-y-3">
         <label class="label" for="testString"><%= tl.testLabel %></label>
         <textarea id="testString" class="textarea-field min-h-[200px] leading-relaxed" placeholder="<%= tl.testPlaceholder %>" spellcheck="false"></textarea>
       </div>
     </div>
-
-    <!-- Right: Highlighted + matches -->
     <div class="space-y-4">
       <div class="card p-5 space-y-3">
         <div class="flex items-center justify-between">
@@ -37,7 +33,6 @@
         </div>
         <div id="highlightedText" class="result-box min-h-[100px] text-sm leading-relaxed whitespace-pre-wrap font-mono"></div>
       </div>
-
       <div class="card p-5 space-y-3">
         <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tl.groupsLabel %></h2>
         <div id="matchList" class="space-y-2 max-h-64 overflow-y-auto"></div>
@@ -45,7 +40,6 @@
       </div>
     </div>
   </div>
-
   <div class="mt-6 card p-5">
     <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
     <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
@@ -57,6 +51,9 @@
   invalidRegex: "<%= tl.invalidRegex %>",
   noGroups: "<%= tl.noGroups %>",
   copied: "<%= tc.copied %>"
-};</script>
-<script src="/js/app.js"></script>
-<script src="/js/modules/regex.js"></script>
+};
+</script>
+<script src="/js/app.js">
+</script>
+<script src="/js/modules/regex.js">
+</script>

@@ -1,15 +1,12 @@
 const path = require('path');
 const fs = require('fs');
-
 const SUPPORTED_LANGS = ['en', 'id'];
 const DEFAULT_LANG = 'en';
-
 const locales = {};
 SUPPORTED_LANGS.forEach(lang => {
   const filePath = path.join(__dirname, '../../locales', lang + '.json');
   locales[lang] = JSON.parse(fs.readFileSync(filePath, 'utf8'));
 });
-
 function i18nMiddleware(req, res, next) {
   if (req.query.lang && SUPPORTED_LANGS.includes(req.query.lang)) {
     res.cookie('lang', req.query.lang, { maxAge: 365 * 24 * 60 * 60 * 1000, httpOnly: false, secure: process.env.NODE_ENV === 'production', sameSite: 'lax' });
@@ -18,9 +15,7 @@ function i18nMiddleware(req, res, next) {
     const cookieLang = req.cookies && req.cookies.lang;
     res.locals.lang = SUPPORTED_LANGS.includes(cookieLang) ? cookieLang : DEFAULT_LANG;
   }
-
   const locale = locales[res.locals.lang];
-  // Make t work both as function: t('nav.home') AND as object: t.nav.home
   const t = function(key) {
     return key.split('.').reduce((obj, k) => (obj && obj[k] !== undefined ? obj[k] : undefined), locale) ?? '';
   };
@@ -29,5 +24,4 @@ function i18nMiddleware(req, res, next) {
   res.locals.supportedLangs = SUPPORTED_LANGS;
   next();
 }
-
 module.exports = { i18nMiddleware };

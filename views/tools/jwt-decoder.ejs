@@ -1,5 +1,4 @@
 <% var tl = t.tools.jwt; var tc = t.common; %>
-  <!-- Token input -->
   <div class="card p-5 mb-6 space-y-3">
     <textarea id="jwtInput" class="textarea-field min-h-[100px] text-xs" placeholder="<%= tl.inputPlaceholder %>" spellcheck="false" autocomplete="off"></textarea>
     <div class="flex gap-2">
@@ -8,14 +7,9 @@
     </div>
     <div id="errorMsg" class="hidden text-xs text-red-500 font-medium"></div>
   </div>
-
-  <!-- Results (hidden until decoded) -->
   <div id="results" class="hidden space-y-5">
-    <!-- Token info bar -->
     <div id="tokenInfoBar" class="card p-4 flex flex-wrap gap-4 items-center"></div>
-
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
-      <!-- Header -->
       <div class="card p-5 space-y-3">
         <div class="flex items-center justify-between">
           <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm flex items-center gap-2">
@@ -25,8 +19,6 @@
         </div>
         <pre id="headerJson" class="result-box min-h-[120px] text-xs whitespace-pre-wrap"></pre>
       </div>
-
-      <!-- Payload -->
       <div class="card p-5 space-y-3">
         <div class="flex items-center justify-between">
           <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm flex items-center gap-2">
@@ -37,14 +29,11 @@
         <pre id="payloadJson" class="result-box min-h-[120px] text-xs whitespace-pre-wrap"></pre>
       </div>
     </div>
-
-    <!-- Signature note -->
     <div class="flex items-start gap-2 text-xs text-slate-400 px-1">
       <svg class="w-4 h-4 text-amber-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
       <span><%= tl.signatureNote %></span>
     </div>
   </div>
-
   <div class="mt-6 card p-5">
     <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
     <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
@@ -57,6 +46,9 @@
   issued: "<%= tl.issued %>",
   expires: "<%= tl.expires %>",
   algorithm: "<%= tl.algorithm %>"
-};</script>
-<script src="/js/app.js"></script>
-<script src="/js/modules/jwt.js"></script>
+};
+</script>
+<script src="/js/app.js">
+</script>
+<script src="/js/modules/jwt.js">
+</script>

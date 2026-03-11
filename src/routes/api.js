@@ -3,37 +3,25 @@ const router = express.Router();
 const { hashAll, hashAllHmac } = require('../utils/hash');
 const { fetchOGData } = require('../utils/opengraph');
 const QRCode = require('qrcode');
-
 const IS_PROD = process.env.NODE_ENV === 'production';
 const GENERIC_ERROR = 'Internal server error';
-
-// SSRF protection: block private/loopback IP ranges
 function isPrivateHostname(hostname) {
-  // Strip IPv6 brackets
   const host = hostname.replace(/^\[|\]$/g, '').toLowerCase();
-
-  // Loopback & localhost
   if (host === 'localhost' || host === '::1') return true;
-
-  // IPv4 checks
   const ipv4 = host.match(/^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/);
   if (ipv4) {
     const [, a, b, c] = ipv4.map(Number);
-    if (a === 127) return true;                          // 127.x.x.x
-    if (a === 10) return true;                           // 10.x.x.x
-    if (a === 192 && b === 168) return true;             // 192.168.x.x
-    if (a === 172 && b >= 16 && b <= 31) return true;   // 172.16–31.x.x
-    if (a === 169 && b === 254) return true;             // 169.254.x.x (link-local)
-    if (a === 0) return true;                            // 0.x.x.x
+    if (a === 127) return true;                          
+    if (a === 10) return true;                           
+    if (a === 192 && b === 168) return true;             
+    if (a === 172 && b >= 16 && b <= 31) return true;   
+    if (a === 169 && b === 254) return true;             
+    if (a === 0) return true;                            
   }
-
-  // IPv6 private ranges (basic)
-  if (host.startsWith('fc') || host.startsWith('fd')) return true; // ULA
-  if (host.startsWith('fe80')) return true;                         // link-local
-
+  if (host.startsWith('fc') || host.startsWith('fd')) return true; 
+  if (host.startsWith('fe80')) return true;                         
   return false;
 }
-
 router.post('/hash', async (req, res) => {
   try {
     const { text, hmacKey } = req.body;
@@ -48,24 +36,18 @@ router.post('/hash', async (req, res) => {
     res.status(500).json({ error: IS_PROD ? GENERIC_ERROR : err.message });
   }
 });
-
 router.post('/opengraph', async (req, res) => {
   try {
     const { url } = req.body;
     if (!url || typeof url !== 'string') return res.status(400).json({ error: 'URL is required' });
-
     let parsedUrl;
     try { parsedUrl = new URL(url); } catch { return res.status(400).json({ error: 'Invalid URL' }); }
-
     if (!['http:', 'https:'].includes(parsedUrl.protocol)) {
       return res.status(400).json({ error: 'Only HTTP/HTTPS allowed' });
     }
-
-    // [SECURITY] Block SSRF — reject private/loopback hosts
     if (isPrivateHostname(parsedUrl.hostname)) {
       return res.status(400).json({ error: 'URL not allowed' });
     }
-
     const data = await fetchOGData(url);
     res.json({ success: true, data });
   } catch (err) {
@@ -74,7 +56,6 @@ router.post('/opengraph', async (req, res) => {
     res.status(500).json({ error: IS_PROD ? GENERIC_ERROR : `Failed to fetch: ${err.message}` });
   }
 });
-
 router.post('/qrcode', async (req, res) => {
   try {
     const { text, size = 300, format = 'png' } = req.body;
@@ -93,5 +74,4 @@ router.post('/qrcode', async (req, res) => {
     res.status(500).json({ error: IS_PROD ? GENERIC_ERROR : err.message });
   }
 });
-
 module.exports = router;

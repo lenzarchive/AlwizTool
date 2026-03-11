@@ -1,9 +1,7 @@
 const helmet = require('helmet');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
-
 const isProd = process.env.NODE_ENV === 'production';
-
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 200,
@@ -11,7 +9,6 @@ const limiter = rateLimit({
   legacyHeaders: false,
   message: { error: 'Too many requests, please try again later.' }
 });
-
 const apiLimiter = rateLimit({
   windowMs: 1 * 60 * 1000,
   max: 30,
@@ -19,7 +16,6 @@ const apiLimiter = rateLimit({
   legacyHeaders: false,
   message: { error: 'API rate limit exceeded.' }
 });
-
 function applySecurityMiddleware(app) {
   app.use(helmet({
     contentSecurityPolicy: {
@@ -51,15 +47,12 @@ function applySecurityMiddleware(app) {
     originAgentCluster: false,
     referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
   }));
-
   app.use(cors({
     origin: isProd ? [process.env.CORS_ORIGIN || 'https://alwiztool.work.gd'] : '*',
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type']
   }));
-
   app.use(limiter);
   app.use('/api', apiLimiter);
 }
-
 module.exports = { applySecurityMiddleware };
