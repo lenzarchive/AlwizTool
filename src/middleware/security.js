@@ -34,9 +34,6 @@ function applySecurityMiddleware(app) {
             'https://cdnjs.cloudflare.com',
             'https://static.cloudflareinsights.com',
             'https://www.googletagmanager.com',
-            'https://*.adsterra.com',
-            'https://*.highperformanceformat.com',
-            'https://*.effectivegatecpm.com',
           ],
           scriptSrcAttr: ["'none'"],
           styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
@@ -64,3 +61,4 @@ function applySecurityMiddleware(app) {
   app.use('/api', apiLimiter);
 }
 module.exports = { applySecurityMiddleware };
+
