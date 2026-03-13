@@ -56,7 +56,7 @@ function applySecurityMiddleware(app) {
     })(req, res, next);
   });
   app.use(cors({
-    origin: isProd ? [process.env.CORS_ORIGIN || 'https://alwiztool.work.gd'] : '*',
+    origin: isProd ? [process.env.CORS_ORIGIN || 'https://ubegui.my.id'] : '*',
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type']
   }));

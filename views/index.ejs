@@ -7,7 +7,7 @@
       <%= t.hero.title1 %><br>
       <span class="text-indigo-600"><%= t.hero.title2 %></span>
     </h1>
-    <p class="text-slate-500 dark:text-slate-400 max-w-xl mx-auto text-base mb-8"><%= t.hero.subtitle %></p>
+    <p class="text-slate-600 dark:text-slate-300 max-w-xl mx-auto text-base mb-8"><%= t.hero.subtitle %></p>
     <div class="max-w-md mx-auto relative">
       <input type="search" id="toolSearch" placeholder="<%= t.hero.searchPlaceholder %>" class="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-slate-100 placeholder-slate-400">
       <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35"/></svg>
@@ -17,7 +17,7 @@
     <% var categories = [...new Set(tools.map(function(tl) { return tl.category; }))]; %>
     <% categories.forEach(function(cat) { %>
     <div class="mb-10 tool-category" data-category="<%= cat %>">
-      <h2 class="text-xs font-semibold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-4"><%= cat %></h2>
+      <h2 class="text-xs font-semibold uppercase tracking-widest text-slate-600 dark:text-slate-300 mb-4"><%= cat %></h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         <% tools.filter(function(tl) { return tl.category === cat; }).forEach(function(tool) {
           var toolT = t.tools[tool.i18nKey] || {};
@@ -27,7 +27,7 @@
             <span class="text-[11px] font-mono font-bold text-indigo-600 dark:text-indigo-400 w-8 shrink-0 mt-0.5"><%= tool.icon %></span>
             <div class="flex-1 min-w-0">
               <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors"><%= toolT.name || tool.slug %></h3>
-              <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed"><%= toolT.desc || '' %></p>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-0.5 leading-relaxed"><%= toolT.desc || '' %></p>
             </div>
           </div>
         </a>
@@ -35,7 +35,7 @@
       </div>
     </div>
     <% }) %>
-    <div id="noResults" class="hidden text-center py-12 text-slate-400 dark:text-slate-500">
+    <div id="noResults" class="hidden text-center py-12 text-slate-500 dark:text-slate-400">
       <p class="text-4xl mb-3">🔍</p>
       <p class="font-medium"><%= t.hero.noResults %></p>
       <p class="text-sm mt-1"><%= t.hero.noResultsHint %></p>

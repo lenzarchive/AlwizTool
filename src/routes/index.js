@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const SITE_URL = process.env.SITE_URL || 'https://alwiztool.work.gd';
+const SITE_URL = process.env.SITE_URL || 'https://ubegui.my.id';
 const tools = [
   { slug: 'base64',         i18nKey: 'base64',        icon: 'B64', category: 'Encoding'   },
   { slug: 'url-codec',      i18nKey: 'urlCodec',       icon: 'URL', category: 'Encoding'   },
