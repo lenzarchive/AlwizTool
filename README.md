@@ -168,4 +168,10 @@ The route is automatically handled by the wildcard in `src/routes/index.js` — 
 
 ---
 
+## License
+
+This script is licensed under the Apache License 2.0. See the `LICENSE` file for more details.
+
+---
+
 Built by [AlwizBA](https://alwizba.pages.dev)
