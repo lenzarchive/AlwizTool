@@ -1,5 +1,7 @@
 # AlwizTool
 
+![Alt text](./public/og-image.png "AlwizTool")
+
 All-in-one free tools for developers and everyday users. No sign-up, no tracking, no nonsense.
 
 Live: [ubegui.my.id](https://ubegui.my.id)
