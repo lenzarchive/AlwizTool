@@ -706,7 +706,12 @@
       "searchPlaceholder": "Cari berdasarkan kode, nama, atau deskripsi...",
       "allCodes": "Semua kode",
       "about": "Tentang Kode Status HTTP",
-      "aboutText": "Kode status HTTP adalah angka tiga digit yang dikembalikan server sebagai respons atas permintaan klien: 1xx (informasi), 2xx (sukses), 3xx (pengalihan), 4xx (kesalahan klien), 5xx (kesalahan server)."
+      "aboutText": "Kode status HTTP adalah angka tiga digit yang dikembalikan server sebagai respons atas permintaan klien: 1xx (informasi), 2xx (sukses), 3xx (pengalihan), 4xx (kesalahan klien), 5xx (kesalahan server).",
+      "cat1xx": "Informasional",
+      "cat2xx": "Sukses",
+      "cat3xx": "Pengalihan",
+      "cat4xx": "Kesalahan Klien",
+      "cat5xx": "Kesalahan Server"
     },
     "metaTag": {
       "name": "Meta Tag Generator",

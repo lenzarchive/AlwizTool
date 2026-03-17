@@ -706,7 +706,12 @@
       "searchPlaceholder": "Search by code, name or description...",
       "allCodes": "All codes",
       "about": "About HTTP Status Codes",
-      "aboutText": "HTTP status codes are three-digit numbers returned by a server in response to a client request. They are grouped into five classes: 1xx (informational), 2xx (success), 3xx (redirection), 4xx (client error), and 5xx (server error)."
+      "aboutText": "HTTP status codes are three-digit numbers returned by a server in response to a client request. They are grouped into five classes: 1xx (informational), 2xx (success), 3xx (redirection), 4xx (client error), and 5xx (server error).",
+      "cat1xx": "Informational",
+      "cat2xx": "Success",
+      "cat3xx": "Redirection",
+      "cat4xx": "Client Error",
+      "cat5xx": "Server Error"
     },
     "metaTag": {
       "name": "HTML Meta Tag Generator",

@@ -4,11 +4,11 @@
     <input id="searchInput" type="search" class="input-field flex-1" placeholder="<%= tl.searchPlaceholder %>">
     <select id="filterSelect" class="select-field w-auto">
       <option value=""><%= tl.allCodes %></option>
-      <option value="1xx">1xx Informational</option>
-      <option value="2xx">2xx Success</option>
-      <option value="3xx">3xx Redirection</option>
-      <option value="4xx">4xx Client Error</option>
-      <option value="5xx">5xx Server Error</option>
+      <option value="1xx">1xx &mdash; <%= tl.cat1xx || 'Informational' %></option>
+      <option value="2xx">2xx &mdash; <%= tl.cat2xx || 'Success' %></option>
+      <option value="3xx">3xx &mdash; <%= tl.cat3xx || 'Redirection' %></option>
+      <option value="4xx">4xx &mdash; <%= tl.cat4xx || 'Client Error' %></option>
+      <option value="5xx">5xx &mdash; <%= tl.cat5xx || 'Server Error' %></option>
     </select>
   </div>
   <div id="codeList" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
@@ -17,5 +17,6 @@
   <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
   <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
 </div>
+<script nonce="<%= nonce %>">var LANG = "<%= lang %>";</script>
 <script nonce="<%= nonce %>" src="/js/app.js"></script>
 <script nonce="<%= nonce %>" src="/js/modules/http-status.js"></script>
