@@ -26,11 +26,11 @@
     "morgan": "^1.10.0",
     "open-graph-scraper": "^6.7.3",
     "qrcode": "^1.5.3",
-    "tailwind-scrollbar": "^3.1.0"
+    "tailwind-scrollbar": "^3.1.0",
+    "@fontsource/inter": "^5.2.8",
+    "@fontsource/jetbrains-mono": "^5.2.8"
   },
   "devDependencies": {
-    "@fontsource/inter": "^5.2.8",
-    "@fontsource/jetbrains-mono": "^5.2.8",
     "autoprefixer": "^10.4.16",
     "concurrently": "^8.2.2",
     "nodemon": "^3.0.2",
