@@ -1,14 +1,17 @@
 <% var tl = t.tools.cspBuilder; var tc = t.common; %>
 <div class="space-y-6">
-  <div class="card p-5">
-    <div class="flex items-center justify-between mb-4">
-      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tl.directives %></h2>
+
+  <!-- Directives Card -->
+  <div class="card p-6">
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-base"><%= tl.directives %></h2>
       <div class="flex gap-2">
-        <button id="btnPresetStrict" class="btn-secondary text-xs"><%= tl.presetStrict %></button>
-        <button id="btnReset" class="btn-secondary text-xs"><%= tc.clear %></button>
+        <button id="btnPresetStrict" class="btn-secondary text-xs px-3 py-1.5"><%= tl.presetStrict %></button>
+        <button id="btnReset" class="btn-secondary text-xs px-3 py-1.5"><%= tc.clear %></button>
       </div>
     </div>
-    <div class="space-y-4">
+
+    <div class="space-y-1">
       <%
       var directives = [
         {key:'defaultSrc',name:'default-src'},{key:'scriptSrc',name:'script-src'},
@@ -19,53 +22,64 @@
         {key:'baseUri',name:'base-uri'}
       ];
       directives.forEach(function(dir) { %>
-      <div class="flex flex-wrap items-center gap-x-4 gap-y-1 py-2 border-b border-slate-100 dark:border-slate-800">
-        <span class="font-mono text-xs text-indigo-600 dark:text-indigo-400 w-40 shrink-0"><%= dir.name %></span>
-        <label class="flex items-center gap-1 text-xs text-slate-500 cursor-pointer">
-          <input type="checkbox" class="dir-input" data-key="<%= dir.key %>" value="'self'"> 'self'
-        </label>
-        <label class="flex items-center gap-1 text-xs text-slate-500 cursor-pointer">
-          <input type="checkbox" class="dir-input" data-key="<%= dir.key %>" value="'none'"> 'none'
-        </label>
-        <label class="flex items-center gap-1 text-xs text-slate-500 cursor-pointer">
-          <input type="checkbox" class="dir-input" data-key="<%= dir.key %>" value="*"> *
-        </label>
-        <label class="flex items-center gap-1 text-xs text-slate-500 cursor-pointer">
-          <input type="checkbox" class="dir-input" data-key="<%= dir.key %>" value="'unsafe-inline'"> 'unsafe-inline'
-        </label>
-        <label class="flex items-center gap-1 text-xs text-slate-500 cursor-pointer">
-          <input type="checkbox" class="dir-input" data-key="<%= dir.key %>" value="data:"> data:
-        </label>
-        <input type="text" class="dir-input input-field text-xs py-1 w-44" data-key="<%= dir.key %>" placeholder="https://example.com">
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-2 py-3 border-b border-slate-100 dark:border-slate-800 last:border-0">
+        <span class="font-mono text-sm font-semibold text-indigo-600 dark:text-indigo-400 w-44 shrink-0"><%= dir.name %></span>
+        <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+          <label class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors select-none">
+            <input type="checkbox" class="dir-input w-4 h-4 rounded accent-indigo-600" data-key="<%= dir.key %>" value="'self'"> 'self'
+          </label>
+          <label class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors select-none">
+            <input type="checkbox" class="dir-input w-4 h-4 rounded accent-indigo-600" data-key="<%= dir.key %>" value="'none'"> 'none'
+          </label>
+          <label class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors select-none">
+            <input type="checkbox" class="dir-input w-4 h-4 rounded accent-indigo-600" data-key="<%= dir.key %>" value="*"> *
+          </label>
+          <label class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors select-none">
+            <input type="checkbox" class="dir-input w-4 h-4 rounded accent-indigo-600" data-key="<%= dir.key %>" value="'unsafe-inline'"> 'unsafe-inline'
+          </label>
+          <label class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors select-none">
+            <input type="checkbox" class="dir-input w-4 h-4 rounded accent-indigo-600" data-key="<%= dir.key %>" value="data:"> data:
+          </label>
+          <input type="text" class="dir-input input-field text-sm py-1.5 w-52" data-key="<%= dir.key %>" placeholder="https://example.com">
+        </div>
       </div>
       <% }); %>
-      <div class="flex flex-wrap gap-4 pt-1">
-        <label class="flex items-center gap-2 text-xs text-slate-500 cursor-pointer">
-          <input type="checkbox" id="upgradeInsecure"> upgrade-insecure-requests
+
+      <!-- Extra flags -->
+      <div class="flex flex-wrap gap-6 pt-4">
+        <label class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors select-none">
+          <input type="checkbox" id="upgradeInsecure" class="w-4 h-4 rounded accent-indigo-600"> upgrade-insecure-requests
         </label>
-        <label class="flex items-center gap-2 text-xs text-slate-500 cursor-pointer">
-          <input type="checkbox" id="blockMixed"> block-all-mixed-content
+        <label class="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors select-none">
+          <input type="checkbox" id="blockMixed" class="w-4 h-4 rounded accent-indigo-600"> block-all-mixed-content
         </label>
       </div>
     </div>
   </div>
-  <div class="card p-5 space-y-3">
+
+  <!-- Output Card -->
+  <div class="card p-6 space-y-4">
     <div class="flex items-center justify-between">
-      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tl.policyValue %></h2>
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-base"><%= tl.policyValue %></h2>
       <button id="btnCopyValue" class="copy-btn"><%= tc.copy %></button>
     </div>
-    <textarea id="outputText" class="result-box min-h-[80px]" readonly placeholder="..."></textarea>
-    <div class="flex items-center justify-between">
-      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tl.header %></h2>
+    <textarea id="outputText" class="result-box min-h-[100px] font-mono text-sm leading-relaxed" readonly placeholder="..."></textarea>
+
+    <div class="flex items-center justify-between pt-2">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-base"><%= tl.header %></h2>
       <button id="btnCopy" class="copy-btn"><%= tc.copy %></button>
     </div>
-    <textarea id="headerOutput" class="result-box min-h-[60px]" readonly placeholder="Content-Security-Policy: ..."></textarea>
+    <textarea id="headerOutput" class="result-box min-h-[80px] font-mono text-sm leading-relaxed" readonly placeholder="Content-Security-Policy: ..."></textarea>
   </div>
+
 </div>
-<div class="mt-6 card p-5">
+
+<!-- About section -->
+<div class="mt-6 card p-6">
   <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
   <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
 </div>
+
 <script nonce="<%= nonce %>">var I18N = {
   nothingToCopy: "<%= tc.nothingToCopy %>",
   copied: "<%= tc.copied %>"

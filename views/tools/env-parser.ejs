@@ -1,42 +1,49 @@
 <% var tl = t.tools.envParser; var tc = t.common; %>
 <div class="space-y-6">
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-    <div class="card p-5 space-y-4">
-      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.input %> .env</h2>
-      <textarea id="inputText" class="textarea-field min-h-[220px] font-mono text-xs" placeholder="<%= tl.inputPlaceholder %>"></textarea>
-      <div class="flex gap-2">
+
+    <!-- Input Card -->
+    <div class="card p-6 flex flex-col gap-4">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-base"><%= tc.input %> .env</h2>
+      <textarea id="inputText" class="textarea-field flex-1 min-h-[280px] font-mono text-sm leading-relaxed" placeholder="<%= tl.inputPlaceholder %>"></textarea>
+      <div class="flex gap-2 items-center">
         <button id="btnParse" class="btn-primary"><%= tl.parse %></button>
         <button id="btnAddRow" class="btn-secondary"><%= tl.addRow %></button>
         <button id="btnClear" class="btn-secondary ml-auto"><%= tc.clear %></button>
       </div>
     </div>
-    <div class="card p-5 space-y-4">
+
+    <!-- Export Card -->
+    <div class="card p-6 flex flex-col gap-4">
       <div class="flex items-center justify-between">
-        <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tl.export %></h2>
+        <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-base"><%= tl.export %></h2>
         <button id="btnCopy" class="copy-btn"><%= tc.copy %></button>
       </div>
-      <div class="flex items-center gap-2">
-        <label class="text-xs text-slate-500" for="exportFormat"><%= tl.format %>:</label>
-        <select id="exportFormat" class="select-field text-xs py-1.5 w-auto">
+      <div class="flex items-center gap-3">
+        <label class="text-sm text-slate-500 shrink-0" for="exportFormat"><%= tl.format %>:</label>
+        <select id="exportFormat" class="select-field text-sm py-1.5 w-auto">
           <option value="env">.env</option>
           <option value="json">JSON</option>
           <option value="yaml">YAML</option>
           <option value="docker">Docker run -e</option>
         </select>
-        <button id="btnExport" class="btn-secondary text-xs"><%= tl.exportBtn %></button>
+        <button id="btnExport" class="btn-secondary text-sm"><%= tl.exportBtn %></button>
       </div>
-      <textarea id="outputText" class="result-box min-h-[180px] font-mono text-xs" readonly placeholder="..."></textarea>
+      <textarea id="outputText" class="result-box flex-1 min-h-[280px] font-mono text-sm leading-relaxed" readonly placeholder="..."></textarea>
     </div>
+
   </div>
-  <div id="tableSection" class="hidden card p-5">
-    <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm mb-3"><%= tl.tableTitle %></h2>
+
+  <!-- Table Section -->
+  <div id="tableSection" class="hidden card p-6">
+    <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-base mb-4"><%= tl.tableTitle %></h2>
     <div class="overflow-x-auto">
-      <table class="w-full text-xs">
+      <table class="w-full text-sm">
         <thead>
           <tr class="border-b border-slate-200 dark:border-slate-700">
-            <th class="text-left px-3 py-2 text-slate-500 font-medium"><%= tl.key %></th>
-            <th class="text-left px-3 py-2 text-slate-500 font-medium"><%= tl.value %></th>
-            <th class="w-8"></th>
+            <th class="text-left px-4 py-3 text-slate-500 font-semibold"><%= tl.key %></th>
+            <th class="text-left px-4 py-3 text-slate-500 font-semibold"><%= tl.value %></th>
+            <th class="w-10"></th>
           </tr>
         </thead>
         <tbody id="tableBody"></tbody>
@@ -44,10 +51,13 @@
     </div>
   </div>
 </div>
-<div class="mt-6 card p-5">
+
+<!-- About section -->
+<div class="mt-6 card p-6">
   <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
   <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
 </div>
+
 <script nonce="<%= nonce %>">var I18N = {
   nothingToCopy: "<%= tc.nothingToCopy %>",
   copied: "<%= tc.copied %>"

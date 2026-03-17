@@ -42,6 +42,7 @@ function applySecurityMiddleware(app) {
           connectSrc: ["'self'", 'https:'],
           frameSrc: ["'self'", 'https:'],
           objectSrc: ["'none'"],
+          workerSrc: ["'self'", "blob:"],
           baseUri: ["'self'"],
         }
       },
@@ -61,4 +62,3 @@ function applySecurityMiddleware(app) {
   app.use('/api', apiLimiter);
 }
 module.exports = { applySecurityMiddleware };
-

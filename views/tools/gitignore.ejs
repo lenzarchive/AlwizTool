@@ -1,13 +1,16 @@
 <% var tl = t.tools.gitignore; var tc = t.common; %>
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-  <div class="card p-5 space-y-4">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+
+  <!-- Templates Card -->
+  <div class="card p-4 sm:p-6 flex flex-col gap-4 sm:gap-6">
     <div class="flex items-center justify-between">
-      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tl.templates %></h2>
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-base"><%= tl.templates %></h2>
       <div class="flex gap-2">
-        <button id="btnSelectAll" class="btn-secondary text-xs"><%= tl.selectAll %></button>
-        <button id="btnClear" class="btn-secondary text-xs"><%= tc.clear %></button>
+        <button id="btnSelectAll" class="btn-secondary text-xs px-3 py-1.5"><%= tl.selectAll %></button>
+        <button id="btnClear" class="btn-secondary text-xs px-3 py-1.5"><%= tc.clear %></button>
       </div>
     </div>
+
     <% var groups = [
       { label: 'Languages', items: [['node','Node.js'],['python','Python'],['java','Java'],['rust','Rust'],['go','Go'],['php','PHP']] },
       { label: 'Frameworks', items: [['react','React'],['vue','Vue.js'],['laravel','Laravel'],['django','Django']] },
@@ -15,35 +18,49 @@
       { label: 'OS', items: [['macos','macOS'],['windows','Windows'],['linux','Linux']] },
       { label: 'Misc', items: [['dotenv','.env files'],['logs','Log files'],['docker','Docker']] }
     ]; %>
-    <% groups.forEach(function(g) { %>
-    <div>
-      <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2"><%= g.label %></p>
-      <div class="grid grid-cols-2 gap-y-1.5 gap-x-4">
-        <% g.items.forEach(function(item) { %>
-        <label class="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400 cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-400">
-          <input type="checkbox" class="tmpl-check rounded" value="<%= item[0] %>">
-          <%= item[1] %>
-        </label>
-        <% }); %>
+
+    <div class="flex flex-col gap-4">
+      <% groups.forEach(function(g) { %>
+      <div>
+        <p class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2.5"><%= g.label %></p>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-x-4 gap-y-3">
+          <% g.items.forEach(function(item) { %>
+          <label class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors select-none">
+            <input type="checkbox" class="tmpl-check w-4 h-4 rounded accent-indigo-600 cursor-pointer shrink-0" value="<%= item[0] %>">
+            <span><%= item[1] %></span>
+          </label>
+          <% }); %>
+        </div>
       </div>
+      <% }); %>
     </div>
-    <% }); %>
   </div>
-  <div class="card p-5 space-y-4">
+
+  <!-- Output Card -->
+  <div class="card p-4 sm:p-6 flex flex-col gap-4">
     <div class="flex items-center justify-between">
-      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm">.gitignore</h2>
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-base">.gitignore</h2>
       <div class="flex gap-2">
         <button id="btnCopy" class="copy-btn"><%= tc.copy %></button>
-        <button id="btnDownload" class="btn-secondary text-xs"><%= tc.download %></button>
+        <button id="btnDownload" class="btn-secondary text-xs px-3 py-1.5"><%= tc.download %></button>
       </div>
     </div>
-    <textarea id="outputText" class="result-box min-h-[400px] font-mono text-xs" readonly placeholder="<%= tl.placeholder %>"></textarea>
+    <textarea
+      id="outputText"
+      class="result-box flex-1 w-full min-h-[200px] sm:min-h-[320px] lg:min-h-[440px] font-mono text-sm leading-relaxed resize-none"
+      readonly
+      placeholder="<%= tl.placeholder %>"
+    ></textarea>
   </div>
+
 </div>
-<div class="mt-6 card p-5">
+
+<!-- About section -->
+<div class="mt-4 sm:mt-6 card p-4 sm:p-6">
   <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
   <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
 </div>
+
 <script nonce="<%= nonce %>">var I18N = {
   nothingToCopy: "<%= tc.nothingToCopy %>",
   copied: "<%= tc.copied %>"
