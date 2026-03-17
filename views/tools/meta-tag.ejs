@@ -1,0 +1,124 @@
+<% var tl = t.tools.metaTag; var tc = t.common; %>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <div class="space-y-4">
+    <div class="card p-5 space-y-3">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tl.basicMeta %></h2>
+      <div>
+        <label class="text-xs text-slate-500 mb-1 block">Title</label>
+        <input id="title" type="text" class="input-field w-full" placeholder="My Awesome Website">
+      </div>
+      <div>
+        <label class="text-xs text-slate-500 mb-1 block">Description</label>
+        <textarea id="description" class="textarea-field min-h-[70px]" placeholder="A brief description of your page..."></textarea>
+      </div>
+      <div>
+        <label class="text-xs text-slate-500 mb-1 block">Keywords</label>
+        <input id="keywords" type="text" class="input-field w-full" placeholder="web, developer, tools">
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="text-xs text-slate-500 mb-1 block">Author</label>
+          <input id="author" type="text" class="input-field w-full" placeholder="John Doe">
+        </div>
+        <div>
+          <label class="text-xs text-slate-500 mb-1 block">Charset</label>
+          <input id="charset" type="text" class="input-field w-full" value="UTF-8">
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="text-xs text-slate-500 mb-1 block">Robots</label>
+          <select id="robots" class="select-field w-full text-xs">
+            <option value="">-- none --</option>
+            <option value="index, follow">index, follow</option>
+            <option value="noindex, nofollow">noindex, nofollow</option>
+            <option value="noindex, follow">noindex, follow</option>
+            <option value="index, nofollow">index, nofollow</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-xs text-slate-500 mb-1 block">Theme Color</label>
+          <input id="themeColor" type="text" class="input-field w-full" placeholder="#4F46E5">
+        </div>
+      </div>
+    </div>
+    <div class="card p-5 space-y-3">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm">Open Graph</h2>
+      <div>
+        <label class="text-xs text-slate-500 mb-1 block">og:title (leave blank = use Title)</label>
+        <input id="ogTitle" type="text" class="input-field w-full" placeholder="">
+      </div>
+      <div>
+        <label class="text-xs text-slate-500 mb-1 block">og:description</label>
+        <textarea id="ogDesc" class="textarea-field min-h-[60px]" placeholder=""></textarea>
+      </div>
+      <div>
+        <label class="text-xs text-slate-500 mb-1 block">og:image URL</label>
+        <input id="ogImage" type="text" class="input-field w-full" placeholder="https://example.com/og.png">
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="text-xs text-slate-500 mb-1 block">og:url</label>
+          <input id="ogUrl" type="text" class="input-field w-full" placeholder="https://example.com">
+        </div>
+        <div>
+          <label class="text-xs text-slate-500 mb-1 block">og:type</label>
+          <select id="ogType" class="select-field w-full text-xs">
+            <option value="website">website</option>
+            <option value="article">article</option>
+            <option value="product">product</option>
+            <option value="profile">profile</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="card p-5 space-y-3">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm">Twitter Card</h2>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="text-xs text-slate-500 mb-1 block">Card type</label>
+          <select id="twitterCard" class="select-field w-full text-xs">
+            <option value="">-- none --</option>
+            <option value="summary_large_image">summary_large_image</option>
+            <option value="summary">summary</option>
+            <option value="app">app</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-xs text-slate-500 mb-1 block">twitter:site</label>
+          <input id="twitterSite" type="text" class="input-field w-full" placeholder="@username">
+        </div>
+      </div>
+      <div>
+        <label class="text-xs text-slate-500 mb-1 block">twitter:title (leave blank = og:title)</label>
+        <input id="twitterTitle" type="text" class="input-field w-full" placeholder="">
+      </div>
+      <div>
+        <label class="text-xs text-slate-500 mb-1 block">twitter:image URL</label>
+        <input id="twitterImage" type="text" class="input-field w-full" placeholder="">
+      </div>
+      <input id="twitterDesc" type="hidden">
+    </div>
+  </div>
+  <div class="card p-5 space-y-4">
+    <div class="flex items-center justify-between">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.output %></h2>
+      <div class="flex gap-2">
+        <button id="btnCopy" class="copy-btn"><%= tc.copy %></button>
+        <button id="btnClear" class="btn-secondary text-xs"><%= tc.clear %></button>
+      </div>
+    </div>
+    <textarea id="outputText" class="result-box min-h-[500px] font-mono text-xs" readonly placeholder="..."></textarea>
+  </div>
+</div>
+<div class="mt-6 card p-5">
+  <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
+  <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
+</div>
+<script nonce="<%= nonce %>">var I18N = {
+  nothingToCopy: "<%= tc.nothingToCopy %>",
+  copied: "<%= tc.copied %>"
+};
+</script>
+<script nonce="<%= nonce %>" src="/js/app.js"></script>
+<script nonce="<%= nonce %>" src="/js/modules/meta-tag.js"></script>

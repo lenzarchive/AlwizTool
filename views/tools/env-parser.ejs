@@ -1,0 +1,57 @@
+<% var tl = t.tools.envParser; var tc = t.common; %>
+<div class="space-y-6">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="card p-5 space-y-4">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.input %> .env</h2>
+      <textarea id="inputText" class="textarea-field min-h-[220px] font-mono text-xs" placeholder="<%= tl.inputPlaceholder %>"></textarea>
+      <div class="flex gap-2">
+        <button id="btnParse" class="btn-primary"><%= tl.parse %></button>
+        <button id="btnAddRow" class="btn-secondary"><%= tl.addRow %></button>
+        <button id="btnClear" class="btn-secondary ml-auto"><%= tc.clear %></button>
+      </div>
+    </div>
+    <div class="card p-5 space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tl.export %></h2>
+        <button id="btnCopy" class="copy-btn"><%= tc.copy %></button>
+      </div>
+      <div class="flex items-center gap-2">
+        <label class="text-xs text-slate-500" for="exportFormat"><%= tl.format %>:</label>
+        <select id="exportFormat" class="select-field text-xs py-1.5 w-auto">
+          <option value="env">.env</option>
+          <option value="json">JSON</option>
+          <option value="yaml">YAML</option>
+          <option value="docker">Docker run -e</option>
+        </select>
+        <button id="btnExport" class="btn-secondary text-xs"><%= tl.exportBtn %></button>
+      </div>
+      <textarea id="outputText" class="result-box min-h-[180px] font-mono text-xs" readonly placeholder="..."></textarea>
+    </div>
+  </div>
+  <div id="tableSection" class="hidden card p-5">
+    <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm mb-3"><%= tl.tableTitle %></h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-xs">
+        <thead>
+          <tr class="border-b border-slate-200 dark:border-slate-700">
+            <th class="text-left px-3 py-2 text-slate-500 font-medium"><%= tl.key %></th>
+            <th class="text-left px-3 py-2 text-slate-500 font-medium"><%= tl.value %></th>
+            <th class="w-8"></th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="mt-6 card p-5">
+  <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
+  <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
+</div>
+<script nonce="<%= nonce %>">var I18N = {
+  nothingToCopy: "<%= tc.nothingToCopy %>",
+  copied: "<%= tc.copied %>"
+};
+</script>
+<script nonce="<%= nonce %>" src="/js/app.js"></script>
+<script nonce="<%= nonce %>" src="/js/modules/env-parser.js"></script>

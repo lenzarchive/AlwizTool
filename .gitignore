@@ -1,9 +1,42 @@
-node_modules
-https
-certs
--e 
+# dependencies
+node_modules/
+
+# environment variables
 .env
+.env.local
+.env.*.local
+
+# SSL / TLS
+certs/
+https/
 *.pem
-*.woff2
-style.css
-google5ae402ff44eeca0a.html
+*.key
+*.crt
+*.p12
+
+# build output
+public/css/style.css
+
+# fonts (downloaded via npm run fonts)
+public/fonts/*.woff2
+public/fonts/*.woff
+
+# logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# google search console verification
+google*.html

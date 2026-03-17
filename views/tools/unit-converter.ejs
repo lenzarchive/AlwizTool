@@ -1,0 +1,42 @@
+<% var tl = t.tools.unitConverter; var tc = t.common; %>
+<div class="card p-6 max-w-2xl mx-auto space-y-6">
+  <div>
+    <label class="text-xs text-slate-500 mb-1 block"><%= tl.category %></label>
+    <select id="catSelect" class="select-field w-full">
+      <option value="length">Length</option>
+      <option value="weight">Weight / Mass</option>
+      <option value="temperature">Temperature</option>
+      <option value="area">Area</option>
+      <option value="volume">Volume</option>
+      <option value="speed">Speed</option>
+      <option value="data">Data Storage</option>
+    </select>
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-[1fr_auto_1fr] gap-4 items-end">
+    <div class="space-y-2">
+      <label class="text-xs text-slate-500"><%= tl.from %></label>
+      <select id="fromSelect" class="select-field w-full"></select>
+      <input id="inputVal" type="number" class="input-field w-full text-lg font-mono" value="1" placeholder="0">
+    </div>
+    <button id="btnSwap" class="btn-secondary px-3 py-2 self-end mb-0.5" title="<%= tc.swapLabel %>">⇄</button>
+    <div class="space-y-2">
+      <label class="text-xs text-slate-500"><%= tl.to %></label>
+      <select id="toSelect" class="select-field w-full"></select>
+      <div class="flex gap-2">
+        <input id="outputVal" type="text" class="result-box flex-1 text-lg font-mono" readonly placeholder="...">
+        <button id="btnCopy" class="copy-btn shrink-0"><%= tc.copy %></button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mt-6 card p-5">
+  <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
+  <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
+</div>
+<script nonce="<%= nonce %>">var I18N = {
+  nothingToCopy: "<%= tc.nothingToCopy %>",
+  copied: "<%= tc.copied %>"
+};
+</script>
+<script nonce="<%= nonce %>" src="/js/app.js"></script>
+<script nonce="<%= nonce %>" src="/js/modules/unit-converter.js"></script>

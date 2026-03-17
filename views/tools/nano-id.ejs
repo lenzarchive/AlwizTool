@@ -1,0 +1,53 @@
+<% var tl = t.tools.nanoId; var tc = t.common; %>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <div class="card p-5 space-y-4">
+    <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tl.options %></h2>
+    <div class="flex flex-wrap gap-4">
+      <div class="flex items-center gap-2">
+        <label class="text-xs text-slate-500" for="sizeInput"><%= tl.size %>:</label>
+        <input id="sizeInput" type="number" min="1" max="512" value="21" class="input-field text-xs py-1.5 w-20">
+      </div>
+      <div class="flex items-center gap-2">
+        <label class="text-xs text-slate-500" for="countInput"><%= tl.count %>:</label>
+        <input id="countInput" type="number" min="1" max="100" value="5" class="input-field text-xs py-1.5 w-20">
+      </div>
+    </div>
+    <div class="space-y-2">
+      <label class="text-xs text-slate-500" for="alphabetSelect"><%= tl.alphabet %>:</label>
+      <select id="alphabetSelect" class="select-field text-xs py-1.5 w-full">
+        <option value="default"><%= tl.alphaDefault %></option>
+        <option value="alphanumeric"><%= tl.alphaAlnum %></option>
+        <option value="lowercase"><%= tl.alphaLower %></option>
+        <option value="numbers"><%= tl.alphaNumbers %></option>
+        <option value="hex"><%= tl.alphaHex %></option>
+        <option value="custom"><%= tl.alphaCustom %></option>
+      </select>
+      <input id="customAlphabet" type="text" class="input-field hidden text-xs" placeholder="<%= tl.customPlaceholder %>">
+      <span id="charCount" class="text-xs text-slate-400"></span>
+    </div>
+    <button id="btnGenerate" class="btn-primary w-full"><%= tc.generate %></button>
+  </div>
+  <div class="card p-5 space-y-4">
+    <div class="flex items-center justify-between">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.result %></h2>
+      <div class="flex gap-2">
+        <button id="btnCopy" class="copy-btn"><%= tc.copy %></button>
+        <button id="btnClear" class="btn-secondary text-xs"><%= tc.clear %></button>
+      </div>
+    </div>
+    <textarea id="outputText" class="result-box min-h-[260px] font-mono" readonly placeholder="..."></textarea>
+  </div>
+</div>
+<div class="mt-6 card p-5">
+  <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
+  <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
+</div>
+<script nonce="<%= nonce %>">var I18N = {
+  uniqueChars: "<%= tl.uniqueChars %>",
+  errAlphabet: "<%= tl.errAlphabet %>",
+  nothingToCopy: "<%= tc.nothingToCopy %>",
+  copied: "<%= tc.copied %>"
+};
+</script>
+<script nonce="<%= nonce %>" src="/js/app.js"></script>
+<script nonce="<%= nonce %>" src="/js/modules/nano-id.js"></script>

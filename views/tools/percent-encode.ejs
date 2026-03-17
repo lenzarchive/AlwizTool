@@ -1,0 +1,39 @@
+<% var tl = t.tools.percentEncode; var tc = t.common; %>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <div class="card p-5 space-y-4">
+    <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.input %></h2>
+    <textarea id="inputText" class="textarea-field min-h-[280px]" placeholder="<%= tl.inputPlaceholder %>"></textarea>
+    <div class="flex items-center gap-2 flex-wrap">
+      <button id="btnEncode" class="btn-primary"><%= tc.encode %></button>
+      <button id="btnDecode" class="btn-secondary"><%= tc.decode %></button>
+      <button id="btnClear" class="btn-secondary ml-auto"><%= tc.clear %></button>
+    </div>
+    <div class="flex items-center gap-2">
+      <label class="text-xs text-slate-500" for="modeSelect"><%= tl.mode %>:</label>
+      <select id="modeSelect" class="select-field text-xs py-1.5 w-auto">
+        <option value="full"><%= tl.modeComponent %> (encodeURIComponent)</option>
+        <option value="uri"><%= tl.modeURI %> (encodeURI)</option>
+        <option value="component"><%= tl.modeStrict %> (RFC 3986)</option>
+      </select>
+    </div>
+  </div>
+  <div class="card p-5 space-y-4">
+    <div class="flex items-center justify-between">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.output %></h2>
+      <button id="btnCopy" class="copy-btn"><%= tc.copy %></button>
+    </div>
+    <textarea id="outputText" class="result-box min-h-[280px]" readonly placeholder="..."></textarea>
+  </div>
+</div>
+<div class="mt-6 card p-5">
+  <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
+  <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
+</div>
+<script nonce="<%= nonce %>">var I18N = {
+  errInvalid: "<%= tl.errInvalid %>",
+  nothingToCopy: "<%= tc.nothingToCopy %>",
+  copied: "<%= tc.copied %>"
+};
+</script>
+<script nonce="<%= nonce %>" src="/js/app.js"></script>
+<script nonce="<%= nonce %>" src="/js/modules/percent-encode.js"></script>

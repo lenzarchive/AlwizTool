@@ -1,0 +1,57 @@
+<% var tl = t.tools.totp; var tc = t.common; %>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <div class="card p-5 space-y-4">
+    <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tl.secretKey %></h2>
+    <div class="flex gap-2">
+      <input id="secretInput" type="text" class="input-field flex-1 font-mono text-sm" placeholder="<%= tl.secretPlaceholder %>">
+      <button id="btnRandSecret" class="btn-secondary shrink-0"><%= tl.random %></button>
+    </div>
+    <div class="flex flex-wrap gap-4">
+      <div class="flex items-center gap-2">
+        <label class="text-xs text-slate-500" for="digitsSelect"><%= tl.digits %>:</label>
+        <select id="digitsSelect" class="select-field text-xs py-1.5 w-auto">
+          <option value="6">6</option>
+          <option value="8">8</option>
+        </select>
+      </div>
+      <div class="flex items-center gap-2">
+        <label class="text-xs text-slate-500" for="periodSelect"><%= tl.period %>:</label>
+        <select id="periodSelect" class="select-field text-xs py-1.5 w-auto">
+          <option value="30">30s</option>
+          <option value="60">60s</option>
+        </select>
+      </div>
+    </div>
+    <button id="btnGenerate" class="btn-primary w-full"><%= tc.generate %></button>
+  </div>
+  <div class="card p-5 space-y-4">
+    <div id="resultBox" class="hidden space-y-4">
+      <div class="text-center">
+        <div id="totpCode" class="text-5xl font-mono font-bold tracking-widest text-indigo-600 dark:text-indigo-400 py-4"></div>
+        <div class="flex items-center gap-2 mt-2">
+          <div class="flex-1 bg-slate-200 dark:bg-slate-700 rounded-full h-2">
+            <div id="progressBar" class="h-full rounded-full transition-all duration-1000 bg-green-500" style="width:100%"></div>
+          </div>
+          <span id="remainTime" class="text-xs font-mono text-slate-500 w-8 text-right"></span>
+        </div>
+      </div>
+      <button id="btnCopy" class="btn-secondary w-full"><%= tc.copy %></button>
+    </div>
+    <div id="emptyState" class="text-center text-slate-400 text-sm py-8">
+      <%= tl.emptyState %>
+    </div>
+  </div>
+</div>
+<div class="mt-6 card p-5">
+  <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
+  <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
+</div>
+<script nonce="<%= nonce %>">var I18N = {
+  errNoSecret: "<%= tl.errNoSecret %>",
+  errInvalid: "<%= tl.errInvalid %>",
+  nothingToCopy: "<%= tc.nothingToCopy %>",
+  copied: "<%= tc.copied %>"
+};
+</script>
+<script nonce="<%= nonce %>" src="/js/app.js"></script>
+<script nonce="<%= nonce %>" src="/js/modules/totp.js"></script>

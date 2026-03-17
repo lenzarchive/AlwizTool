@@ -1,0 +1,48 @@
+<% var tl = t.tools.cssUnit; var tc = t.common; %>
+<div class="max-w-2xl mx-auto space-y-6">
+  <div class="card p-5">
+    <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm mb-4"><%= tl.baseSettings %></h2>
+    <div class="flex flex-wrap gap-4">
+      <div class="flex items-center gap-2">
+        <label class="text-xs text-slate-500" for="baseFontSize"><%= tl.baseFontSize %> (px):</label>
+        <input id="baseFontSize" type="number" value="16" min="1" class="input-field text-xs py-1.5 w-20">
+      </div>
+      <div class="flex items-center gap-2">
+        <label class="text-xs text-slate-500" for="viewportW"><%= tl.viewportW %> (px):</label>
+        <input id="viewportW" type="number" value="1440" min="1" class="input-field text-xs py-1.5 w-24">
+      </div>
+      <div class="flex items-center gap-2">
+        <label class="text-xs text-slate-500" for="viewportH"><%= tl.viewportH %> (px):</label>
+        <input id="viewportH" type="number" value="900" min="1" class="input-field text-xs py-1.5 w-24">
+      </div>
+    </div>
+  </div>
+  <div class="card p-5">
+    <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm mb-4"><%= tl.units %></h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <% var units = [
+        ['pxInput','px','Pixel'],
+        ['remInput','rem','REM (root-relative)'],
+        ['emInput','em','EM (parent-relative)'],
+        ['vwInput','vw','VW (viewport width %)'],
+        ['vhInput','vh','VH (viewport height %)'],
+        ['ptInput','pt','Point (pt)'],
+        ['pcInput','pc','Pica (pc = 16px)']
+      ]; units.forEach(function(u) { %>
+      <div>
+        <label class="text-xs text-slate-500 mb-1 block"><%= u[2] %></label>
+        <div class="flex items-center gap-0">
+          <input id="<%= u[0] %>" type="number" step="any" class="input-field flex-1 font-mono text-sm rounded-r-none" placeholder="0">
+          <span class="bg-slate-100 dark:bg-slate-700 border border-l-0 border-slate-200 dark:border-slate-600 px-3 py-2 text-xs text-slate-500 font-mono rounded-r-lg"><%= u[1] %></span>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+  </div>
+</div>
+<div class="mt-6 card p-5">
+  <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
+  <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
+</div>
+<script nonce="<%= nonce %>" src="/js/app.js"></script>
+<script nonce="<%= nonce %>" src="/js/modules/css-unit.js"></script>

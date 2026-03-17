@@ -1,0 +1,37 @@
+<% var tl = t.tools.tomlFormatter; var tc = t.common; %>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <div class="card p-5 space-y-4">
+    <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.input %> TOML / JSON</h2>
+    <textarea id="inputText" class="textarea-field min-h-[300px]" placeholder="<%= tl.inputPlaceholder %>"></textarea>
+    <div class="flex items-center gap-2 flex-wrap">
+      <button id="btnFormat" class="btn-primary"><%= tc.format %></button>
+      <button id="btnToJson" class="btn-secondary"><%= tl.toJson %></button>
+      <button id="btnFromJson" class="btn-secondary"><%= tl.fromJson %></button>
+      <button id="btnClear" class="btn-secondary ml-auto"><%= tc.clear %></button>
+    </div>
+  </div>
+  <div class="card p-5 space-y-4">
+    <div class="flex items-center justify-between">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.output %></h2>
+      <button id="btnCopy" class="copy-btn"><%= tc.copy %></button>
+    </div>
+    <textarea id="outputText" class="result-box min-h-[300px]" readonly placeholder="..."></textarea>
+    <div id="statusMsg" class="text-xs font-medium flex items-center gap-2"></div>
+  </div>
+</div>
+<div class="mt-6 card p-5">
+  <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
+  <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
+</div>
+<script nonce="<%= nonce %>">var I18N = {
+  validMsg: "<%= tl.validMsg %>",
+  invalidMsg: "<%= tl.invalidMsg %>",
+  convertedJson: "<%= tl.convertedJson %>",
+  convertedToml: "<%= tl.convertedToml %>",
+  invalidJson: "<%= tl.invalidJson %>",
+  nothingToCopy: "<%= tc.nothingToCopy %>",
+  copied: "<%= tc.copied %>"
+};
+</script>
+<script nonce="<%= nonce %>" src="/js/app.js"></script>
+<script nonce="<%= nonce %>" src="/js/modules/toml-formatter.js"></script>

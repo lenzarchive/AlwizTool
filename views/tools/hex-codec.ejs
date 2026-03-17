@@ -1,0 +1,48 @@
+<% var tl = t.tools.hexCodec; var tc = t.common; %>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <div class="card p-5 space-y-4">
+    <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.input %></h2>
+    <textarea id="inputText" class="textarea-field min-h-[280px]" placeholder="<%= tl.inputPlaceholder %>"></textarea>
+    <div class="flex items-center gap-2 flex-wrap">
+      <button id="btnEncode" class="btn-primary"><%= tc.encode %></button>
+      <button id="btnDecode" class="btn-secondary"><%= tc.decode %></button>
+      <button id="btnClear" class="btn-secondary ml-auto"><%= tc.clear %></button>
+    </div>
+    <div class="flex flex-wrap gap-4 items-center">
+      <div class="flex items-center gap-2">
+        <label class="text-xs text-slate-500" for="separatorSelect"><%= tl.separator %>:</label>
+        <select id="separatorSelect" class="select-field text-xs py-1.5 w-auto">
+          <option value=" ">Space</option>
+          <option value=":">Colon (:)</option>
+          <option value="-">Dash (-)</option>
+          <option value="">None</option>
+        </select>
+      </div>
+      <label class="flex items-center gap-2 text-xs text-slate-500 cursor-pointer">
+        <input type="checkbox" id="uppercaseCheck" class="rounded">
+        <%= tl.uppercase %>
+      </label>
+      <input type="hidden" id="modeSelect" value="encode">
+    </div>
+  </div>
+  <div class="card p-5 space-y-4">
+    <div class="flex items-center justify-between">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.output %></h2>
+      <button id="btnCopy" class="copy-btn"><%= tc.copy %></button>
+    </div>
+    <textarea id="outputText" class="result-box min-h-[280px]" readonly placeholder="..."></textarea>
+  </div>
+</div>
+<div class="mt-6 card p-5">
+  <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
+  <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
+</div>
+<script nonce="<%= nonce %>">var I18N = {
+  errInvalid: "<%= tl.errInvalid %>",
+  errOddLength: "<%= tl.errOddLength %>",
+  nothingToCopy: "<%= tc.nothingToCopy %>",
+  copied: "<%= tc.copied %>"
+};
+</script>
+<script nonce="<%= nonce %>" src="/js/app.js"></script>
+<script nonce="<%= nonce %>" src="/js/modules/hex-codec.js"></script>

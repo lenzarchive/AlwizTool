@@ -1,0 +1,65 @@
+<% var tl = t.tools.fakeData; var tc = t.common; %>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <div class="card p-5 space-y-4">
+    <div class="flex items-center justify-between">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tl.fields %></h2>
+      <div class="flex gap-2">
+        <button id="btnSelectAll" class="btn-secondary text-xs"><%= tl.selectAll %></button>
+        <button id="btnSelectNone" class="btn-secondary text-xs"><%= tl.selectNone %></button>
+      </div>
+    </div>
+    <div id="fieldsContainer" class="grid grid-cols-2 gap-2">
+      <% var fields = [
+        ['fullName','Full Name'],['firstName','First Name'],['lastName','Last Name'],
+        ['email','Email'],['phone','Phone'],['username','Username'],
+        ['password','Password'],['address','Address'],['city','City'],
+        ['country','Country'],['company','Company'],['jobTitle','Job Title'],
+        ['uuid','UUID'],['ipv4','IPv4'],['date','Date (DoB)'],
+        ['url','URL'],['color','Color'],['number','Number'],
+        ['price','Price'],['paragraph','Paragraph']
+      ]; fields.forEach(function(f) { %>
+      <label class="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400 cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-400">
+        <input type="checkbox" class="field-check rounded" value="<%= f[0] %>" <%= ['fullName','email','phone','city'].includes(f[0]) ? 'checked' : '' %>>
+        <%= f[1] %>
+      </label>
+      <% }); %>
+    </div>
+    <div class="flex flex-wrap gap-4 pt-2 border-t border-slate-100 dark:border-slate-800">
+      <div class="flex items-center gap-2">
+        <label class="text-xs text-slate-500" for="countInput"><%= tl.rows %>:</label>
+        <input id="countInput" type="number" min="1" max="50" value="5" class="input-field text-xs py-1.5 w-16">
+      </div>
+      <div class="flex items-center gap-2">
+        <label class="text-xs text-slate-500" for="formatSelect"><%= tl.format %>:</label>
+        <select id="formatSelect" class="select-field text-xs py-1.5 w-auto">
+          <option value="json">JSON</option>
+          <option value="csv">CSV</option>
+          <option value="text">Text</option>
+        </select>
+      </div>
+    </div>
+    <button id="btnGenerate" class="btn-primary w-full"><%= tc.generate %></button>
+  </div>
+  <div class="card p-5 space-y-4">
+    <div class="flex items-center justify-between">
+      <h2 class="font-semibold text-slate-900 dark:text-slate-100 text-sm"><%= tc.output %></h2>
+      <div class="flex gap-2">
+        <button id="btnCopy" class="copy-btn"><%= tc.copy %></button>
+        <button id="btnClear" class="btn-secondary text-xs"><%= tc.clear %></button>
+      </div>
+    </div>
+    <textarea id="outputText" class="result-box min-h-[340px] font-mono text-xs" readonly placeholder="..."></textarea>
+  </div>
+</div>
+<div class="mt-6 card p-5">
+  <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100 mb-2"><%= tl.about %></h3>
+  <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed"><%= tl.aboutText %></p>
+</div>
+<script nonce="<%= nonce %>">var I18N = {
+  errNoFields: "<%= tl.errNoFields %>",
+  nothingToCopy: "<%= tc.nothingToCopy %>",
+  copied: "<%= tc.copied %>"
+};
+</script>
+<script nonce="<%= nonce %>" src="/js/app.js"></script>
+<script nonce="<%= nonce %>" src="/js/modules/fake-data.js"></script>
